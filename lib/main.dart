@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'TakePictureScreen.dart';
+import 'CardLoadingApp.dart';
+import 'ButtonCamera.dart';
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -18,7 +20,13 @@ void main() async {
   runApp(
     MaterialApp(
       theme: ThemeData.dark(),
-      home: TakePictureScreen(camera: firstCamera),
+      // Define routes here
+      initialRoute: '/',
+      routes: {
+        '/': (context) => ButtonCamera(),
+        '/camera': (context) => TakePictureScreen(camera: firstCamera),
+        '/loading': (context) => CardLoadingApp(),
+      },
     ),
   );
 }
