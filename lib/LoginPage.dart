@@ -82,20 +82,26 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap:() => Navigator.pushNamed(context, '/login'),
+                          child: Container(
+                            padding: EdgeInsets.only(left: 20, top: 20),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap:() => Navigator.pushNamed(context, '/signup'),
+                          child: Container(
+                            padding: EdgeInsets.only(left: 20, top: 20),
+                            child: Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         )
                       ],
