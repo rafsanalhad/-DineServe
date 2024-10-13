@@ -14,9 +14,9 @@ class _HomePageState extends State<HomePage> {
   // Daftar halaman yang akan ditampilkan
   final List<Widget> _pages = [
     // Halaman untuk Home, History, Ulasan, dan Profil
-    Center(child: Text('Home Page')),
-    Center(child: Text('History Page')),
-    Center(child: Text('Ulasan Page')),
+    const Center(child: Text('Home Page')),
+    const Center(child: Text('History Page')),
+    const Center(child: Text('Ulasan Page')),
   ];
 
   // Fungsi untuk menangani navigasi
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/bg_hero.png'), // Lokasi gambar
                     fit: BoxFit.cover, // Mengatur gambar agar menutupi seluruh kontainer
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Container(
                                     margin: const EdgeInsets.only(left: 5),
-                                    child: Column(
+                                    child: const Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        Icon(Icons.notifications_active_outlined, color: Colors.white),
+                        const Icon(Icons.notifications_active_outlined, color: Colors.white),
                       ],
                     ),
                     Row(
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Halo Food Hunter',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Mau Cari Informasi Apa Hari Ini?',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.search),
+                                        const Icon(Icons.search),
                                         Text(
                                           'Cari sesuatu disini',
                                           style: TextStyle(
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 15, left: 20, bottom: 10),
-                child: Text(
+                child: const Text(
                   'Layanan Kami',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                         height: 310,
                         width: 150,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: AssetImage('assets/images/bg_detect_face.png'),
                             fit: BoxFit.cover,
                           ),
@@ -205,11 +205,11 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Icon(Icons.home),
+                              child: const Icon(Icons.home),
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 120, left: 10),
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -243,7 +243,7 @@ class _HomePageState extends State<HomePage> {
                             height: 150,
                             width: MediaQuery.of(context).size.width - 200,
                             decoration: BoxDecoration(
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                 image: AssetImage('assets/images/bg_history.png'),
                                 fit: BoxFit.cover,
                               ),
@@ -259,11 +259,11 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Icon(Icons.history),
+                                  child: const Icon(Icons.history),
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10, left: 10),
-                                  child: Column(
+                                  child: const Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
@@ -288,12 +288,12 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Container(
                             height: 150,
                             width: MediaQuery.of(context).size.width - 200,
                             decoration: BoxDecoration(
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                 image: AssetImage('assets/images/bg_emotion.png'),
                                 fit: BoxFit.cover,
                               ),
@@ -309,11 +309,11 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Icon(Icons.sentiment_satisfied),
+                                  child: const Icon(Icons.sentiment_satisfied),
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10, left: 10),
-                                  child: Column(
+                                  child: const Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
@@ -361,8 +361,8 @@ class _HomePageState extends State<HomePage> {
               label: 'Profil',
             ),
           ],
-          selectedItemColor: Color(0xFF18654A),
-          unselectedItemColor: Color(0xFF18654A), // Warna item yang dipilih
+          selectedItemColor: const Color(0xFF18654A),
+          unselectedItemColor: const Color(0xFF18654A), // Warna item yang dipilih
           onTap: _onItemTapped, // Callback saat item ditekan
         ),
       ),

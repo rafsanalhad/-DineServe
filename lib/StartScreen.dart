@@ -10,7 +10,7 @@ class StartScreen extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -22,7 +22,7 @@ class StartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center, // Center secara vertikal
               crossAxisAlignment: CrossAxisAlignment.center, // Center secara horizontal
               children: [
-                Text(
+                const Text(
                   'Mulai Reservasi Sekarang Dengan Mudah',
                   textAlign: TextAlign.center, // Center text secara horizontal
                   style: TextStyle(
@@ -31,8 +31,8 @@ class StartScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10), // Spasi antar elemen
-                Text(
+                const SizedBox(height: 10), // Spasi antar elemen
+                const Text(
                   'Lakukan Reservasi Dengan Pengenalan Wajah dengan cepat dan mudah',
                   textAlign: TextAlign.center, // Center text secara horizontal
                   style: TextStyle(
@@ -41,9 +41,9 @@ class StartScreen extends StatelessWidget {
                     fontWeight: FontWeight.w100,
                   ),
                 ),
-                SizedBox(height: 70), // Spasi sebelum gambar
+                const SizedBox(height: 70), // Spasi sebelum gambar
                 Container(
-                  margin: EdgeInsets.only(right: 40),
+                  margin: const EdgeInsets.only(right: 40),
                   child: Image.asset(
                     'assets/images/hero_img.png',
                     width: 320,
@@ -51,7 +51,7 @@ class StartScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                // Spasi sebelum tombol
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -66,7 +66,7 @@ class StartScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     },
-                    child: Text('Mulai Sekarang', style: TextStyle(color: Color(0xFF18654A))),
+                    child: const Text('Mulai Sekarang', style: TextStyle(color: Color(0xFF18654A))),
                   ),
                 ),
               ],

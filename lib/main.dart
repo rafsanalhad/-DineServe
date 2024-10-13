@@ -25,12 +25,12 @@ void main() async {
       // Define routes here
       initialRoute: '/',
       routes: {
-        '/': (context) => StartScreen(),
-        '/home': (context) => HomePage(),
-        '/login': (context) => LoginPage(),
-        '/signup': (context) => SignUpPage(),
+        '/': (context) => const StartScreen(),
+        '/home': (context) => const HomePage(),
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignUpPage(),
         '/camera': (context) => TakePictureScreen(camera: firstCamera),
-        '/loading': (context) => CardLoadingApp(),
+        '/loading': (context) => const CardLoadingApp(),
       },
     ),
   );

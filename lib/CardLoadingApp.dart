@@ -16,11 +16,11 @@ class CardLoadingApp extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
+                  return const Padding(
+                    padding: EdgeInsets.only(bottom: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         CardLoading(
                           height: 30,
                           borderRadius: BorderRadius.all(Radius.circular(15)),
