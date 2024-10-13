@@ -5,6 +5,7 @@ import 'CardLoadingApp.dart';
 import 'ButtonCamera.dart';
 import 'HomePage.dart';
 import 'StartScreen.dart';
+import 'LoginPage.dart';
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -19,12 +20,13 @@ void main() async {
 
   runApp(
     MaterialApp(
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
       // Define routes here
       initialRoute: '/',
       routes: {
         '/': (context) => StartScreen(),
         '/home': (context) => HomePage(),
+        '/login': (context) => LoginPage(),
         '/camera': (context) => TakePictureScreen(camera: firstCamera),
         '/loading': (context) => CardLoadingApp(),
       },
