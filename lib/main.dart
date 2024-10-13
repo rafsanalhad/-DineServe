@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'TakePictureScreen.dart';
 import 'CardLoadingApp.dart';
 import 'ButtonCamera.dart';
+import 'HomePage.dart';
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -21,7 +22,7 @@ void main() async {
       // Define routes here
       initialRoute: '/',
       routes: {
-        '/': (context) => ButtonCamera(),
+        '/': (context) => HomePage(),
         '/camera': (context) => TakePictureScreen(camera: firstCamera),
         '/loading': (context) => CardLoadingApp(),
       },

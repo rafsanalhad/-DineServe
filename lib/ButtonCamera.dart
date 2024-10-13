@@ -8,7 +8,7 @@ class ButtonCamera extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Home Page'), // Judul AppBar
+          title: const Text('HomePage'), // Judul AppBar
         ),
         body: Center(
           // Mengatur posisi ButtonCamera di tengah layar
