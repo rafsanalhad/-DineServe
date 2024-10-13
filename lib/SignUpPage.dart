@@ -126,8 +126,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: _firstNameController,
                               decoration: InputDecoration(
                                 labelText: 'First Name',
-                                prefixIcon:
-                                    Icon(Icons.person, color: Color(0xFF18654A)),
+                                prefixIcon: Icon(Icons.person,
+                                    color: Color(0xFF18654A)),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 20.0, horizontal: 16.0),
                                 enabledBorder: OutlineInputBorder(
@@ -153,8 +153,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: _lastNameController,
                               decoration: InputDecoration(
                                 labelText: 'Last Name',
-                                prefixIcon:
-                                    Icon(Icons.person, color: Color(0xFF18654A)),
+                                prefixIcon: Icon(Icons.person,
+                                    color: Color(0xFF18654A)),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 20.0, horizontal: 16.0),
                                 enabledBorder: OutlineInputBorder(
@@ -180,8 +180,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: _usernameController,
                               decoration: InputDecoration(
                                 labelText: 'Username',
-                                prefixIcon:
-                                    Icon(Icons.person, color: Color(0xFF18654A)),
+                                prefixIcon: Icon(Icons.person,
+                                    color: Color(0xFF18654A)),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 20.0, horizontal: 16.0),
                                 enabledBorder: OutlineInputBorder(
@@ -248,9 +248,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                   String username = _usernameController.text;
                                   String password = _passwordController.text;
 
-                                  print('First Name: $firstName, Last Name: $lastName, Username: $username, Password: $password');
+                                  print(
+                                      'First Name: $firstName, Last Name: $lastName, Username: $username, Password: $password');
                                 },
-                                child: Text('Sign Up', style: TextStyle(color: Colors.white)),
+                                child: GestureDetector(
+                                    onTap:() => Navigator.pushNamed(context, '/home'),
+                                    child: Text('Sign Up',
+                                        style: TextStyle(color: Colors.white))),
                               ),
                             ),
                           ],
