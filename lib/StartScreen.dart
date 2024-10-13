@@ -64,7 +64,7 @@ class StartScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/camera');
+                      Navigator.pushNamed(context, '/login');
                     },
                     child: Text('Mulai Sekarang', style: TextStyle(color: Color(0xFF18654A))),
                   ),
