@@ -81,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           spreadRadius: 1,
                           blurRadius: 3,
                           offset: const Offset(
-                              0, 2), // Perpindahan shadow dari posisi widget
+                              0, 2),
                         ),
                       ]),
                   child: Column(
@@ -121,7 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            // Input First Name
+                     
                             TextField(
                               controller: _firstNameController,
                               decoration: InputDecoration(
@@ -148,7 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Input Last Name
+                          
                             TextField(
                               controller: _lastNameController,
                               decoration: InputDecoration(
@@ -175,7 +175,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Input Username
+                        
                             TextField(
                               controller: _usernameController,
                               decoration: InputDecoration(
@@ -202,7 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Input Password
+                         
                             TextField(
                               controller: _passwordController,
                               obscureText: true,
@@ -242,7 +242,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  // Aksi sign up ketika tombol ditekan
+                              
                                   String firstName = _firstNameController.text;
                                   String lastName = _lastNameController.text;
                                   String username = _usernameController.text;

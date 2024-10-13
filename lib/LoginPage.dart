@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                         spreadRadius: 1,
                         blurRadius: 3,
                         offset: const Offset(
-                            0, 2), // Perpindahan shadow dari posisi widget
+                            0, 2),
                       ),
                     ]),
                 child: Column(
@@ -200,8 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                                   margin: const EdgeInsets.only(top: 0),
                                   child: TextButton(
                                       onPressed: () {
-                                        // Aksi ketika tombol Forgot Password ditekan
-                                        // Misalnya, navigasi ke halaman reset password
+                                
                                         showDialog(
                                           context: context,
                                           builder: (context) {
@@ -213,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.of(context)
-                                                        .pop(); // Tutup dialog
+                                                        .pop();
                                                   },
                                                   child: const Text('OK'),
                                                 ),
@@ -227,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                                               color: Color(0xFF18654A),
                                               fontSize: 14))),
                                 ),
-                              ]), // Spasi sebelum tombol login
+                              ]), 
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             width: MediaQuery.of(context).size.width * 0.8,
@@ -240,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               onPressed: () {
-                                // Aksi login ketika tombol ditekan
+                 
                                 String username = _usernameController.text;
                                 String password = _passwordController.text;
 

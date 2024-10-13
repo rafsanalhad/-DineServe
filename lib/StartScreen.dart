@@ -19,29 +19,29 @@ class StartScreen extends StatelessWidget {
           ),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Center secara vertikal
-              crossAxisAlignment: CrossAxisAlignment.center, // Center secara horizontal
+              mainAxisAlignment: MainAxisAlignment.center, 
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Mulai Reservasi Sekarang Dengan Mudah',
-                  textAlign: TextAlign.center, // Center text secara horizontal
+                  textAlign: TextAlign.center, 
                   style: TextStyle(
                     fontSize: 24,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 10), // Spasi antar elemen
+                const SizedBox(height: 10), 
                 const Text(
                   'Lakukan Reservasi Dengan Pengenalan Wajah dengan cepat dan mudah',
-                  textAlign: TextAlign.center, // Center text secara horizontal
+                  textAlign: TextAlign.center, 
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white,
                     fontWeight: FontWeight.w100,
                   ),
                 ),
-                const SizedBox(height: 70), // Spasi sebelum gambar
+                const SizedBox(height: 70), 
                 Container(
                   margin: const EdgeInsets.only(right: 40),
                   child: Image.asset(
@@ -52,7 +52,7 @@ class StartScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-               // Spasi sebelum tombol
+              
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: 50,

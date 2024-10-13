@@ -8,34 +8,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Indeks halaman yang sedang aktif
+
   int _selectedIndex = 0;
 
-  // Daftar halaman yang akan ditampilkan
+
   final List<Widget> _pages = [
-    // Halaman untuk Home, History, Ulasan, dan Profil
+
     const Center(child: Text('Home Page')),
     const Center(child: Text('History Page')),
     const Center(child: Text('Ulasan Page')),
   ];
 
-  // Fungsi untuk menangani navigasi
+ 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
     switch (index) {
       case 0:
-        // Aksi untuk Home
+      
         break;
       case 1:
-        // Aksi untuk History
+        
         break;
       case 2:
-        // Aksi untuk Ulasan
+      
         break;
       case 3:
-        // ButtonCamera();
+  
         break;
       default:
         break;
@@ -43,8 +43,8 @@ class _HomePageState extends State<HomePage> {
 
   }
   void ButtonCamera() {
-    // Implementasi untuk membuka kamera atau aksi lainnya
-    Navigator.pushNamed(context, '/camera'); // Contoh untuk navigasi
+    
+    Navigator.pushNamed(context, '/camera'); 
   }
 
   @override
@@ -59,12 +59,12 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/bg_hero.png'), // Lokasi gambar
-                    fit: BoxFit.cover, // Mengatur gambar agar menutupi seluruh kontainer
+                    image: AssetImage('assets/images/bg_hero.png'), 
+                    fit: BoxFit.cover, 
                   ),
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50), // Radius di sudut kiri bawah
-                    bottomRight: Radius.circular(50), // Radius di sudut kanan bawah
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50), 
                   ),
                 ),
                 child: Column(
@@ -362,8 +362,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           selectedItemColor: const Color(0xFF18654A),
-          unselectedItemColor: const Color(0xFF18654A), // Warna item yang dipilih
-          onTap: _onItemTapped, // Callback saat item ditekan
+          unselectedItemColor: const Color(0xFF18654A),
+          onTap: _onItemTapped,
         ),
       ),
     );
