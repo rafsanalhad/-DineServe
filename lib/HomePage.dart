@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Container(
                             height: 150,
-                            width: 160,
+                            width: MediaQuery.of(context).size.width - 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage('assets/images/bg_history.png'),
@@ -291,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(height: 10),
                           Container(
                             height: 150,
-                            width: 160,
+                            width: MediaQuery.of(context).size.width - 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage('assets/images/bg_emotion.png'),
