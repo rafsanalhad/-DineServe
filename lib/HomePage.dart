@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/bg_hero.png'), // Lokasi gambar
