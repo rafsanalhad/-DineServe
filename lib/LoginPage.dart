@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap:() => Navigator.pushNamed(context, '/login'),
+                          onTap: () => Navigator.pushNamed(context, '/login'),
                           child: Container(
                             padding: EdgeInsets.only(left: 20, top: 20),
                             child: Text(
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap:() => Navigator.pushNamed(context, '/signup'),
+                          onTap: () => Navigator.pushNamed(context, '/signup'),
                           child: Container(
                             padding: EdgeInsets.only(left: 20, top: 20),
                             child: Text(
@@ -190,38 +190,42 @@ class _LoginPageState extends State<LoginPage> {
                                         Text(
                                           'Remember Me',
                                           style: TextStyle(
-                                              color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w500),
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ],
                                     )),
                                 Container(
                                   margin: EdgeInsets.only(top: 0),
                                   child: TextButton(
-                                    onPressed: () {
-                                      // Aksi ketika tombol Forgot Password ditekan
-                                      // Misalnya, navigasi ke halaman reset password
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Text('Forgot Password'),
-                                            content: Text(
-                                                'Reset link has been sent to your email.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(); // Tutup dialog
-                                                },
-                                                child: Text('OK'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Text('Forgot Password?', style: TextStyle(color: Color(0xFF18654A), fontSize: 14))
-                                  ),
+                                      onPressed: () {
+                                        // Aksi ketika tombol Forgot Password ditekan
+                                        // Misalnya, navigasi ke halaman reset password
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text('Forgot Password'),
+                                              content: Text(
+                                                  'Reset link has been sent to your email.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(); // Tutup dialog
+                                                  },
+                                                  child: Text('OK'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Text('Forgot Password?',
+                                          style: TextStyle(
+                                              color: Color(0xFF18654A),
+                                              fontSize: 14))),
                                 ),
                               ]), // Spasi sebelum tombol login
                           Container(
@@ -239,10 +243,14 @@ class _LoginPageState extends State<LoginPage> {
                                 // Aksi login ketika tombol ditekan
                                 String username = _usernameController.text;
                                 String password = _passwordController.text;
-                            
-                                print('Username: $username, Password: $password');
+
+                                print(
+                                    'Username: $username, Password: $password');
                               },
-                              child: Text('Login', style: TextStyle(color: Colors.white)),
+                              child: GestureDetector(
+                                  onTap:() => Navigator.pushNamed(context, '/home'),
+                                  child: Text('Login',
+                                      style: TextStyle(color: Colors.white))),
                             ),
                           ),
                         ],
