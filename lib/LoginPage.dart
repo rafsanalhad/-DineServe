@@ -74,8 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 1,
                         blurRadius: 3,
-                        offset: const Offset(
-                            0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ]),
                 child: Column(
@@ -115,8 +114,8 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _usernameController,
                             decoration: InputDecoration(
                               labelText: 'Username',
-                              prefixIcon:
-                                  const Icon(Icons.person, color: Color(0xFF18654A)),
+                              prefixIcon: const Icon(Icons.person,
+                                  color: Color(0xFF18654A)),
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 16.0),
                               enabledBorder: OutlineInputBorder(
@@ -136,14 +135,13 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           const SizedBox(height: 16),
-
                           TextField(
                             controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon:
-                                  const Icon(Icons.lock, color: Color(0xFF18654A)),
+                              prefixIcon: const Icon(Icons.lock,
+                                  color: Color(0xFF18654A)),
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 16.0),
                               enabledBorder: OutlineInputBorder(
@@ -200,19 +198,18 @@ class _LoginPageState extends State<LoginPage> {
                                   margin: const EdgeInsets.only(top: 0),
                                   child: TextButton(
                                       onPressed: () {
-                                
                                         showDialog(
                                           context: context,
                                           builder: (context) {
                                             return AlertDialog(
-                                              title: const Text('Forgot Password'),
+                                              title:
+                                                  const Text('Forgot Password'),
                                               content: const Text(
                                                   'Reset link has been sent to your email.'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop();
+                                                    Navigator.of(context).pop();
                                                   },
                                                   child: const Text('OK'),
                                                 ),
@@ -226,31 +223,36 @@ class _LoginPageState extends State<LoginPage> {
                                               color: Color(0xFF18654A),
                                               fontSize: 14))),
                                 ),
-                              ]), 
+                              ]),
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             width: MediaQuery.of(context).size.width * 0.8,
                             height: 50,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF18654A),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF18654A),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
                                 ),
-                              ),
-                              onPressed: () {
-                 
-                                String username = _usernameController.text;
-                                String password = _passwordController.text;
+                                onPressed: () {
+                                  String username = _usernameController.text;
+                                  String password = _passwordController.text;
 
-                                print(
-                                    'Username: $username, Password: $password');
-                              },
-                              child: GestureDetector(
-                                  onTap:() => Navigator.pushNamed(context, '/home'),
-                                  child: const Text('Login',
-                                      style: TextStyle(color: Colors.white))),
-                            ),
+                                  print(
+                                      'Username: $username, Password: $password');
+
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/home',
+                                    arguments: {
+                                      'username': username,
+                                      'password': password
+                                    },
+                                  );
+                                },
+                                child: const Text('Login',
+                                    style: TextStyle(color: Colors.white))),
                           ),
                         ],
                       ),

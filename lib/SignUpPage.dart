@@ -80,8 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 3,
-                          offset: const Offset(
-                              0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ]),
                   child: Column(
@@ -121,7 +120,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
-                     
                             TextField(
                               controller: _firstNameController,
                               decoration: InputDecoration(
@@ -147,8 +145,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             ),
                             const SizedBox(height: 16),
-
-                          
                             TextField(
                               controller: _lastNameController,
                               decoration: InputDecoration(
@@ -174,8 +170,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             ),
                             const SizedBox(height: 16),
-
-                        
                             TextField(
                               controller: _usernameController,
                               decoration: InputDecoration(
@@ -201,15 +195,13 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             ),
                             const SizedBox(height: 16),
-
-                         
                             TextField(
                               controller: _passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                prefixIcon:
-                                    const Icon(Icons.lock, color: Color(0xFF18654A)),
+                                prefixIcon: const Icon(Icons.lock,
+                                    color: Color(0xFF18654A)),
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 20.0, horizontal: 16.0),
                                 enabledBorder: OutlineInputBorder(
@@ -229,7 +221,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             ),
                             const SizedBox(height: 2),
-
                             Container(
                               margin: const EdgeInsets.only(top: 20),
                               width: MediaQuery.of(context).size.width * 0.8,
@@ -242,7 +233,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                 ),
                                 onPressed: () {
-                              
                                   String firstName = _firstNameController.text;
                                   String lastName = _lastNameController.text;
                                   String username = _usernameController.text;
@@ -250,13 +240,18 @@ class _SignUpPageState extends State<SignUpPage> {
 
                                   print(
                                       'First Name: $firstName, Last Name: $lastName, Username: $username, Password: $password');
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/home',
+                                    arguments: {
+                                      'username': username,
+                                      'password': password
+                                    },
+                                  );
                                 },
-                                child: GestureDetector(
-                                    onTap:() => Navigator.pushNamed(context, '/home'),
-                                    child: const Text('Sign Up',
+                                child: const Text('Sign Up',
                                         style: TextStyle(color: Colors.white))),
                               ),
-                            ),
                           ],
                         ),
                       )
