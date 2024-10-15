@@ -7,6 +7,7 @@ import 'HomePage.dart';
 import 'StartScreen.dart';
 import 'LoginPage.dart';
 import 'SignUpPage.dart';
+import 'ProfilePage.dart';
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -31,6 +32,7 @@ void main() async {
         '/signup': (context) => const SignUpPage(),
         '/camera': (context) => TakePictureScreen(camera: firstCamera),
         '/loading': (context) => const CardLoadingApp(),
+        '/profile': (context) => ProfilePage(),
       },
     ),
   );

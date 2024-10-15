@@ -8,43 +8,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int _selectedIndex = 0;
-  
 
   final List<Widget> _pages = [
-
     const Center(child: Text('Home Page')),
     const Center(child: Text('History Page')),
     const Center(child: Text('Ulasan Page')),
   ];
 
- 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
     switch (index) {
       case 0:
-      
         break;
       case 1:
-        
         break;
       case 2:
-      
         break;
       case 3:
-  
+        // Navigasi halaman profile
+        Navigator.pushNamed(context, '/profile');
         break;
       default:
         break;
     }
-
   }
+
   void ButtonCamera() {
-    
-    Navigator.pushNamed(context, '/camera'); 
+    Navigator.pushNamed(context, '/camera');
   }
 
   @override
@@ -59,12 +52,12 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/bg_hero.png'), 
-                    fit: BoxFit.cover, 
+                    image: AssetImage('assets/images/bg_hero.png'),
+                    fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50), 
+                    bottomRight: Radius.circular(50),
                   ),
                 ),
                 child: Column(
@@ -82,7 +75,8 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     margin: const EdgeInsets.only(left: 5),
                                     child: const Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Rizky Arifiansyah',
@@ -107,7 +101,8 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        const Icon(Icons.notifications_active_outlined, color: Colors.white),
+                        const Icon(Icons.notifications_active_outlined,
+                            color: Colors.white),
                       ],
                     ),
                     Row(
@@ -165,7 +160,8 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        Image.asset('assets/images/hero_img.png', width: 152, height: 200),
+                        Image.asset('assets/images/hero_img.png',
+                            width: 152, height: 200),
                       ],
                     ),
                   ],
@@ -190,7 +186,8 @@ class _HomePageState extends State<HomePage> {
                         width: 150,
                         decoration: BoxDecoration(
                           image: const DecorationImage(
-                            image: AssetImage('assets/images/bg_detect_face.png'),
+                            image:
+                                AssetImage('assets/images/bg_detect_face.png'),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.circular(10),
@@ -244,7 +241,8 @@ class _HomePageState extends State<HomePage> {
                             width: MediaQuery.of(context).size.width - 200,
                             decoration: BoxDecoration(
                               image: const DecorationImage(
-                                image: AssetImage('assets/images/bg_history.png'),
+                                image:
+                                    AssetImage('assets/images/bg_history.png'),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -254,7 +252,8 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(10),
-                                  margin: const EdgeInsets.only(top: 20, left: 12),
+                                  margin:
+                                      const EdgeInsets.only(top: 20, left: 12),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
@@ -262,9 +261,11 @@ class _HomePageState extends State<HomePage> {
                                   child: const Icon(Icons.history),
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.only(top: 10, left: 10),
+                                  margin:
+                                      const EdgeInsets.only(top: 10, left: 10),
                                   child: const Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'History Reservasi & Ulasan',
@@ -294,7 +295,8 @@ class _HomePageState extends State<HomePage> {
                             width: MediaQuery.of(context).size.width - 200,
                             decoration: BoxDecoration(
                               image: const DecorationImage(
-                                image: AssetImage('assets/images/bg_emotion.png'),
+                                image:
+                                    AssetImage('assets/images/bg_emotion.png'),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -304,7 +306,8 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(10),
-                                  margin: const EdgeInsets.only(top: 20, left: 20),
+                                  margin:
+                                      const EdgeInsets.only(top: 20, left: 20),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
@@ -312,9 +315,11 @@ class _HomePageState extends State<HomePage> {
                                   child: const Icon(Icons.sentiment_satisfied),
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.only(top: 10, left: 10),
+                                  margin:
+                                      const EdgeInsets.only(top: 10, left: 10),
                                   child: const Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Lakukan Ulasan Dengan Emotion Detection',
@@ -342,7 +347,7 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           showSelectedLabels: true,
-          showUnselectedLabels: true, 
+          showUnselectedLabels: true,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
