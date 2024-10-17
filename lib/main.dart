@@ -25,6 +25,7 @@ void main() async {
   runApp(
     MaterialApp(
       theme: ThemeData.light(),
+      debugShowCheckedModeBanner: false,  // Hilangkan banner debug
       // Define routes here
       initialRoute: '/',
       routes: {

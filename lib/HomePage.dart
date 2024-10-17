@@ -24,10 +24,10 @@ class _HomePageState extends State<HomePage> {
       case 0:
         break;
       case 1:
-      Navigator.pushNamed(context, '/history');
+        Navigator.pushNamed(context, '/history');
         break;
       case 2:
-      Navigator.pushNamed(context, '/profile');
+        Navigator.pushNamed(context, '/profile');
         break;
       default:
         break;
@@ -63,7 +63,12 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
+                        // Menambahkan InkWell di bagian profil
+                        InkWell(
+                          onTap: () {
+                            // Navigasi ke halaman profil
+                            Navigator.pushNamed(context, '/profile');
+                          },
                           child: Row(
                             children: [
                               Image.asset('assets/images/profil.png'),
@@ -95,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -103,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.white),
                       ],
                     ),
+                    const SizedBox(height: 20), // Jarak antara elemen
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -232,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     InkWell(
-                       onTap: () => Navigator.pushNamed(context, '/history'),
+                      onTap: () => Navigator.pushNamed(context, '/history'),
                       child: Container(
                         child: Column(
                           children: [
@@ -241,8 +247,8 @@ class _HomePageState extends State<HomePage> {
                               width: MediaQuery.of(context).size.width - 200,
                               decoration: BoxDecoration(
                                 image: const DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/bg_history.png'),
+                                  image: AssetImage(
+                                      'assets/images/bg_history.png'),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
@@ -252,8 +258,8 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.all(10),
-                                    margin:
-                                        const EdgeInsets.only(top: 20, left: 12),
+                                    margin: const EdgeInsets.only(
+                                        top: 20, left: 12),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
@@ -261,8 +267,8 @@ class _HomePageState extends State<HomePage> {
                                     child: const Icon(Icons.history),
                                   ),
                                   Container(
-                                    margin:
-                                        const EdgeInsets.only(top: 10, left: 10),
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 10),
                                     child: const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -291,14 +297,15 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(height: 10),
                             InkWell(
-                               onTap: () => Navigator.pushNamed(context, '/cameraEmotion'),
+                              onTap: () => Navigator.pushNamed(
+                                  context, '/cameraEmotion'),
                               child: Container(
                                 height: 150,
                                 width: MediaQuery.of(context).size.width - 200,
                                 decoration: BoxDecoration(
                                   image: const DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/bg_emotion.png'),
+                                    image: AssetImage(
+                                        'assets/images/bg_emotion.png'),
                                     fit: BoxFit.cover,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
@@ -308,17 +315,18 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.all(10),
-                                      margin:
-                                          const EdgeInsets.only(top: 20, left: 20),
+                                      margin: const EdgeInsets.only(
+                                          top: 20, left: 20),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: const Icon(Icons.sentiment_satisfied),
+                                      child:
+                                          const Icon(Icons.sentiment_satisfied),
                                     ),
                                     Container(
-                                      margin:
-                                          const EdgeInsets.only(top: 10, left: 10),
+                                      margin: const EdgeInsets.only(
+                                          top: 10, left: 10),
                                       child: const Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
