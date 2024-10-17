@@ -3,17 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'ListReservasi.dart';
 
-class DisplayPictureScreen extends StatefulWidget {
+class DisplayPictureScreenEmotion extends StatefulWidget {
   final String imagePath;
 
-  const DisplayPictureScreen({Key? key, required this.imagePath})
+  const DisplayPictureScreenEmotion({Key? key, required this.imagePath})
       : super(key: key);
 
   @override
-  _DisplayPictureScreenState createState() => _DisplayPictureScreenState();
+  _DisplayPictureScreenEmotionState createState() => _DisplayPictureScreenEmotionState();
 }
 
-class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+class _DisplayPictureScreenEmotionState extends State<DisplayPictureScreenEmotion> {
   // Daftar untuk menyimpan data reservasi
   List<ListReservasi> daftarReservasi = [];
 

@@ -1,24 +1,23 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'DisplayPictureScreen.dart';
+import 'DisplayPictureScreenEmotion.dart';
 
-class TakePictureScreen extends StatefulWidget {
-  const TakePictureScreen({
+class TakePictureScreenEmotion extends StatefulWidget {
+  const TakePictureScreenEmotion({
     Key? key,
   }) : super(key: key);
 
   @override
-  TakePictureScreenState createState() => TakePictureScreenState();
+  TakePictureScreenEmotionState createState() => TakePictureScreenEmotionState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> {
+class TakePictureScreenEmotionState extends State<TakePictureScreenEmotion> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    // Inisialisasi kamera saat widget dibuat
     _initializeCamera();
   }
 
@@ -87,7 +86,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
+                builder: (context) => DisplayPictureScreenEmotion(
                   imagePath: image.path,
                 ),
               ),

@@ -24,12 +24,10 @@ class _HomePageState extends State<HomePage> {
       case 0:
         break;
       case 1:
+      Navigator.pushNamed(context, '/history');
         break;
       case 2:
-        break;
-      case 3:
-        // Navigasi halaman profile
-        Navigator.pushNamed(context, '/profile');
+      Navigator.pushNamed(context, '/profile');
         break;
       default:
         break;
@@ -233,109 +231,115 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 150,
-                            width: MediaQuery.of(context).size.width - 200,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                image:
-                                    AssetImage('assets/images/bg_history.png'),
-                                fit: BoxFit.cover,
+                    InkWell(
+                       onTap: () => Navigator.pushNamed(context, '/history'),
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width - 200,
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/bg_history.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  margin:
-                                      const EdgeInsets.only(top: 20, left: 12),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    margin:
+                                        const EdgeInsets.only(top: 20, left: 12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Icon(Icons.history),
                                   ),
-                                  child: const Icon(Icons.history),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.only(top: 10, left: 10),
-                                  child: const Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'History Reservasi & Ulasan',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                  Container(
+                                    margin:
+                                        const EdgeInsets.only(top: 10, left: 10),
+                                    child: const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'History Reservasi & Ulasan',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        'Lihat history reservasi Anda',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.w100,
+                                        Text(
+                                          'Lihat history reservasi Anda',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w100,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            height: 150,
-                            width: MediaQuery.of(context).size.width - 200,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                image:
-                                    AssetImage('assets/images/bg_emotion.png'),
-                                fit: BoxFit.cover,
+                                ],
                               ),
-                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  margin:
-                                      const EdgeInsets.only(top: 20, left: 20),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
+                            const SizedBox(height: 10),
+                            InkWell(
+                               onTap: () => Navigator.pushNamed(context, '/cameraEmotion'),
+                              child: Container(
+                                height: 150,
+                                width: MediaQuery.of(context).size.width - 200,
+                                decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                    image:
+                                        AssetImage('assets/images/bg_emotion.png'),
+                                    fit: BoxFit.cover,
                                   ),
-                                  child: const Icon(Icons.sentiment_satisfied),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.only(top: 10, left: 10),
-                                  child: const Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Lakukan Ulasan Dengan Emotion Detection',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      margin:
+                                          const EdgeInsets.only(top: 20, left: 20),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ],
-                                  ),
+                                      child: const Icon(Icons.sentiment_satisfied),
+                                    ),
+                                    Container(
+                                      margin:
+                                          const EdgeInsets.only(top: 10, left: 10),
+                                      child: const Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Lakukan Ulasan Dengan Emotion Detection',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -356,10 +360,6 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.history),
               label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.rate_review),
-              label: 'Ulasan',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
