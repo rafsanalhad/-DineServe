@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfilePage> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-        Navigator.pushNamed(context, '/history');
+        Navigator.pushNamed(context, '/home');
         break;
       case 2:
         Navigator.pushNamed(context, '/login');
