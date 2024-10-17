@@ -21,8 +21,8 @@ class _LoginPageState extends State<LoginPage> {
           Container(
               alignment: Alignment.topLeft,
               width: double.infinity,
-              padding: EdgeInsets.only(top: 60),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.only(top: 60),
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -34,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Expanded(
                     child: Container(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Column(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Selamat Datang',
@@ -74,8 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 1,
                         blurRadius: 3,
-                        offset: Offset(
-                            0, 2), // Perpindahan shadow dari posisi widget
+                        offset: const Offset(0, 2),
                       ),
                     ]),
                 child: Column(
@@ -85,8 +84,8 @@ class _LoginPageState extends State<LoginPage> {
                         GestureDetector(
                           onTap: () => Navigator.pushNamed(context, '/login'),
                           child: Container(
-                            padding: EdgeInsets.only(left: 20, top: 20),
-                            child: Text(
+                            padding: const EdgeInsets.only(left: 20, top: 20),
+                            child: const Text(
                               'Login',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
@@ -96,8 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                         GestureDetector(
                           onTap: () => Navigator.pushNamed(context, '/signup'),
                           child: Container(
-                            padding: EdgeInsets.only(left: 20, top: 20),
-                            child: Text(
+                            padding: const EdgeInsets.only(left: 20, top: 20),
+                            child: const Text(
                               'Sign Up',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
@@ -107,73 +106,72 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 30),
-                      padding: EdgeInsets.all(20),
+                      margin: const EdgeInsets.only(top: 30),
+                      padding: const EdgeInsets.all(20),
                       child: Column(
                         children: [
                           TextField(
                             controller: _usernameController,
                             decoration: InputDecoration(
                               labelText: 'Username',
-                              prefixIcon:
-                                  Icon(Icons.person, color: Color(0xFF18654A)),
-                              contentPadding: EdgeInsets.symmetric(
+                              prefixIcon: const Icon(Icons.person,
+                                  color: Color(0xFF18654A)),
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 16.0),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.green,
                                   width: 2.0,
                                 ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF18654A),
                                   width: 2.0,
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),
-
+                          const SizedBox(height: 16),
                           TextField(
                             controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon:
-                                  Icon(Icons.lock, color: Color(0xFF18654A)),
-                              contentPadding: EdgeInsets.symmetric(
+                              prefixIcon: const Icon(Icons.lock,
+                                  color: Color(0xFF18654A)),
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 16.0),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.green,
                                   width: 2.0,
                                 ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF18654A),
                                   width: 2.0,
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 2),
+                          const SizedBox(height: 2),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                    margin: EdgeInsets.only(top: 0),
+                                    margin: const EdgeInsets.only(top: 0),
                                     alignment: Alignment.topLeft,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        SizedBox(width: 5),
+                                        const SizedBox(width: 5),
                                         SizedBox(
                                           width: 15,
                                           height: 15,
@@ -186,8 +184,8 @@ class _LoginPageState extends State<LoginPage> {
                                             },
                                           ),
                                         ),
-                                        SizedBox(width: 5),
-                                        Text(
+                                        const SizedBox(width: 5),
+                                        const Text(
                                           'Remember Me',
                                           style: TextStyle(
                                               color: Colors.grey,
@@ -197,61 +195,64 @@ class _LoginPageState extends State<LoginPage> {
                                       ],
                                     )),
                                 Container(
-                                  margin: EdgeInsets.only(top: 0),
+                                  margin: const EdgeInsets.only(top: 0),
                                   child: TextButton(
                                       onPressed: () {
-                                        // Aksi ketika tombol Forgot Password ditekan
-                                        // Misalnya, navigasi ke halaman reset password
                                         showDialog(
                                           context: context,
                                           builder: (context) {
                                             return AlertDialog(
-                                              title: Text('Forgot Password'),
-                                              content: Text(
+                                              title:
+                                                  const Text('Forgot Password'),
+                                              content: const Text(
                                                   'Reset link has been sent to your email.'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop(); // Tutup dialog
+                                                    Navigator.of(context).pop();
                                                   },
-                                                  child: Text('OK'),
+                                                  child: const Text('OK'),
                                                 ),
                                               ],
                                             );
                                           },
                                         );
                                       },
-                                      child: Text('Forgot Password?',
+                                      child: const Text('Forgot Password?',
                                           style: TextStyle(
                                               color: Color(0xFF18654A),
                                               fontSize: 14))),
                                 ),
-                              ]), // Spasi sebelum tombol login
+                              ]),
                           Container(
-                            margin: EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(top: 20),
                             width: MediaQuery.of(context).size.width * 0.8,
                             height: 50,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF18654A),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF18654A),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
                                 ),
-                              ),
-                              onPressed: () {
-                                // Aksi login ketika tombol ditekan
-                                String username = _usernameController.text;
-                                String password = _passwordController.text;
+                                onPressed: () {
+                                  String username = _usernameController.text;
+                                  String password = _passwordController.text;
 
-                                print(
-                                    'Username: $username, Password: $password');
-                              },
-                              child: GestureDetector(
-                                  onTap:() => Navigator.pushNamed(context, '/home'),
-                                  child: Text('Login',
-                                      style: TextStyle(color: Colors.white))),
-                            ),
+                                  print(
+                                      'Username: $username, Password: $password');
+
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/home',
+                                    arguments: {
+                                      'username': username,
+                                      'password': password
+                                    },
+                                  );
+                                },
+                                child: const Text('Login',
+                                    style: TextStyle(color: Colors.white))),
                           ),
                         ],
                       ),

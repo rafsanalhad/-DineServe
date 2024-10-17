@@ -7,6 +7,9 @@ import 'HomePage.dart';
 import 'StartScreen.dart';
 import 'LoginPage.dart';
 import 'SignUpPage.dart';
+import 'ProfilePage.dart';
+import 'History.dart';
+import 'TakePictureScreenEmotion.dart';
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -25,12 +28,15 @@ void main() async {
       // Define routes here
       initialRoute: '/',
       routes: {
-        '/': (context) => StartScreen(),
-        '/home': (context) => HomePage(),
-        '/login': (context) => LoginPage(),
-        '/signup': (context) => SignUpPage(),
-        '/camera': (context) => TakePictureScreen(camera: firstCamera),
-        '/loading': (context) => CardLoadingApp(),
+        '/': (context) => const StartScreen(),
+        '/home': (context) => const HomePage(),
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignUpPage(),
+        '/camera': (context) => TakePictureScreen(),
+        '/loading': (context) => const CardLoadingApp(),
+        '/profile': (context) => ProfilePage(),
+        '/history':(context) => History(),
+        '/cameraEmotion': (context) => TakePictureScreenEmotion(),
       },
     ),
   );
