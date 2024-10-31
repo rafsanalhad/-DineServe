@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:provider/provider.dart';
+
+import 'reservation_provider.dart';
 import 'package:flutter/material.dart';
 import 'ListReservasi.dart';
 
@@ -54,69 +57,71 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Face Attendance',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 16),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xFF18654A)),
-                        borderRadius: BorderRadius.circular(16),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Face Attendance',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Color(0xFF18654A)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text('Wajah Valid',
+                                    style: TextStyle(
+                                        color: Color(0xFF949494),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400)),
+                                Text('Benar',
+                                    style: TextStyle(color: Color(0xFF18654A))),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 13,
+                              child: VerticalDivider(color: Color(0xFF18654A)),
+                            ),
+                            Column(
+                              children: [
+                                Text('Status Pengguna',
+                                    style: TextStyle(
+                                        color: Color(0xFF949494),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400)),
+                                Text('Baru',
+                                    style: TextStyle(color: Color(0xFF18654A))),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 13,
+                              child: VerticalDivider(color: Color(0xFF18654A)),
+                            ),
+                            Column(
+                              children: [
+                                Text('Status Kehadiran',
+                                    style: TextStyle(
+                                        color: Color(0xFF949494),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400)),
+                                Text('Hadir',
+                                    style: TextStyle(color: Color(0xFF18654A))),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Text('Wajah Valid',
-                                  style: TextStyle(
-                                      color: Color(0xFF949494),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400)),
-                              Text('Benar',
-                                  style: TextStyle(color: Color(0xFF18654A))),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 13,
-                            child: VerticalDivider(color: Color(0xFF18654A)),
-                          ),
-                          Column(
-                            children: [
-                              Text('Status Pengguna',
-                                  style: TextStyle(
-                                      color: Color(0xFF949494),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400)),
-                              Text('Baru',
-                                  style: TextStyle(color: Color(0xFF18654A))),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 13,
-                            child: VerticalDivider(color: Color(0xFF18654A)),
-                          ),
-                          Column(
-                            children: [
-                              Text('Status Kehadiran',
-                                  style: TextStyle(
-                                      color: Color(0xFF949494),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400)),
-                              Text('Hadir',
-                                  style: TextStyle(color: Color(0xFF18654A))),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -131,7 +136,18 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Tambahkan data reservasi ke dalam daftar
-                    
+                    final reservationProvider =
+                        Provider.of<ReservationProvider>(context,
+                            listen: false);
+                    final newReservation = ListReservasi(
+                      id: DateTime.now().toString(),
+                      nama: 'Rizky Arifiansyah',
+                      tgl: '12/12/2024',
+                      jam: '12:00',
+                      status: 'Hadir',
+                    );
+
+                    reservationProvider.addReservation(newReservation);
                     Navigator.pushNamed(
                       context,
                       '/history',

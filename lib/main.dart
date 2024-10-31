@@ -10,36 +10,33 @@ import 'SignUpPage.dart';
 import 'ProfilePage.dart';
 import 'History.dart';
 import 'TakePictureScreenEmotion.dart';
+import 'package:provider/provider.dart';
+import 'reservation_provider.dart';
 
 void main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Obtain a list of the available cameras on the device.
   final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.first;
 
   runApp(
-    MaterialApp(
-      theme: ThemeData.light(),
-      debugShowCheckedModeBanner: false,  // Hilangkan banner debug
-      // Define routes here
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const StartScreen(),
-        '/home': (context) => const HomePage(),
-        '/login': (context) => const LoginPage(),
-        '/signup': (context) => const SignUpPage(),
-        '/camera': (context) => TakePictureScreen(),
-        '/loading': (context) => const CardLoadingApp(),
-        '/profile': (context) => ProfilePage(),
-        '/history':(context) => History(),
-        '/cameraEmotion': (context) => TakePictureScreenEmotion(),
-      },
+    ChangeNotifierProvider(
+      create: (context) => ReservationProvider(),
+      child: MaterialApp(
+        theme: ThemeData.light(),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const StartScreen(),
+          '/home': (context) => const HomePage(),
+          '/login': (context) => const LoginPage(),
+          '/signup': (context) => const SignUpPage(),
+          '/camera': (context) => TakePictureScreen(),
+          '/loading': (context) => const CardLoadingApp(),
+          '/profile': (context) => ProfilePage(),
+          '/history': (context) => History(),
+          '/cameraEmotion': (context) => TakePictureScreenEmotion(),
+        },
+      ),
     ),
   );
 }
-

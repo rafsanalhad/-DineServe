@@ -26,11 +26,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     try {
       // Dapatkan daftar kamera yang tersedia
       final cameras = await availableCameras();
-      
+
       // Cari kamera depan
       final frontCamera = cameras.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.front,
-        orElse: () => cameras.first, // Fallback ke kamera pertama jika kamera depan tidak ditemukan
+        orElse: () => cameras
+            .first, // Fallback ke kamera pertama jika kamera depan tidak ditemukan
       );
 
       // Inisialisasi controller
