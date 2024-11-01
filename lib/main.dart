@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'TakePictureScreen.dart';
-import 'CardLoadingApp.dart';
-import 'ButtonCamera.dart';
-import 'HomePage.dart';
-import 'StartScreen.dart';
-import 'LoginPage.dart';
-import 'SignUpPage.dart';
-import 'ProfilePage.dart';
-import 'History.dart';
-import 'TakePictureScreenEmotion.dart';
+import 'views/TakePictureScreen.dart';
+import 'views/CardLoadingApp.dart';
+import 'views/ButtonCamera.dart';
+import 'views/HomePage.dart';
+import 'views/StartScreen.dart';
+import 'views/LoginPage.dart';
+import 'views/SignUpPage.dart';
+import 'views/ProfilePage.dart';
+import 'views/History.dart';
+import 'views/TakePictureScreenEmotion.dart';
 import 'package:provider/provider.dart';
-import 'reservation_provider.dart';
+import 'provider/reservation_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

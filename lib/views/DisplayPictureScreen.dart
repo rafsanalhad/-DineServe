@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:provider/provider.dart';
 
-import 'reservation_provider.dart';
+import '../provider/reservation_provider.dart';
 import 'package:flutter/material.dart';
-import 'ListReservasi.dart';
+import '../models/ListReservasi.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;

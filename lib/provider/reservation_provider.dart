@@ -1,4 +1,4 @@
-import 'package:dineserve/ListReservasi.dart';
+import 'package:dineserve/models/ListReservasi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 

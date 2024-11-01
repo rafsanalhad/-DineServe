@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'ListReservasi.dart';
+import '../models/ListReservasi.dart';
 
 class DisplayPictureScreenEmotion extends StatefulWidget {
   final String imagePath;
