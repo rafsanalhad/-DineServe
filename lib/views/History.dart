@@ -1,9 +1,9 @@
-import 'package:dineserve/reservation_provider.dart';
+import 'package:dineserve/provider/reservation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Import kelas ListReservasi yang sudah ada
-import 'ListReservasi.dart';
+import '../models/ListReservasi.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
