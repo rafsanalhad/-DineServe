@@ -135,7 +135,7 @@ class _DisplayPictureScreenEmotionState
                 child: Column(
                   children: [
                     Text(
-                      'Face Attendance',
+                      'Emotion Detection Result',
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -153,7 +153,7 @@ class _DisplayPictureScreenEmotionState
                           Column(
                             children: [
                               Text(
-                                'Wajah Valid',
+                                'Result',
                                 style: TextStyle(
                                     color: Color(0xFF949494),
                                     fontSize: 11,
