@@ -1,6 +1,10 @@
 import 'dart:io';
-
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import '../models/ListReservasi.dart';
 
 class DisplayPictureScreenEmotion extends StatefulWidget {
@@ -10,12 +14,86 @@ class DisplayPictureScreenEmotion extends StatefulWidget {
       : super(key: key);
 
   @override
-  _DisplayPictureScreenEmotionState createState() => _DisplayPictureScreenEmotionState();
+  _DisplayPictureScreenEmotionState createState() =>
+      _DisplayPictureScreenEmotionState();
 }
 
-class _DisplayPictureScreenEmotionState extends State<DisplayPictureScreenEmotion> {
-  // Daftar untuk menyimpan data reservasi
-  List<ListReservasi> daftarReservasi = [];
+class _DisplayPictureScreenEmotionState
+    extends State<DisplayPictureScreenEmotion> {
+  String emotionResult = "Awaiting result...";
+  String confidence = "";
+
+ Future<void> predictEmotion() async {
+  setState(() {
+    emotionResult = "Loading...";
+    confidence = "";
+  });
+
+  try {
+    final url = Uri.parse('http://10.0.2.2:5000/predict');
+    print('Sending request to: $url');
+
+    final request = http.MultipartRequest('POST', url);
+    if (!kIsWeb) {
+      final file = File(widget.imagePath);
+
+      if (!await file.exists()) {
+        setState(() {
+          emotionResult = "Error: Image file not found";
+          confidence = "";
+        });
+        return;
+      }
+
+      final multipartFile = await http.MultipartFile.fromPath(
+        'file',
+        widget.imagePath,
+        filename: 'image.jpg',
+      );
+
+      request.files.add(multipartFile);
+      print('File added to request: ${widget.imagePath}');
+    } else {
+      print("Running on the web, no file handling");
+      setState(() {
+        emotionResult = "Web platform detected, skipping file upload";
+      });
+      return;
+    }
+
+    final streamedResponse = await request.send();
+
+    final responseBody = await streamedResponse.stream.bytesToString();
+    print('Response status code: ${streamedResponse.statusCode}');
+    print('Response body: $responseBody');
+
+    if (streamedResponse.statusCode == 200) {
+      final data = jsonDecode(responseBody);
+      setState(() {
+        emotionResult = data['max_emotion'] ?? "Unknown";
+        confidence = "${data['max_percentage'] ?? 0}%";
+      });
+    } else {
+      setState(() {
+        emotionResult = "Failed to get prediction (Status: ${streamedResponse.statusCode})";
+        confidence = "";
+      });
+    }
+  } catch (e) {
+    print('Error in predictEmotion: $e');
+    setState(() {
+      emotionResult = "Error: ${e.toString()}";
+      confidence = "";
+    });
+  }
+}
+
+
+  @override
+  void initState() {
+    super.initState();
+    predictEmotion(); 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +101,17 @@ class _DisplayPictureScreenEmotionState extends State<DisplayPictureScreenEmotio
       appBar: AppBar(title: const Text('Display the Picture')),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               flex: 3,
-              child: Image.file(
-                File(widget.imagePath),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                fit: BoxFit.cover,
-              ),
+              child: kIsWeb
+                  ? Image.network(widget.imagePath)
+                  : Image.file(
+                      File(widget.imagePath),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      fit: BoxFit.cover,
+                    ),
             ),
             Expanded(
               flex: 1,
@@ -55,12 +133,12 @@ class _DisplayPictureScreenEmotionState extends State<DisplayPictureScreenEmotio
                   ],
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Face Attendance',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Face Attendance',
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(height: 16),
                     Container(
                       padding: EdgeInsets.all(16),
@@ -74,46 +152,21 @@ class _DisplayPictureScreenEmotionState extends State<DisplayPictureScreenEmotio
                         children: [
                           Column(
                             children: [
-                              Text('Wajah Valid',
-                                  style: TextStyle(
-                                      color: Color(0xFF949494),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400)),
-                              Text('Benar',
-                                  style: TextStyle(color: Color(0xFF18654A))),
+                              Text(
+                                'Wajah Valid',
+                                style: TextStyle(
+                                    color: Color(0xFF949494),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              Text(
+                                emotionResult,
+                                style: TextStyle(color: Color(0xFF18654A)),
+                              ),
                             ],
                           ),
-                          SizedBox(
-                            height: 13,
-                            child: VerticalDivider(color: Color(0xFF18654A)),
-                          ),
-                          Column(
-                            children: [
-                              Text('Status Pengguna',
-                                  style: TextStyle(
-                                      color: Color(0xFF949494),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400)),
-                              Text('Baru',
-                                  style: TextStyle(color: Color(0xFF18654A))),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 13,
-                            child: VerticalDivider(color: Color(0xFF18654A)),
-                          ),
-                          Column(
-                            children: [
-                              Text('Status Kehadiran',
-                                  style: TextStyle(
-                                      color: Color(0xFF949494),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400)),
-                              Text('Hadir',
-                                  style: TextStyle(color: Color(0xFF18654A))),
-                            ],
-                          )
-                        ],
+                          
+                        ]
                       ),
                     ),
                   ],
@@ -122,37 +175,28 @@ class _DisplayPictureScreenEmotionState extends State<DisplayPictureScreenEmotio
             ),
             Container(
               padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Tambahkan data reservasi ke dalam daftar
-                    
-                    Navigator.pushNamed(
-                      context,
-                      '/history',
-                      arguments: {
-                        'id': 1,
-                        'nama': 'Rizky Arifiansyah',
-                        'tgl': '12/12/2021',
-                        'jam': '12:00',
-                        'status': 'Hadir',
-                      },
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF18654A),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Lakukan Reservasi'),
+              child: ElevatedButton(
+                onPressed: () async {
+                  await predictEmotion();
+                  Navigator.pushNamed(
+                    context,
+                    '/history',
+                    arguments: {
+                      'id': 1,
+                      'nama': 'Rizky Arifiansyah',
+                      'tgl': '12/12/2021',
+                      'jam': '12:00',
+                      'status': 'Hadir',
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF18654A),
+                  foregroundColor: Colors.white,
                 ),
+                child: const Text('Lakukan Reservasi'),
               ),
             ),
-            SizedBox(height: 16),
           ],
         ),
       ),

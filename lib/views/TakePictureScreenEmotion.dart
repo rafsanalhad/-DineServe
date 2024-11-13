@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'DisplayPictureScreenEmotion.dart';
+import 'dart:io';
 
 class TakePictureScreenEmotion extends StatefulWidget {
   const TakePictureScreenEmotion({
@@ -23,22 +24,17 @@ class TakePictureScreenEmotionState extends State<TakePictureScreenEmotion> {
 
   Future<void> _initializeCamera() async {
     try {
-      // Dapatkan daftar kamera yang tersedia
       final cameras = await availableCameras();
-      
-      // Cari kamera depan
       final frontCamera = cameras.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.front,
-        orElse: () => cameras.first, // Fallback ke kamera pertama jika kamera depan tidak ditemukan
+        orElse: () => cameras.first,
       );
 
-      // Inisialisasi controller
       final controller = CameraController(
         frontCamera,
         ResolutionPreset.medium,
       );
 
-      // Update state
       setState(() {
         _controller = controller;
         _initializeControllerFuture = controller.initialize();
