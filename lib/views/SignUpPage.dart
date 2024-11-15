@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -10,10 +11,74 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  Future<void> signUp() async {
+    String username = _usernameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    String confirmPassword = _confirmPasswordController.text;
+
+    // Check if all fields are filled and if passwords match
+    if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
+      return;
+    }
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Passwords do not match")));
+      return;
+    }
+
+    try {
+      // Send data to the backend API
+      var response = await http.post(
+        Uri.parse('http://localhost:5000/signup'), // Replace with your API endpoint
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'username': username,
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Success
+        showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Sign Up Successful"),
+            content: Text("Your account has been created successfully!"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  // Close the dialog
+                  Navigator.pop(context);
+                  // Redirect to login page
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      } else {
+        // Error: handle API error response
+        var responseData = json.decode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(responseData['message'] ?? 'Error occurred')));
+      }
+    } catch (e) {
+      // Handle connection error
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error connecting to the server")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           offset: const Offset(0, 2),
                         ),
                       ]),
+
                   child: Column(
                     children: [
                       Row(
@@ -121,60 +187,35 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: Column(
                           children: [
                             TextField(
-                              controller: _firstNameController,
-                              decoration: InputDecoration(
-                                labelText: 'First Name',
-                                prefixIcon: const Icon(Icons.person,
-                                    color: Color(0xFF18654A)),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 16.0),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.green,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF18654A),
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            TextField(
-                              controller: _lastNameController,
-                              decoration: InputDecoration(
-                                labelText: 'Last Name',
-                                prefixIcon: const Icon(Icons.person,
-                                    color: Color(0xFF18654A)),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 16.0),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.green,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF18654A),
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            TextField(
                               controller: _usernameController,
                               decoration: InputDecoration(
                                 labelText: 'Username',
                                 prefixIcon: const Icon(Icons.person,
+                                    color: Color(0xFF18654A)),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 20.0, horizontal: 16.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFF18654A),
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            TextField(
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: const Icon(Icons.email,
                                     color: Color(0xFF18654A)),
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 20.0, horizontal: 16.0),
@@ -220,41 +261,49 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 2),
-                            Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              height: 50,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF18654A),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
+                            const SizedBox(height: 16),
+                            TextField(
+                              controller: _confirmPasswordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: 'Confirm Password',
+                                prefixIcon: const Icon(Icons.lock,
+                                    color: Color(0xFF18654A)),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 20.0, horizontal: 16.0),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
                                   ),
                                 ),
-                                onPressed: () {
-                                  String firstName = _firstNameController.text;
-                                  String lastName = _lastNameController.text;
-                                  String username = _usernameController.text;
-                                  String password = _passwordController.text;
-
-                                  print(
-                                      'First Name: $firstName, Last Name: $lastName, Username: $username, Password: $password');
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/home',
-                                    arguments: {
-                                      'username': username,
-                                      'password': password
-                                    },
-                                  );
-                                },
-                                child: const Text('Sign Up',
-                                        style: TextStyle(color: Colors.white))),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFF18654A),
+                                    width: 2.0,
+                                  ),
+                                ),
                               ),
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: signUp,
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size.fromHeight(50),
+                                backgroundColor: const Color(0xFF18654A),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                              ),
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
