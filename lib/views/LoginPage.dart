@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    final url = Uri.parse('http://localhost:5000/login'); // Ganti dengan URL API Anda
+    final url = Uri.parse('http://10.0.2.2:5000/login'); // Ganti dengan URL API Anda
     try {
       final response = await http.post(
         url,

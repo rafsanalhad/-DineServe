@@ -27,7 +27,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const StartScreen()),
+        GetPage(name: '/', page: () => const HomePage()),
         GetPage(name: '/home', page: () => const HomePage()),
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/signup', page: () => const SignUpPage()),
