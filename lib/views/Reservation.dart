@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:get/get.dart';
+import '../controller/AuthController.dart';
 
 class Reservation extends StatefulWidget {
   const Reservation({super.key});
@@ -10,6 +12,7 @@ class Reservation extends StatefulWidget {
 }
 
 class _ReservationState extends State<Reservation> {
+  final AuthController _authController = Get.find();
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -67,7 +70,7 @@ class _ReservationState extends State<Reservation> {
           '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}';
 
       final Map<String, dynamic> reservationData = {
-        'user_id': 1,
+        'user_id': '${_authController.id.value}',
         'name': _nameController.text,
         'phone': _phoneController.text,
         'email': _emailController.text,

@@ -14,7 +14,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthController _authController = Get.find(); // Mengambil instance AuthController
+  final AuthController _authController =
+      Get.find(); // Mengambil instance AuthController
 
   Future<void> _login() async {
     String email = _emailController.text.trim();
@@ -25,7 +26,8 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    final url = Uri.parse('http://localhost:5000/login'); // Ganti dengan URL API Anda
+    final url =
+        Uri.parse('http://localhost:5000/login'); // Ganti dengan URL API Anda
     try {
       final response = await http.post(
         url,
@@ -37,9 +39,9 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushNamed(
           context,
           '/home',
-          arguments: {'email': email},
         );
         final dataUser = jsonDecode(response.body);
+        _authController.setId(dataUser['id']);
         _authController.setUsername(dataUser['user']);
       } else {
         _showErrorDialog('Invalid email or password.');
