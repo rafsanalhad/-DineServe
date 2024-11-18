@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../controller/AuthController.dart';
+import 'package:get/get.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  final AuthController _authController = Get.find();
 
   final List<Widget> _pages = [
     const Center(child: Text('Home Page')),
@@ -78,12 +82,12 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Container(
                                       margin: const EdgeInsets.only(left: 5),
-                                      child: const Column(
+                                      child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Rizky Arifiansyah',
+                                            '${_authController.username.value}',
                                             style: TextStyle(
                                               fontSize: 14,
                                               color: Colors.white,
