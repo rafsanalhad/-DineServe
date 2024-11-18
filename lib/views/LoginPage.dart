@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../controller/AuthController.dart';
+import 'package:get/get.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthController _authController = Get.find(); // Mengambil instance AuthController
 
   Future<void> _login() async {
     String email = _emailController.text.trim();
@@ -21,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    final url = Uri.parse('http://10.0.2.2:5000/login'); // Ganti dengan URL API Anda
+    final url = Uri.parse('http://localhost:5000/login'); // Ganti dengan URL API Anda
     try {
       final response = await http.post(
         url,
@@ -35,6 +39,8 @@ class _LoginPageState extends State<LoginPage> {
           '/home',
           arguments: {'email': email},
         );
+        final dataUser = jsonDecode(response.body);
+        _authController.setUsername(dataUser['user']);
       } else {
         _showErrorDialog('Invalid email or password.');
       }

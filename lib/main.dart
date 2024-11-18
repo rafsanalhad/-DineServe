@@ -12,6 +12,7 @@ import 'views/ProfilePage.dart';
 import 'views/History.dart';
 import 'views/TakePictureScreenEmotion.dart';
 import 'controller/reservation_controller.dart';
+import 'controller/AuthController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,7 @@ void main() async {
 
   // Initialize the controller
   Get.put(ReservationController());
+   Get.put(AuthController());
 
   runApp(
     GetMaterialApp(
