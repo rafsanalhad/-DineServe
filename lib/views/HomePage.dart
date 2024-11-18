@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           InkWell(
                             onTap: () =>
-                                Navigator.pushNamed(context, '/camera'),
+                                Navigator.pushNamed(context, '/reservation'),
                             child: Container(
                               height: 150,
                               width: MediaQuery.of(context).size.width / 2 -

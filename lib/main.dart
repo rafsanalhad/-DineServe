@@ -10,6 +10,7 @@ import 'views/LoginPage.dart';
 import 'views/SignUpPage.dart';
 import 'views/ProfilePage.dart';
 import 'views/History.dart';
+import 'views/Reservation.dart';
 import 'views/TakePictureScreenEmotion.dart';
 import 'controller/reservation_controller.dart';
 import 'controller/AuthController.dart';
@@ -33,7 +34,7 @@ void main() async {
         GetPage(name: '/home', page: () => const HomePage()),
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/signup', page: () => const SignUpPage()),
-        GetPage(name: '/camera', page: () => TakePictureScreen()),
+        GetPage(name: '/reservation', page: () => Reservation()),
         GetPage(name: '/loading', page: () => const CardLoadingApp()),
         GetPage(name: '/profile', page: () => ProfilePage()),
         GetPage(name: '/history', page: () => History()),
