@@ -109,12 +109,12 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white),
                         ],
                       ),
-                      const SizedBox(height: 20), // Jarak antara elemen
+                      // Jarak antara elemen
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(top: 10, left: 10),
+                            margin: const EdgeInsets.only(left: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 const Text(
-                                  'Mau Cari Informasi Apa Hari Ini?',
+                                  'Mau Melakukan Apa Hari Ini?',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 11,
@@ -135,33 +135,44 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Row(
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 20,
-                                        right: 20,
-                                        bottom: 10,
-                                      ),
-                                      margin: const EdgeInsets.only(top: 20),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.search),
-                                          Text(
-                                            'Cari sesuatu disini',
-                                            style: TextStyle(
-                                              color: Colors.grey[400],
-                                              fontSize: 12,
-                                            ),
+                                    InkWell(
+                                      onTap: () {
+                                        // Aksi ketika tombol diklik
+                                        Navigator.pushNamed(context, '/login');
+                                      },
+                                      borderRadius: BorderRadius.circular(10),
+                                      splashColor:
+                                          Colors.green, // Warna splash effect
+                                      highlightColor: Colors.greenAccent,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 20),
+                                        margin: const EdgeInsets.only(top: 15),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFF00BF69),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 0,
                                           ),
-                                        ],
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Tentang Kami',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
-                                ),
+                                )
                               ],
                             ),
                           ),
@@ -180,181 +191,236 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10), // Memperkecil padding
+                  child: Column(
                     children: [
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/camera'),
-                        child: Container(
-                          height: 310,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/bg_detect_face.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin:
-                                    const EdgeInsets.only(top: 20, left: 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/camera'),
+                            child: Container(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width / 2 -
+                                  15, // Perkecil lebar
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/bg_detect_face.png'),
+                                  fit: BoxFit.cover,
                                 ),
-                                child: const Icon(Icons.home),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(top: 120, left: 10),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Lakukan Reservasi',
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Icon(Icons.home),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Lakukan Reservasi',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          'Reservasi sekarang dengan Face Recognition',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/history'),
+                            child: Container(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width / 2 -
+                                  15, // Perkecil lebar
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/bg_history.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Icon(Icons.history),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'History Reservasi',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Lihat history reservasi Anda',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10), // Perkecil jarak antar baris
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/cameraEmotion'),
+                            child: Container(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width / 2 - 15,
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/bg_emotion.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child:
+                                        const Icon(Icons.sentiment_satisfied),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Text(
+                                      'Lakukan Ulasan\nDengan Emotion Detection',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 20,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      'Reservasi sekarang dengan menggunakan Face Recognition',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.w100,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/history'),
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 150,
-                                width: MediaQuery.of(context).size.width - 200,
-                                decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/bg_history.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
+                          InkWell(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/rating'),
+                            child: Container(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width / 2 - 15,
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/bg_detect_face.png'),
+                                  fit: BoxFit.cover,
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      margin: const EdgeInsets.only(
-                                          top: 20, left: 12),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Icon(Icons.history),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 10, left: 10),
-                                      child: const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'History Reservasi & Ulasan',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Lihat history reservasi Anda',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 8,
-                                              fontWeight: FontWeight.w100,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              const SizedBox(height: 10),
-                              InkWell(
-                                onTap: () => Navigator.pushNamed(
-                                    context, '/cameraEmotion'),
-                                child: Container(
-                                  height: 150,
-                                  width:
-                                      MediaQuery.of(context).size.width - 200,
-                                  decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/bg_emotion.png'),
-                                      fit: BoxFit.cover,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    borderRadius: BorderRadius.circular(10),
+                                    child: const Icon(Icons.star),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(10),
-                                        margin: const EdgeInsets.only(
-                                            top: 20, left: 20),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Lihat Rating',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                        child: const Icon(
-                                            Icons.sentiment_satisfied),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(
-                                            top: 10, left: 10),
-                                        child: const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Lakukan Ulasan Dengan Emotion Detection',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
+                                        SizedBox(height: 5),
+                                        Text(
+                                          'Cek rating dari pengguna lainnya',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
