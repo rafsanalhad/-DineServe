@@ -23,7 +23,8 @@ class _HistoryState extends State<History> {
 
   Future<List<dynamic>> fetchReservations() async {
     final response = await http.get(
-      Uri.parse('http://localhost:5000/reservations?user_id=${_authController.id.value}'),
+      Uri.parse(
+          'http://localhost:5000/reservations?user_id=${_authController.id.value}'),
     );
 
     if (response.statusCode == 200) {
@@ -85,7 +86,8 @@ class _HistoryState extends State<History> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                reservasi['details'] ?? 'No details available', // Handle null for 'details'
+                                reservasi['name'] ??
+                                    'No name available', // Handle null for 'details'
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -101,26 +103,24 @@ class _HistoryState extends State<History> {
                                     ),
                                   ),
                                   Text(
-                                    reservasi['date'] ?? 'No date available', // Handle null for 'date'
+                                    reservasi['date'] ??
+                                        'No date available', // Handle null for 'date'
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 12,
                                     ),
                                   ),
+                                  
                                 ],
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                reservasi['status'] ?? 'Unknown status', // Handle null for 'status'
-                                style: TextStyle(
-                                  color: reservasi['status'] == 'Confirmed'
-                                      ? Colors.green
-                                      : reservasi['status'] == 'Pending'
-                                          ? Colors.orange
-                                          : Colors.red,
-                                  fontSize: 12,
-                                ),
-                              ),
+                                    "Jumlah orang: ${(reservasi['guest_count'] ?? 0).toString()}",
+                                    style: const TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 12,
+                                    ),
+                                  ),
                             ],
                           ),
                         ),
