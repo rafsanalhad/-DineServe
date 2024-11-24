@@ -55,6 +55,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
         usernameController.text = username;
         emailController.text = email;
+
+
       });
     } else {
       print("Failed to load profile");
@@ -153,6 +155,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       print("Profile updated successfully!");
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Profile updated successfully")));
+        _authController.setUsername(usernameController.text);
       Navigator.pushNamed(context, '/profile');
     } else {
       print("Failed to update profile: ${response}");
