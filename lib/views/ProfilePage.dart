@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfilePage> {
     if (_authController.username.value.isEmpty) {
       Navigator.pushNamed(context, '/login');
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -30,12 +30,7 @@ class _ProfileScreenState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      cekLogin();
-      if(cekLogin() == false){
-        _getProfile();
-      }
-    });
+    _getProfile();
   }
 
   Future<void> _getProfile() async {
@@ -77,6 +72,14 @@ class _ProfileScreenState extends State<ProfilePage> {
     if (response.statusCode == 200) {
       print("Profile updated successfully!");
       // Handle success, show confirmation or navigate away
+      Navigator.pushNamed(context, '/profile');
+      await _getProfile();
+      Get.snackbar(
+        'Success',
+        'Profile updated successfully!',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } else {
       print("Failed to update profile: ${response.statusCode}");
     }

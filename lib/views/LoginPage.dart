@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         final dataUser = jsonDecode(response.body);
         _authController.setId(dataUser['id']);
         _authController.setUsername(dataUser['user']);
+        print('Saved username: ${_authController.username.value}');
       } else {
         _showErrorDialog('Invalid email or password.');
       }

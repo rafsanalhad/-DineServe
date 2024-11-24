@@ -29,10 +29,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  bool cekLogin() {
+    if (_authController.username.value.isEmpty) {
+      Navigator.pushNamed(context, '/login');
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    // Mengambil data profil jika belum ada
+
     _getProfile();
   }
 
@@ -67,34 +76,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   // Fungsi untuk memilih gambar baru
   Future<void> _pickImage() async {
-  try {
-    final picker = ImagePicker();
-    // Gunakan ImagePicker untuk mobile, tapi untuk web kita harus menambahkan penanganan lain
-    if (kIsWeb) {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        final bytes = await pickedFile.readAsBytes();  // Membaca file sebagai bytes
-        setState(() {
-          _selectedImage = File(pickedFile.path); // Menyimpan gambar untuk preview (bisa berbeda untuk Web)
-          _imageBytes = bytes; // Menyimpan gambar dalam bentuk byte untuk Web
-        });
+    try {
+      final picker = ImagePicker();
+      if (kIsWeb) {
+        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          final bytes =
+              await pickedFile.readAsBytes(); // Membaca file sebagai bytes
+          setState(() {
+            _selectedImage = File(pickedFile
+                .path); // Menyimpan gambar untuk preview (bisa berbeda untuk Web)
+            _imageBytes = bytes; // Menyimpan gambar dalam bentuk byte untuk Web
+          });
+        } else {
+          print('No image selected');
+        }
       } else {
-        print('No image selected');
+        final pickedFile = await picker.pickImage(
+            source: ImageSource.gallery); // Untuk mobile (Android/iOS)
+        if (pickedFile != null) {
+          setState(() {
+            _selectedImage = File(
+                pickedFile.path); // Menyimpan gambar untuk preview di mobile
+          });
+        } else {
+          print('No image selected');
+        }
       }
-    } else {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);  // Untuk mobile (Android/iOS)
-      if (pickedFile != null) {
-        setState(() {
-          _selectedImage = File(pickedFile.path); // Menyimpan gambar untuk preview di mobile
-        });
-      } else {
-        print('No image selected');
-      }
+    } catch (e) {
+      print('Error picking image: $e');
     }
-  } catch (e) {
-    print('Error picking image: $e');
   }
-}
 
   Future<void> _updateProfile() async {
     if (!_formKey.currentState!.validate()) {
@@ -119,8 +131,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       if (newPasswordController.text == confirmPasswordController.text) {
         request.fields['password'] = newPasswordController.text;
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Passwords do not match")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Passwords do not match")));
         setState(() {
           isLoading = false;
         });
@@ -133,13 +145,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
       if (kIsWeb) {
         // Untuk Web, kirimkan gambar dalam bentuk base64 atau MultipartFile
         var pic = await http.MultipartFile.fromBytes(
-          'profile_picture',
+          'file',
           _imageBytes!,
           filename: 'profile_picture.jpg', // Berikan nama file
         );
         request.files.add(pic);
       } else {
-        var pic = await http.MultipartFile.fromPath('profile_picture', _selectedImage!.path);
+        var pic =
+            await http.MultipartFile.fromPath('file', _selectedImage!.path);
         request.files.add(pic);
       }
     }
@@ -149,9 +162,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       print("Profile updated successfully!");
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Profile updated successfully")));
-      Navigator.pop(context); // Go back to ProfilePage
+      Navigator.pushNamed(context, '/profile');
     } else {
-      print("Failed to update profile: ${response.statusCode}");
+      print("Failed to update profile: ${response}");
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Failed to update profile")));
     }
@@ -188,11 +201,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ? (_imageBytes != null
                                     ? Image.memory(_imageBytes!).image
                                     : NetworkImage(
-                                        'http://localhost:5000/uploads/$profilePicture') as ImageProvider)
+                                            'http://localhost:5000/uploads/$profilePicture')
+                                        as ImageProvider)
                                 : (_selectedImage != null
                                     ? FileImage(_selectedImage!)
                                     : NetworkImage(
-                                        'http://localhost:5000/uploads/$profilePicture') as ImageProvider),
+                                            'http://localhost:5000/uploads/$profilePicture')
+                                        as ImageProvider),
                           ),
                         ),
                       ),
