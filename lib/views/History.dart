@@ -41,6 +41,7 @@ class _HistoryState extends State<History> {
     });
     switch (index) {
       case 0:
+        Navigator.pushNamed(context, '/home');
         break;
       case 1:
         Navigator.pushNamed(context, '/history');

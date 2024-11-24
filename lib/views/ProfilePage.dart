@@ -90,7 +90,7 @@ class _ProfileScreenState extends State<ProfilePage> {
         Navigator.pushNamed(context, '/history');
         break;
       case 2:
-        Navigator.pushNamed(context, '/login');
+        Navigator.pushNamed(context, '/profil');
         break;
       default:
         break;

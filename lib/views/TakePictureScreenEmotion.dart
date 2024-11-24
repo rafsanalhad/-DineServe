@@ -9,7 +9,8 @@ class TakePictureScreenEmotion extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  TakePictureScreenEmotionState createState() => TakePictureScreenEmotionState();
+  TakePictureScreenEmotionState createState() =>
+      TakePictureScreenEmotionState();
 }
 
 class TakePictureScreenEmotionState extends State<TakePictureScreenEmotion> {
@@ -51,48 +52,54 @@ class TakePictureScreenEmotionState extends State<TakePictureScreenEmotion> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (_controller == null || _initializeControllerFuture == null) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller!);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            await _initializeControllerFuture;
-            final image = await _controller!.takePicture();
-
-            if (!mounted) return;
-
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreenEmotion(
-                  imagePath: image.path,
-                ),
-              ),
-            );
-          } catch (e) {
-            print('Error taking picture: $e');
-          }
-        },
-        child: const Icon(Icons.camera_alt),
+Widget build(BuildContext context) {
+  if (_controller == null || _initializeControllerFuture == null) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
+
+  return Scaffold(
+    appBar: AppBar(title: const Text('Take a picture')),
+    body: FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Center(
+            child: AspectRatio(
+              aspectRatio: _controller!.value.aspectRatio,
+              child: CameraPreview(_controller!),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () async {
+        try {
+          await _initializeControllerFuture;
+          final image = await _controller!.takePicture();
+
+          if (!mounted) return;
+
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DisplayPictureScreenEmotion(
+                imagePath: image.path,
+              ),
+            ),
+          );
+        } catch (e) {
+          print('Error taking picture: $e');
+        }
+      },
+      child: const Icon(Icons.camera_alt),
+    ),
+  );
+}
+
 }
