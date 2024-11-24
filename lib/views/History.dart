@@ -14,6 +14,7 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   late Future<List<dynamic>> _reservations;
   final AuthController _authController = Get.find();
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -32,6 +33,23 @@ class _HistoryState extends State<History> {
       return reservations;
     } else {
       throw Exception('Failed to load reservations');
+    }
+  }
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/history');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/profile');
+        break;
+      default:
+        break;
     }
   }
 
@@ -133,6 +151,28 @@ class _HistoryState extends State<History> {
           },
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'History',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profil',
+            ),
+          ],
+          selectedItemColor: const Color(0xFF18654A),
+          unselectedItemColor: const Color(0xFF18654A),
+          onTap: _onItemTapped,
+        ),
     );
   }
 }
