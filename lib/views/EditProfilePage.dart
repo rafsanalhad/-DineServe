@@ -29,15 +29,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  bool cekLogin() {
-    if (_authController.username.value.isEmpty) {
-      Navigator.pushNamed(context, '/login');
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -127,18 +118,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
     request.fields['email'] = emailController.text;
 
     // Jika password baru diisi, kirimkan password baru
-    if (newPasswordController.text.isNotEmpty) {
-      if (newPasswordController.text == confirmPasswordController.text) {
-        request.fields['password'] = newPasswordController.text;
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Passwords do not match")));
-        setState(() {
-          isLoading = false;
-        });
-        return;
-      }
-    }
+    // if (newPasswordController.text.isNotEmpty) {
+    //   if (newPasswordController.text == confirmPasswordController.text) {
+    //     request.fields['password'] = newPasswordController.text;
+    //   } else {
+    //     ScaffoldMessenger.of(context)
+    //         .showSnackBar(SnackBar(content: Text("Passwords do not match")));
+    //     setState(() {
+    //       isLoading = false;
+    //     });
+    //     return;
+    //   }
+    // }
 
     // Jika ada gambar yang dipilih, unggah gambar tersebut
     if (_selectedImage != null) {
@@ -244,33 +235,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
-                      // New Password input
-                      TextFormField(
-                        controller: newPasswordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "New Password",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      // Confirm Password input
-                      TextFormField(
-                        controller: confirmPasswordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "Confirm New Password",
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (newPasswordController.text.isNotEmpty &&
-                              value != newPasswordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
-                      ),
+                     
                       SizedBox(height: 20),
                       // Save Changes Button
                       ElevatedButton(
