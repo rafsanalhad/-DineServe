@@ -18,14 +18,6 @@ class _ProfileScreenState extends State<ProfilePage> {
   late String username = '';
   late String email = '';
   late String profilePicture = 'default.jpg';
-  bool cekLogin() {
-    if (_authController.username.value.isEmpty) {
-      Navigator.pushNamed(context, '/login');
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   @override
   void initState() {
