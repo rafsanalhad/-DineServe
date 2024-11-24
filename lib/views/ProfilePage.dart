@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../controller/AuthController.dart';
+import 'package:get/get.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -9,6 +13,74 @@ class _ProfileScreenState extends State<ProfilePage> {
   bool pushNotifications = true;
   bool faceID = true;
   int _selectedIndex = 2; // Set the index for the Profile tab (2)
+  final AuthController _authController = Get.find();
+  // Profile data variables
+  late String username = '';
+  late String email = '';
+  late String profilePicture = 'default.jpg';
+  bool cekLogin() {
+    if (_authController.username.value.isEmpty) {
+      Navigator.pushNamed(context, '/login');
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      cekLogin();
+      if(cekLogin() == false){
+        _getProfile();
+      }
+    });
+  }
+
+  Future<void> _getProfile() async {
+    final response = await http.get(
+      Uri.parse(
+          'http://localhost:5000/profil?user_id=${_authController.username.value}'),
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      setState(() {
+        username = data['username'];
+        email = data['email'];
+
+        if (data['profile_picture'] == null) {
+          profilePicture = 'default.jpg';
+        } else {
+          profilePicture = data['profile_picture'];
+        }
+      });
+    } else {
+      // Error handling
+      print("Failed to load profile: ${response.body}");
+    }
+  }
+
+  Future<void> _updateProfile() async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://localhost:5000/profil/update'),
+    );
+
+    request.fields['user_id'] = _authController.username.value;
+    request.fields['username'] = username; // Modify with updated username
+    request.fields['email'] = email; // Modify with updated email
+    request.fields['password'] = ''; // Add password change if required
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      print("Profile updated successfully!");
+      // Handle success, show confirmation or navigate away
+    } else {
+      print("Failed to update profile: ${response.statusCode}");
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,24 +115,28 @@ class _ProfileScreenState extends State<ProfilePage> {
                 Center(
                   child: Column(
                     children: [
+                      // Display profile picture
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage('assets/images/profil.png'),
+                        backgroundImage: NetworkImage(
+                            'http://localhost:5000/uploads/$profilePicture'),
                       ),
                       SizedBox(height: 8),
+                      // Display username and email
                       Text(
-                        'Rizky Arifiansyah',
+                        username,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Member',
+                        email,
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
                           // Implement edit profile functionality
+                          Navigator.pushNamed(context, '/editProfile');
                         },
                         child: Text('Edit profile'),
                         style: ElevatedButton.styleFrom(

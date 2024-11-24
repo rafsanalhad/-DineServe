@@ -6,6 +6,7 @@ import 'views/CardLoadingApp.dart';
 import 'views/ButtonCamera.dart';
 import 'views/HomePage.dart';
 import 'views/StartScreen.dart';
+import 'views/EditProfilePage.dart';
 import 'views/LoginPage.dart';
 import 'views/SignUpPage.dart';
 import 'views/ProfilePage.dart';
@@ -37,6 +38,7 @@ void main() async {
         GetPage(name: '/reservation', page: () => Reservation()),
         GetPage(name: '/loading', page: () => const CardLoadingApp()),
         GetPage(name: '/profile', page: () => ProfilePage()),
+        GetPage(name: '/editProfile', page: () => EditProfilePage()),
         GetPage(name: '/history', page: () => History()),
         GetPage(name: '/cameraEmotion', page: () => TakePictureScreenEmotion()),
       ],
