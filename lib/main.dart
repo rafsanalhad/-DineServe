@@ -13,6 +13,7 @@ import 'views/ProfilePage.dart';
 import 'views/History.dart';
 import 'views/Reservation.dart';
 import 'views/TakePictureScreenEmotion.dart';
+import 'views/ReviewsPage.dart';
 import 'controller/reservation_controller.dart';
 import 'controller/AuthController.dart';
 
@@ -40,6 +41,7 @@ void main() async {
         GetPage(name: '/profile', page: () => ProfilePage()),
         GetPage(name: '/editProfile', page: () => EditProfilePage()),
         GetPage(name: '/history', page: () => History()),
+        GetPage(name: '/reviews', page: () => ReviewsPage()), 
         GetPage(name: '/cameraEmotion', page: () => TakePictureScreenEmotion()),
       ],
     ),

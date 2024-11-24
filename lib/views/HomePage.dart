@@ -369,7 +369,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           InkWell(
                             onTap: () =>
-                                Navigator.pushNamed(context, '/rating'),
+                                Navigator.pushNamed(context, '/reviews'),
                             child: Container(
                               height: 150,
                               width: MediaQuery.of(context).size.width / 2 - 15,
