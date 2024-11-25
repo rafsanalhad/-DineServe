@@ -16,11 +16,14 @@ import 'views/TakePictureScreenEmotion.dart';
 import 'views/ReviewsPage.dart';
 import 'controller/reservation_controller.dart';
 import 'controller/AuthController.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
+import 'views/Payment.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
+  await dot_env.dotenv.load(fileName: ".env");
 
   // Initialize the controller
   Get.put(ReservationController());
@@ -32,7 +35,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const StartScreen()),
+        GetPage(name: '/', page: () => const HomePage()),
         GetPage(name: '/home', page: () => const HomePage()),
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/signup', page: () => const SignUpPage()),
@@ -42,6 +45,7 @@ void main() async {
         GetPage(name: '/editProfile', page: () => EditProfilePage()),
         GetPage(name: '/history', page: () => History()),
         GetPage(name: '/reviews', page: () => ReviewsPage()), 
+        GetPage(name: '/payment', page: () => Payment()),
         GetPage(name: '/cameraEmotion', page: () => TakePictureScreenEmotion()),
       ],
     ),

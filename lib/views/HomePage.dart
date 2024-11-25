@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                                     InkWell(
                                       onTap: () {
                                         // Aksi ketika tombol diklik
-                                        Navigator.pushNamed(context, '/login');
+                                        Navigator.pushNamed(context, '/payment');
                                       },
                                       borderRadius: BorderRadius.circular(10),
                                       splashColor:
