@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import '../controller/AuthController.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   final AuthController _authController =
       Get.find(); // Mengambil instance AuthController
 
@@ -27,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     final url =
-        Uri.parse('http://localhost:5000/login'); // Ganti dengan URL API Anda
+        Uri.parse(baseUrl + '/login'); // Ganti dengan URL API Anda
     try {
       final response = await http.post(
         url,

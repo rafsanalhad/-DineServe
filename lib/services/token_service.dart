@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class TokenService {
   Future<Either<Failure, TokenModel>> getToken() async {
-    var apiUrl = dotenv.env['BASE_URL'] ?? '';
+    var apiUrl = (dotenv.env['BASE_URL'] ?? '') + '/payment';
 
     // Payload
     var payload = {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ReviewsPage extends StatefulWidget {
   @override
@@ -9,10 +10,10 @@ class ReviewsPage extends StatefulWidget {
 
 class _ReviewsPageState extends State<ReviewsPage> {
   List<Map<String, dynamic>> _reviews = [];
-
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   Future<void> fetchReviews() async {
     try {
-      final response = await http.get(Uri.parse('http://localhost:5000/reviews')); // Ganti URL sesuai API Flask kamu
+      final response = await http.get(Uri.parse(baseUrl + '/reviews'));
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
 

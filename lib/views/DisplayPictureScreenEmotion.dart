@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../controller/AuthController.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/ListReservasi.dart';
 
@@ -22,11 +23,12 @@ class DisplayPictureScreenEmotion extends StatefulWidget {
 
 class _DisplayPictureScreenEmotionState
     extends State<DisplayPictureScreenEmotion> {
-    final AuthController _authController = Get.find();
+  final AuthController _authController = Get.find();
   String emotionResult = "Awaiting result...";
   String confidence = "";
   String starRating = "☆☆☆☆☆";
   int starInt = 0;
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   String getStarRating(String emotion) {
     switch (emotion.toLowerCase()) {
       case 'senang':
@@ -57,33 +59,34 @@ class _DisplayPictureScreenEmotionState
   }
 
   Future<void> sendReview(int starInt, String review) async {
-  try {
-    final url = Uri.parse('http://localhost:5000/review');
-    final requestBody = jsonEncode({
-      'user_id': _authController.id.value,
-      'rating': starInt,
-      'comment': review,
-    });
+    try {
+      final url = Uri.parse(
+          baseUrl + '/review');
+      final requestBody = jsonEncode({
+        'user_id': _authController.id.value,
+        'rating': starInt,
+        'comment': review,
+      });
 
-    // Log the request body for debugging
-    print('Sending request body: $requestBody');
+      // Log the request body for debugging
+      print('Sending request body: $requestBody');
 
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: requestBody,
-    );
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: requestBody,
+      );
 
-    if (response.statusCode == 200) {
-      print("Review submitted successfully");
-    } else {
-      print("Failed to submit review: ${response.statusCode}");
-      print("Response body: ${response.body}");
+      if (response.statusCode == 200) {
+        print("Review submitted successfully");
+      } else {
+        print("Failed to submit review: ${response.statusCode}");
+        print("Response body: ${response.body}");
+      }
+    } catch (e) {
+      print("Error submitting review: $e");
     }
-  } catch (e) {
-    print("Error submitting review: $e");
   }
-}
 
   Future<void> predictEmotion() async {
     setState(() {
@@ -92,7 +95,8 @@ class _DisplayPictureScreenEmotionState
     });
 
     try {
-      final url = Uri.parse('http://10.0.2.2:5000/predict');
+      final url = Uri.parse(
+          baseUrl + '/predict');
       print('Sending request to: $url');
 
       final request = http.MultipartRequest('POST', url);
@@ -270,17 +274,10 @@ class _DisplayPictureScreenEmotionState
                                     onPressed: () async {
                                       if (userReview.isNotEmpty) {
                                         await sendReview(starInt,
-                                            userReview); // Send data to backend
+                                            userReview); 
                                         Navigator.pop(
-                                            context); // Close the dialog
+                                            context);
                                         setState(() {
-                                          // Trigger a UI update to show the SnackBar
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                                content: Text(
-                                                    "Review submitted successfully")),
-                                          );
                                         });
                                       } else {
                                         setState(() {

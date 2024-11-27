@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'DisplayPictureScreen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({

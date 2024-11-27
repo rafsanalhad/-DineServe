@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
 import '../controller/AuthController.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Reservation extends StatefulWidget {
   const Reservation({super.key});
@@ -22,9 +23,8 @@ class _ReservationState extends State<Reservation> {
   int _guestCount = 1;
   String? _tablePreference;
   final List<String> _tableOptions = ['Indoor', 'Outdoor', 'Near Window'];
-
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   // URL backend
-  final String _apiUrl = 'http://localhost:5000/reservations';
 
   // Method to select a date
   Future<void> _pickDate() async {
@@ -82,7 +82,7 @@ class _ReservationState extends State<Reservation> {
 
       try {
         final response = await http.post(
-          Uri.parse(_apiUrl),
+          Uri.parse(baseUrl + '/reservations'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(reservationData),
         );

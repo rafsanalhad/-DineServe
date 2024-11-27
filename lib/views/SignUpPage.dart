@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -15,7 +16,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   Future<void> signUp() async {
     String username = _usernameController.text;
     String email = _emailController.text;
@@ -36,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
     try {
       // Send data to the backend API
       var response = await http.post(
-        Uri.parse('http://localhost:5000/signup'), // Replace with your API endpoint
+        Uri.parse(baseUrl + '/signup'), // Replace with your API endpoint
         headers: {
           'Content-Type': 'application/json',
         },

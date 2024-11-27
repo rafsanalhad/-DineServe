@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart'; // Untuk mengecek platform
 import '../controller/AuthController.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   @override
   void initState() {
     super.initState();
@@ -40,10 +41,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     setState(() {
       isLoading = true;
     });
+    
 
     final response = await http.get(
-      Uri.parse(
-          'http://localhost:5000/profil?user_id=${_authController.username.value}'),
+     Uri.parse(baseUrl + '/profil?user_id=${_authController.username.value}'),
     );
 
     if (response.statusCode == 200) {
@@ -112,7 +113,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://localhost:5000/profil/update'),
+       Uri.parse(baseUrl + '/profil/update'),
     );
 
     request.fields['user_id'] = _authController.username.value;
@@ -195,12 +196,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ? (_imageBytes != null
                                     ? Image.memory(_imageBytes!).image
                                     : NetworkImage(
-                                            'http://localhost:5000/uploads/$profilePicture')
+                                            baseUrl + '/uploads/$profilePicture')
                                         as ImageProvider)
                                 : (_selectedImage != null
                                     ? FileImage(_selectedImage!)
                                     : NetworkImage(
-                                            'http://localhost:5000/uploads/$profilePicture')
+                                            baseUrl + '/uploads/$profilePicture')
                                         as ImageProvider),
                           ),
                         ),

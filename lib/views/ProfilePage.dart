@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../controller/AuthController.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class ProfilePage extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -18,6 +18,7 @@ class _ProfileScreenState extends State<ProfilePage> {
   late String username = '';
   late String email = '';
   late String profilePicture = 'default.jpg';
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _ProfileScreenState extends State<ProfilePage> {
   Future<void> _getProfile() async {
     final response = await http.get(
       Uri.parse(
-          'http://localhost:5000/profil?user_id=${_authController.username.value}'),
+          baseUrl + '/profil?user_id=${_authController.username.value}'),
     );
 
     if (response.statusCode == 200) {
@@ -52,7 +53,7 @@ class _ProfileScreenState extends State<ProfilePage> {
   Future<void> _updateProfile() async {
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://localhost:5000/profil/update'),
+      Uri.parse(baseUrl + '/profil/update'),
     );
 
     request.fields['user_id'] = _authController.username.value;
@@ -114,7 +115,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                       CircleAvatar(
                         radius: 40,
                         backgroundImage: NetworkImage(
-                            'http://localhost:5000/uploads/$profilePicture'),
+                            baseUrl + '/uploads/$profilePicture'),
                       ),
                       SizedBox(height: 8),
                       // Display username and email

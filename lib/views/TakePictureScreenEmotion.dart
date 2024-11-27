@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'DisplayPictureScreenEmotion.dart';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 
 class TakePictureScreenEmotion extends StatefulWidget {
   const TakePictureScreenEmotion({

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import '../controller/AuthController.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -15,7 +16,7 @@ class _HistoryState extends State<History> {
   late Future<List<dynamic>> _reservations;
   final AuthController _authController = Get.find();
   int _selectedIndex = 0;
-
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
   @override
   void initState() {
     super.initState();
@@ -25,7 +26,7 @@ class _HistoryState extends State<History> {
   Future<List<dynamic>> fetchReservations() async {
     final response = await http.get(
       Uri.parse(
-          'http://localhost:5000/reservations?user_id=${_authController.id.value}'),
+          baseUrl + '/reservations?user_id=${_authController.id.value}'),
     );
 
     if (response.statusCode == 200) {
