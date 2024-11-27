@@ -69,6 +69,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _getProfile();
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(

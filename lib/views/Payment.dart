@@ -54,7 +54,7 @@ class PaymentState extends State<Payment> {
         _handleFailedTransaction(result);
         break;
       default:
-        _showToast('Unhandled Transaction Status: ${result.transactionStatus}', true);
+        // _showToast('Unhandled Transaction Status: ${result.transactionStatus}', true);
     }
   }
 
