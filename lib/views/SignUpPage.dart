@@ -23,7 +23,6 @@ class _SignUpPageState extends State<SignUpPage> {
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    // Check if all fields are filled and if passwords match
     if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
       return;
@@ -35,9 +34,8 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     try {
-      // Send data to the backend API
       var response = await http.post(
-        Uri.parse(baseUrl + '/signup'), // Replace with your API endpoint
+        Uri.parse(baseUrl + '/signup'), 
         headers: {
           'Content-Type': 'application/json',
         },
@@ -49,7 +47,6 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
       if (response.statusCode == 200) {
-        // Success
         showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -59,9 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  // Close the dialog
                   Navigator.pop(context);
-                  // Redirect to login page
                   Navigator.pushReplacementNamed(context, '/login');
                 },
                 child: Text("OK"),
@@ -71,12 +66,10 @@ class _SignUpPageState extends State<SignUpPage> {
         },
       );
       } else {
-        // Error: handle API error response
         var responseData = json.decode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(responseData['message'] ?? 'Error occurred')));
       }
     } catch (e) {
-      // Handle connection error
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error connecting to the server")));
     }
   }

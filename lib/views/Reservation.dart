@@ -24,9 +24,8 @@ class _ReservationState extends State<Reservation> {
   String? _tablePreference;
   final List<String> _tableOptions = ['Indoor', 'Outdoor', 'Near Window'];
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
-  // URL backend
 
-  // Method to select a date
+
   Future<void> _pickDate() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -41,7 +40,6 @@ class _ReservationState extends State<Reservation> {
     }
   }
 
-  // Method to select a time
   Future<void> _pickTime() async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -54,7 +52,6 @@ class _ReservationState extends State<Reservation> {
     }
   }
 
-  // Method to submit reservation
   Future<void> _submitReservation() async {
     if (_formKey.currentState!.validate()) {
       if (_selectedDate == null || _selectedTime == null) {
@@ -126,7 +123,6 @@ class _ReservationState extends State<Reservation> {
           key: _formKey,
           child: ListView(
             children: [
-              // Name Field
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
@@ -142,7 +138,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Phone Field
               TextFormField(
                 controller: _phoneController,
                 decoration: const InputDecoration(
@@ -159,7 +154,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Email Field
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -170,7 +164,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Date Picker
               ListTile(
                 title: Text(_selectedDate == null
                     ? 'Select Date'
@@ -180,7 +173,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Time Picker
               ListTile(
                 title: Text(_selectedTime == null
                     ? 'Select Time'
@@ -190,7 +182,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Guest Count
               DropdownButtonFormField<int>(
                 value: _guestCount,
                 decoration: const InputDecoration(
@@ -212,7 +203,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Table Preference
               DropdownButtonFormField<String>(
                 value: _tablePreference,
                 decoration: const InputDecoration(
@@ -233,7 +223,6 @@ class _ReservationState extends State<Reservation> {
               ),
               const SizedBox(height: 16),
 
-              // Submit Button
               ElevatedButton(
                 onPressed: _submitReservation,
                 child: const Text('Submit Reservation'),

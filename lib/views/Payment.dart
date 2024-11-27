@@ -60,18 +60,15 @@ class PaymentState extends State<Payment> {
 
   void _handleSuccessfulTransaction(TransactionResult result) {
     _showToast('Transaction Completed Successfully', false);
-    // Add any additional success handling logic here
     print('Transaction Details: ${result.transactionId}, ${result.paymentType}');
   }
 
   void _handlePendingTransaction(TransactionResult result) {
     _showToast('Transaction is Pending', true);
-    // Consider implementing additional checks or server-side validation
   }
 
   void _handleFailedTransaction(TransactionResult result) {
     _showToast('Transaction Failed', true);
-    // Log detailed error information
     print('Transaction Failure Details: ${result.transactionStatus}');
   }
 

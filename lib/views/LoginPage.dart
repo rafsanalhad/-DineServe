@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   final AuthController _authController =
-      Get.find(); // Mengambil instance AuthController
+      Get.find();
 
   Future<void> _login() async {
     String email = _emailController.text.trim();
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     final url =
-        Uri.parse(baseUrl + '/login'); // Ganti dengan URL API Anda
+        Uri.parse(baseUrl + '/login');
     try {
       final response = await http.post(
         url,

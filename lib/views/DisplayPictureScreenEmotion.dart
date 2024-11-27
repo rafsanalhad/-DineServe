@@ -67,8 +67,6 @@ class _DisplayPictureScreenEmotionState
         'rating': starInt,
         'comment': review,
       });
-
-      // Log the request body for debugging
       print('Sending request body: $requestBody');
 
       final response = await http.post(
@@ -267,7 +265,7 @@ class _DisplayPictureScreenEmotionState
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
-                                        Navigator.pop(context), // Tutup dialog
+                                        Navigator.pop(context),
                                     child: Text("Batal"),
                                   ),
                                   ElevatedButton(

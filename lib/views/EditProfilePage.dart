@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
-import 'package:flutter/foundation.dart'; // Untuk mengecek platform
+import 'package:flutter/foundation.dart';
 import '../controller/AuthController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -21,10 +21,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String email = '';
   String profilePicture = 'default.jpg';
   bool isLoading = false;
-  File? _selectedImage; // Untuk menyimpan gambar yang dipilih
-  Uint8List? _imageBytes; // Untuk menyimpan gambar dalam bentuk byte untuk Web
+  File? _selectedImage; 
+  Uint8List? _imageBytes; 
 
-  // Controller untuk text field
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
@@ -68,7 +67,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
   }
 
-  // Fungsi untuk memilih gambar baru
+
   Future<void> _pickImage() async {
     try {
       final picker = ImagePicker();
@@ -76,22 +75,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
         final pickedFile = await picker.pickImage(source: ImageSource.gallery);
         if (pickedFile != null) {
           final bytes =
-              await pickedFile.readAsBytes(); // Membaca file sebagai bytes
+              await pickedFile.readAsBytes(); 
           setState(() {
             _selectedImage = File(pickedFile
-                .path); // Menyimpan gambar untuk preview (bisa berbeda untuk Web)
-            _imageBytes = bytes; // Menyimpan gambar dalam bentuk byte untuk Web
+                .path); 
+            _imageBytes = bytes; 
           });
         } else {
           print('No image selected');
         }
       } else {
         final pickedFile = await picker.pickImage(
-            source: ImageSource.gallery); // Untuk mobile (Android/iOS)
+            source: ImageSource.gallery);
         if (pickedFile != null) {
           setState(() {
             _selectedImage = File(
-                pickedFile.path); // Menyimpan gambar untuk preview di mobile
+                pickedFile.path);
           });
         } else {
           print('No image selected');
@@ -120,28 +119,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     request.fields['username'] = usernameController.text;
     request.fields['email'] = emailController.text;
 
-    // Jika password baru diisi, kirimkan password baru
-    // if (newPasswordController.text.isNotEmpty) {
-    //   if (newPasswordController.text == confirmPasswordController.text) {
-    //     request.fields['password'] = newPasswordController.text;
-    //   } else {
-    //     ScaffoldMessenger.of(context)
-    //         .showSnackBar(SnackBar(content: Text("Passwords do not match")));
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //     return;
-    //   }
-    // }
-
-    // Jika ada gambar yang dipilih, unggah gambar tersebut
     if (_selectedImage != null) {
       if (kIsWeb) {
-        // Untuk Web, kirimkan gambar dalam bentuk base64 atau MultipartFile
         var pic = await http.MultipartFile.fromBytes(
           'file',
           _imageBytes!,
-          filename: 'profile_picture.jpg', // Berikan nama file
+          filename: 'profile_picture.jpg',
         );
         request.files.add(pic);
       } else {
@@ -186,10 +169,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Tampilkan foto profil
                       Center(
                         child: GestureDetector(
-                          onTap: _pickImage, // Memanggil fungsi pilih gambar
+                          onTap: _pickImage,
                           child: CircleAvatar(
                             radius: 50,
                             backgroundImage: kIsWeb
@@ -207,7 +189,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      // Username input
                       TextFormField(
                         controller: usernameController,
                         decoration: InputDecoration(
@@ -222,7 +203,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                       ),
                       SizedBox(height: 16),
-                      // Email input
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
@@ -241,7 +221,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                      
                       SizedBox(height: 20),
-                      // Save Changes Button
                       ElevatedButton(
                         onPressed: _updateProfile,
                         child: Text("Save Changes"),
@@ -253,10 +232,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ),
                       SizedBox(height: 16),
-                      // Cancel Button
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context); // Close EditProfilePage
+                          Navigator.pop(context);
                         },
                         child: Text("Cancel"),
                         style: ElevatedButton.styleFrom(

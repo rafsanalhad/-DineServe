@@ -12,9 +12,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfileScreenState extends State<ProfilePage> {
   bool pushNotifications = true;
   bool faceID = true;
-  int _selectedIndex = 2; // Set the index for the Profile tab (2)
+  int _selectedIndex = 2; 
   final AuthController _authController = Get.find();
-  // Profile data variables
   late String username = '';
   late String email = '';
   late String profilePicture = 'default.jpg';
@@ -45,7 +44,6 @@ class _ProfileScreenState extends State<ProfilePage> {
         }
       });
     } else {
-      // Error handling
       print("Failed to load profile: ${response.body}");
     }
   }
@@ -57,14 +55,13 @@ class _ProfileScreenState extends State<ProfilePage> {
     );
 
     request.fields['user_id'] = _authController.username.value;
-    request.fields['username'] = username; // Modify with updated username
-    request.fields['email'] = email; // Modify with updated email
-    request.fields['password'] = ''; // Add password change if required
+    request.fields['username'] = username; 
+    request.fields['email'] = email; 
+    request.fields['password'] = ''; 
 
     var response = await request.send();
     if (response.statusCode == 200) {
       print("Profile updated successfully!");
-      // Handle success, show confirmation or navigate away
       Navigator.pushNamed(context, '/profile');
       await _getProfile();
       Get.snackbar(
@@ -111,14 +108,12 @@ class _ProfileScreenState extends State<ProfilePage> {
                 Center(
                   child: Column(
                     children: [
-                      // Display profile picture
                       CircleAvatar(
                         radius: 40,
                         backgroundImage: NetworkImage(
                             baseUrl + '/uploads/$profilePicture'),
                       ),
                       SizedBox(height: 8),
-                      // Display username and email
                       Text(
                         username,
                         style: TextStyle(
@@ -131,7 +126,6 @@ class _ProfileScreenState extends State<ProfilePage> {
                       SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          // Implement edit profile functionality
                           Navigator.pushNamed(context, '/editProfile');
                         },
                         child: Text('Edit profile'),
@@ -167,7 +161,6 @@ class _ProfileScreenState extends State<ProfilePage> {
                     ],
                   ),
                   onTap: () {
-                    // Implement navigation to reservation
                     Navigator.pushNamed(context, '/history');
                   },
                 ),
@@ -176,7 +169,6 @@ class _ProfileScreenState extends State<ProfilePage> {
                   title: Text('Support'),
                   trailing: Icon(Icons.chevron_right),
                   onTap: () {
-                    // Implement navigation to support
                   },
                 ),
                 SizedBox(height: 24),
@@ -206,7 +198,6 @@ class _ProfileScreenState extends State<ProfilePage> {
                   title: Text('Reset Password'),
                   trailing: Icon(Icons.chevron_right),
                   onTap: () {
-                    // Implement Password Reset functionality
                   },
                 ),
                 SizedBox(height: 16),
@@ -214,7 +205,6 @@ class _ProfileScreenState extends State<ProfilePage> {
                   leading: Icon(Icons.logout, color: Colors.red),
                   title: Text('Logout', style: TextStyle(color: Colors.red)),
                   onTap: () {
-                    // Implement logout functionality
                     Navigator.pushNamed(context, '/login');
                   },
                 ),

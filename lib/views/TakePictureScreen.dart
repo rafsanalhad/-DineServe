@@ -19,29 +19,24 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
-    // Inisialisasi kamera saat widget dibuat
     _initializeCamera();
   }
 
   Future<void> _initializeCamera() async {
     try {
-      // Dapatkan daftar kamera yang tersedia
       final cameras = await availableCameras();
 
-      // Cari kamera depan
       final frontCamera = cameras.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.front,
         orElse: () => cameras
-            .first, // Fallback ke kamera pertama jika kamera depan tidak ditemukan
+            .first, 
       );
 
-      // Inisialisasi controller
       final controller = CameraController(
         frontCamera,
         ResolutionPreset.medium,
       );
 
-      // Update state
       setState(() {
         _controller = controller;
         _initializeControllerFuture = controller.initialize();

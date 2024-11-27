@@ -107,7 +107,7 @@ class _HistoryState extends State<History> {
                             children: [
                               Text(
                                 reservasi['name'] ??
-                                    'No name available', // Handle null for 'details'
+                                    'No name available',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -116,7 +116,7 @@ class _HistoryState extends State<History> {
                               Row(
                                 children: [
                                   Text(
-                                    '${reservasi['time'] ?? 'No time available'}, ', // Handle null for 'time'
+                                    '${reservasi['time'] ?? 'No time available'}, ', 
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 12,
@@ -124,7 +124,7 @@ class _HistoryState extends State<History> {
                                   ),
                                   Text(
                                     reservasi['date'] ??
-                                        'No date available', // Handle null for 'date'
+                                        'No date available', 
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 12,

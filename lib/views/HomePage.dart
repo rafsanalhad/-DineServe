@@ -67,10 +67,8 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Menambahkan InkWell di bagian profil
                           InkWell(
                             onTap: () {
-                              // Navigasi ke halaman profil
                               Navigator.pushNamed(context, '/profile');
                             },
                             child: Row(
@@ -112,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white),
                         ],
                       ),
-                      // Jarak antara elemen
+              
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -140,12 +138,12 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        // Aksi ketika tombol diklik
+                             
                                         Navigator.pushNamed(context, '/payment');
                                       },
                                       borderRadius: BorderRadius.circular(10),
                                       splashColor:
-                                          Colors.green, // Warna splash effect
+                                          Colors.green, 
                                       highlightColor: Colors.greenAccent,
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -195,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 10), // Memperkecil padding
+                      horizontal: 10), 
                   child: Column(
                     children: [
                       Row(
@@ -207,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               height: 150,
                               width: MediaQuery.of(context).size.width / 2 -
-                                  15, // Perkecil lebar
+                                  15, 
                               decoration: BoxDecoration(
                                 image: const DecorationImage(
                                   image: AssetImage(
@@ -265,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               height: 150,
                               width: MediaQuery.of(context).size.width / 2 -
-                                  15, // Perkecil lebar
+                                  15,
                               decoration: BoxDecoration(
                                 image: const DecorationImage(
                                   image: AssetImage(
@@ -318,7 +316,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10), // Perkecil jarak antar baris
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
