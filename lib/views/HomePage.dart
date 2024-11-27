@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../controller/AuthController.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,12 +15,36 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final AuthController _authController = Get.find();
-
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
+  late String username = '';
+  late String email = '';
+  late String profilePicture = 'default.jpg';
   final List<Widget> _pages = [
     const Center(child: Text('Home Page')),
     const Center(child: Text('History Page')),
     const Center(child: Text('Ulasan Page')),
   ];
+  Future<void> _getProfile() async {
+    final response = await http.get(
+      Uri.parse(baseUrl + '/profil?user_id=${_authController.username.value}'),
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      setState(() {
+        username = data['username'];
+        email = data['email'];
+
+        if (data['profile_picture'] == null) {
+          profilePicture = 'default.jpg';
+        } else {
+          profilePicture = data['profile_picture'];
+        }
+      });
+    } else {
+      print("Failed to load profile: ${response.body}");
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -73,7 +100,11 @@ class _HomePageState extends State<HomePage> {
                             },
                             child: Row(
                               children: [
-                                Image.asset('assets/images/profil.png'),
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                      baseUrl + '/uploads/$profilePicture'),
+                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -110,7 +141,6 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white),
                         ],
                       ),
-              
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -138,12 +168,11 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                             
-                                        Navigator.pushNamed(context, '/payment');
+                                        Navigator.pushNamed(
+                                            context, '/payment');
                                       },
                                       borderRadius: BorderRadius.circular(10),
-                                      splashColor:
-                                          Colors.green, 
+                                      splashColor: Colors.green,
                                       highlightColor: Colors.greenAccent,
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -192,8 +221,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10), 
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     children: [
                       Row(
@@ -204,8 +232,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushNamed(context, '/reservation'),
                             child: Container(
                               height: 150,
-                              width: MediaQuery.of(context).size.width / 2 -
-                                  15, 
+                              width: MediaQuery.of(context).size.width / 2 - 15,
                               decoration: BoxDecoration(
                                 image: const DecorationImage(
                                   image: AssetImage(
@@ -262,8 +289,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushNamed(context, '/history'),
                             child: Container(
                               height: 150,
-                              width: MediaQuery.of(context).size.width / 2 -
-                                  15,
+                              width: MediaQuery.of(context).size.width / 2 - 15,
                               decoration: BoxDecoration(
                                 image: const DecorationImage(
                                   image: AssetImage(
