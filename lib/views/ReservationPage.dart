@@ -119,106 +119,108 @@ class _ReservationPageState extends State<ReservationPage> {
       appBar: AppBar(
         title: const Text('Reservation and Payment'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Full Name'),
-            ),
-            TextField(
-              controller: _phoneController,
-              decoration: const InputDecoration(labelText: 'Phone Number'),
-              keyboardType: TextInputType.phone,
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email Address'),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    final DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: _selectedDate ?? DateTime.now(),
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime(2101),
-                    );
-                    if (picked != null && picked != _selectedDate) {
-                      setState(() {
-                        _selectedDate = picked;
-                      });
-                    }
-                  },
-                  child: const Text('Select Date'),
-                ),
-                SizedBox(width: 8),
-                Text(_selectedDate == null
-                    ? 'No date selected'
-                    : '${_selectedDate!.toLocal()}'.split(' ')[0]),
-              ],
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                      context: context,
-                      initialTime: _selectedTime ?? TimeOfDay.now(),
-                    );
-                    if (picked != null && picked != _selectedTime) {
-                      setState(() {
-                        _selectedTime = picked;
-                      });
-                    }
-                  },
-                  child: const Text('Select Time'),
-                ),
-                SizedBox(width: 8),
-                Text(_selectedTime == null
-                    ? 'No time selected'
-                    : '${_selectedTime!.format(context)}'),
-              ],
-            ),
-            SizedBox(height: 16),
-            TextField(
-              onChanged: (value) {
-                _tablePreference = value;
-              },
-              decoration: const InputDecoration(labelText: 'Table Preference'),
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                const Text('Guest Count: '),
-                DropdownButton<int>(
-                  value: _guestCount,
-                  items: List.generate(
-                    10,
-                    (index) => DropdownMenuItem(
-                      value: index + 1,
-                      child: Text('${index + 1} guests'),
-                    ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Full Name'),
+              ),
+              TextField(
+                controller: _phoneController,
+                decoration: const InputDecoration(labelText: 'Phone Number'),
+                keyboardType: TextInputType.phone,
+              ),
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: 'Email Address'),
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      final DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: _selectedDate ?? DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2101),
+                      );
+                      if (picked != null && picked != _selectedDate) {
+                        setState(() {
+                          _selectedDate = picked;
+                        });
+                      }
+                    },
+                    child: const Text('Select Date'),
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _guestCount = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _initiatePayment,
-              child: const Text('Proceed to Payment'),
-            ),
-          ],
+                  SizedBox(width: 8),
+                  Text(_selectedDate == null
+                      ? 'No date selected'
+                      : '${_selectedDate!.toLocal()}'.split(' ')[0]),
+                ],
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      final TimeOfDay? picked = await showTimePicker(
+                        context: context,
+                        initialTime: _selectedTime ?? TimeOfDay.now(),
+                      );
+                      if (picked != null && picked != _selectedTime) {
+                        setState(() {
+                          _selectedTime = picked;
+                        });
+                      }
+                    },
+                    child: const Text('Select Time'),
+                  ),
+                  SizedBox(width: 8),
+                  Text(_selectedTime == null
+                      ? 'No time selected'
+                      : '${_selectedTime!.format(context)}'),
+                ],
+              ),
+              SizedBox(height: 16),
+              TextField(
+                onChanged: (value) {
+                  _tablePreference = value;
+                },
+                decoration: const InputDecoration(labelText: 'Table Preference'),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  const Text('Guest Count: '),
+                  DropdownButton<int>(
+                    value: _guestCount,
+                    items: List.generate(
+                      10,
+                      (index) => DropdownMenuItem(
+                        value: index + 1,
+                        child: Text('${index + 1} guests'),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _guestCount = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _initiatePayment,
+                child: const Text('Proceed to Payment'),
+              ),
+            ],
+          ),
         ),
       ),
     );
