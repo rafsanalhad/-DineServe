@@ -56,22 +56,32 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   void _handleTransactionResult(TransactionResult result) {
-      print('Transaction Details: ${result.transactionId}, ${result.paymentType}');
-        _submitReservation();
+    print(
+        'Transaction Details: ${result.transactionId}, ${result.paymentType}');
+    print('Transaction: ${result}');
+    _submitReservation(result);
   }
 
-  void _submitReservation() async {
-    if (_nameController.text.isEmpty || _phoneController.text.isEmpty || _emailController.text.isEmpty || _selectedDate == null || _selectedTime == null) {
+  void _submitReservation(result) async {
+    if (_nameController.text.isEmpty ||
+        _phoneController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _selectedDate == null ||
+        _selectedTime == null) {
       _showToast('Please fill all fields before submitting', true);
       return;
     }
-
+    final transaction_id = result.transactionId;
+    final transactionStatus = result.transactionStatus;
+    final paymentType = result.paymentType;
+    final orderId = result.orderId;
     final String formattedDate =
         '${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}';
     final String formattedTime =
         '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}';
-
+    final id = DateTime.now().millisecondsSinceEpoch;
     final Map<String, dynamic> reservationData = {
+      'id': id,
       'user_id': _authController.id.value,
       'name': _nameController.text,
       'phone': _phoneController.text,
@@ -80,7 +90,18 @@ class _ReservationPageState extends State<ReservationPage> {
       'time': formattedTime,
       'guest_count': _guestCount,
       'table_preference': _tablePreference ?? '',
+      'transaction_id': transaction_id,
     };
+
+    final Map<String, dynamic> transactionData = {
+      'transaction_id': transaction_id,
+      'transaction_status': 'settlement',
+      'reservation_id': id,
+      'payment_type': paymentType,
+      'order_id': orderId,
+      'status': 'sukses'
+    };
+    print("Transaction Data: $transactionData");
 
     final response = await http.post(
       Uri.parse(baseUrl + '/reservations' ?? ""),
@@ -89,6 +110,12 @@ class _ReservationPageState extends State<ReservationPage> {
     );
 
     if (response.statusCode == 201) {
+      final response2 = await http.post(
+        Uri.parse(baseUrl + '/payment/finish' ?? ""),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(transactionData),
+      );
+      print('Failed response 2: ${response2.body}');
       _showToast('Reservation submitted successfully!', false);
     } else {
       _showToast('Failed to submit reservation: ${response.body}', true);
@@ -191,7 +218,8 @@ class _ReservationPageState extends State<ReservationPage> {
                 onChanged: (value) {
                   _tablePreference = value;
                 },
-                decoration: const InputDecoration(labelText: 'Table Preference'),
+                decoration:
+                    const InputDecoration(labelText: 'Table Preference'),
               ),
               SizedBox(height: 16),
               Row(
