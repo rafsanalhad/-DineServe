@@ -46,6 +46,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   equatable: ^2.0.7
   dartz: ^0.10.1
+  timeago: ^3.7.0
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthController extends GetxController {
   var id = 0.obs;
   var username = ''.obs;
+  var role = ''.obs;
 
   @override
   void onInit() {
@@ -39,6 +40,16 @@ class AuthController extends GetxController {
       await prefs.setString('username', value);
       username.value = value;
       print('Set username: $value'); // Debug print
+    } catch (e) {
+      print('Error setting username: $e');
+    }
+  }
+  Future<void> setRole(String value) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('role', value);
+      role.value = value;
+      print('Set username: $role'); // Debug print
     } catch (e) {
       print('Error setting username: $e');
     }

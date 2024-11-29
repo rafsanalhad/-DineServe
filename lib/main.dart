@@ -18,6 +18,7 @@ import 'controller/reservation_controller.dart';
 import 'controller/AuthController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 import 'views/Payment.dart';
+import 'views/TentangKami.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ void main() async {
         GetPage(name: '/reviews', page: () => ReviewsPage()), 
         GetPage(name: '/payment', page: () => Payment()),
         GetPage(name: '/cameraEmotion', page: () => TakePictureScreenEmotion()),
+        GetPage(name: '/tentangKami', page: () => TentangKami()),
       ],
     ),
   );

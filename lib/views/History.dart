@@ -17,6 +17,7 @@ class _HistoryState extends State<History> {
   final AuthController _authController = Get.find();
   int _selectedIndex = 0;
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
+
   @override
   void initState() {
     super.initState();
@@ -25,17 +26,16 @@ class _HistoryState extends State<History> {
 
   Future<List<dynamic>> fetchReservations() async {
     final response = await http.get(
-      Uri.parse(
-          baseUrl + '/reservations?user_id=${_authController.id.value}'),
+      Uri.parse('$baseUrl/reservations?user_id=${_authController.id.value}'),
     );
 
     if (response.statusCode == 200) {
-      List<dynamic> reservations = json.decode(response.body);
-      return reservations;
+      return json.decode(response.body);
     } else {
       throw Exception('Failed to load reservations');
     }
   }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -60,7 +60,16 @@ class _HistoryState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF7F7F7),
-        title: const Text('History'),
+        title: const Text(
+          'History',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
         child: FutureBuilder<List<dynamic>>(
@@ -69,82 +78,89 @@ class _HistoryState extends State<History> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text(snapshot.error.toString()));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.error, color: Colors.red, size: 50),
+                    const SizedBox(height: 8),
+                    Text(
+                      snapshot.error.toString(),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text('No reservations found'));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.inbox, color: Colors.grey, size: 50),
+                    SizedBox(height: 8),
+                    Text(
+                      'No reservations found',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             } else {
               final reservations = snapshot.data!;
               return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 itemCount: reservations.length,
                 itemBuilder: (context, index) {
                   final reservasi = reservations[index];
-                  return Container(
-                    margin: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                  return Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.only(bottom: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        const Image(
-                          image: AssetImage('assets/images/profil.png'),
-                          width: 40,
-                          height: 40,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.green.shade100,
+                        child: const Icon(Icons.restaurant_menu, color: Colors.green),
+                      ),
+                      title: Text(
+                        reservasi['name'] ?? 'No name available',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                reservasi['name'] ??
-                                    'No name available',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '${reservasi['time'] ?? 'No time available'}, ', 
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Text(
-                                    reservasi['date'] ??
-                                        'No date available', 
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  
-                                ],
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                    "Jumlah orang: ${(reservasi['guest_count'] ?? 0).toString()}",
-                                    style: const TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                            ],
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${reservasi['date'] ?? 'No date available'} • ${reservasi['time'] ?? 'No time available'}',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 4),
+                          Text(
+                            "Guests: ${(reservasi['guest_count'] ?? 0).toString()}",
+                            style: TextStyle(
+                              color: Colors.green.shade700,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        // TODO: Implement detail page navigation
+                      },
                     ),
                   );
                 },
@@ -154,27 +170,27 @@ class _HistoryState extends State<History> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profil',
-            ),
-          ],
-          selectedItemColor: const Color(0xFF18654A),
-          unselectedItemColor: const Color(0xFF18654A),
-          onTap: _onItemTapped,
-        ),
+        currentIndex: _selectedIndex,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'History',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        selectedItemColor: const Color(0xFF18654A),
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

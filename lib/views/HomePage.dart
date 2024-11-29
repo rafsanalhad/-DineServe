@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                                     InkWell(
                                       onTap: () {
                                         Navigator.pushNamed(
-                                            context, '/payment');
+                                            context, '/tentangKami');
                                       },
                                       borderRadius: BorderRadius.circular(10),
                                       splashColor: Colors.green,
