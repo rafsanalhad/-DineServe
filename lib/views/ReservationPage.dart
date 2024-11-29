@@ -20,19 +20,58 @@ class _ReservationPageState extends State<ReservationPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   DateTime? _selectedDate;
-  TimeOfDay? _selectedTime;
+  String? _selectedTime;
   int _guestCount = 1;
   String? _tablePreference;
   final String baseUrl = dot_env.dotenv.env['BASE_URL'] ?? "";
   MidtransSDK? _midtrans;
   final AuthController _authController = Get.find();
+  List<Map<String, dynamic>> tables = [];
+  List<String> availableTimes = [
+    '07:00 - 08:00',
+    '08:00 - 09:00',
+    '09:00 - 10:00'
+  ]; // Opsi waktu
+
+  Future<void> fetchTables() async {
+    try {
+      final response = await http.get(Uri.parse(baseUrl + '/getAllTables'));
+
+      if (response.statusCode == 200) {
+        // Parse response body and extract full table data
+        final List<dynamic> data = json.decode(response.body)['tables'];
+        setState(() {
+          tables = data
+              .map((table) => {
+                    'id': table['id'],
+                    'table_number': table['table_number']
+                  })
+              .toList();
+
+          // Optionally set a default table selection
+          if (tables.isNotEmpty) {
+            _tablePreference = tables[0]['id'].toString();
+          }
+        });
+        print("Fetched tables: $tables");
+      } else {
+        // Handle error if failed to fetch data
+        throw Exception('Failed to load tables');
+      }
+    } catch (e) {
+      print('Error fetching tables: $e');
+      _showToast('Failed to load tables', true);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _initSDK();
+    fetchTables();
   }
 
+  // Inisialisasi Midtrans SDK
   void _initSDK() async {
     _midtrans = await MidtransSDK.init(
       config: MidtransConfig(
@@ -58,28 +97,31 @@ class _ReservationPageState extends State<ReservationPage> {
   void _handleTransactionResult(TransactionResult result) {
     print(
         'Transaction Details: ${result.transactionId}, ${result.paymentType}');
-    print('Transaction: ${result}');
     _submitReservation(result);
   }
 
+  // Menambahkan validasi dan data reservasi
   void _submitReservation(result) async {
     if (_nameController.text.isEmpty ||
         _phoneController.text.isEmpty ||
         _emailController.text.isEmpty ||
         _selectedDate == null ||
-        _selectedTime == null) {
+        _selectedTime == null ||
+        _tablePreference == null) {
       _showToast('Please fill all fields before submitting', true);
       return;
     }
+
     final transaction_id = result.transactionId;
     final transactionStatus = result.transactionStatus;
     final paymentType = result.paymentType;
     final orderId = result.orderId;
-    final String formattedDate =
+
+    final formattedDate =
         '${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}';
-    final String formattedTime =
-        '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}';
+
     final id = DateTime.now().millisecondsSinceEpoch;
+
     final Map<String, dynamic> reservationData = {
       'id': id,
       'user_id': _authController.id.value,
@@ -87,9 +129,9 @@ class _ReservationPageState extends State<ReservationPage> {
       'phone': _phoneController.text,
       'email': _emailController.text,
       'date': formattedDate,
-      'time': formattedTime,
+      'time': _selectedTime ?? '',
       'guest_count': _guestCount,
-      'table_preference': _tablePreference ?? '',
+      'table_id': _tablePreference,
       'transaction_id': transaction_id,
     };
 
@@ -101,27 +143,26 @@ class _ReservationPageState extends State<ReservationPage> {
       'order_id': orderId,
       'status': 'sukses'
     };
-    print("Transaction Data: $transactionData");
 
     final response = await http.post(
-      Uri.parse(baseUrl + '/reservations' ?? ""),
+      Uri.parse(baseUrl + '/reservations'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(reservationData),
     );
 
     if (response.statusCode == 201) {
       final response2 = await http.post(
-        Uri.parse(baseUrl + '/payment/finish' ?? ""),
+        Uri.parse(baseUrl + '/payment/finish'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(transactionData),
       );
-      print('Failed response 2: ${response2.body}');
       _showToast('Reservation submitted successfully!', false);
     } else {
       _showToast('Failed to submit reservation: ${response.body}', true);
     }
   }
 
+  // Menampilkan Toast
   void _showToast(String msg, bool isError) {
     Fluttertoast.showToast(
       msg: msg,
@@ -167,6 +208,8 @@ class _ReservationPageState extends State<ReservationPage> {
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 16),
+
+              // Pemilihan Tanggal
               Row(
                 children: [
                   ElevatedButton(
@@ -191,37 +234,51 @@ class _ReservationPageState extends State<ReservationPage> {
                       : '${_selectedDate!.toLocal()}'.split(' ')[0]),
                 ],
               ),
+
               Row(
                 children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      final TimeOfDay? picked = await showTimePicker(
-                        context: context,
-                        initialTime: _selectedTime ?? TimeOfDay.now(),
+                  const Text('Select Time: '),
+                  DropdownButton<String>(
+                    value: _selectedTime,
+                    hint: const Text('Choose Time Slot'),
+                    items: availableTimes.map((String time) {
+                      return DropdownMenuItem<String>(
+                        value: time,
+                        child: Text(time),
                       );
-                      if (picked != null && picked != _selectedTime) {
-                        setState(() {
-                          _selectedTime = picked;
-                        });
-                      }
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedTime = newValue;
+                      });
                     },
-                    child: const Text('Select Time'),
                   ),
-                  SizedBox(width: 8),
-                  Text(_selectedTime == null
-                      ? 'No time selected'
-                      : '${_selectedTime!.format(context)}'),
                 ],
               ),
+
               SizedBox(height: 16),
-              TextField(
-                onChanged: (value) {
-                  _tablePreference = value;
+
+              // Pemilihan Meja
+              DropdownButton<String>(
+                hint: Text('Select Table'),
+                value: _tablePreference,
+                items: tables.map((table) {
+                  return DropdownMenuItem<String>(
+                    value: table['id']
+                        .toString(),
+                    child: Text(table['table_number']),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    _tablePreference = newValue;
+                  });
                 },
-                decoration:
-                    const InputDecoration(labelText: 'Table Preference'),
               ),
+
               SizedBox(height: 16),
+
+              // Jumlah Tamu
               Row(
                 children: [
                   const Text('Guest Count: '),
@@ -254,6 +311,7 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
+  // Fungsi untuk memulai pembayaran
   void _initiatePayment() async {
     try {
       final tokenResult = await TokenService().getToken();
@@ -267,14 +325,11 @@ class _ReservationPageState extends State<ReservationPage> {
             _midtrans?.startPaymentUiFlow(
               token: tokenData.token!,
             );
-          } else {
-            _showToast('Invalid Payment Token', true);
           }
         },
       );
     } catch (e) {
-      _showToast('Payment Initiation Error', true);
-      print('Payment Error: $e');
+      _showToast('Error occurred during payment', true);
     }
   }
 }
