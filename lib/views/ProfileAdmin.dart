@@ -5,15 +5,15 @@ import '../controller/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfileAdmin extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfilePage> {
+class _ProfileScreenState extends State<ProfileAdmin> {
   bool pushNotifications = true;
   bool notifications = true;
-  int _selectedIndex = 2; 
+  int _selectedIndex = 1; 
   final AuthController _authController = Get.find();
   late String username = '';
   late String email = '';
@@ -82,13 +82,10 @@ class _ProfileScreenState extends State<ProfilePage> {
 
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/admin');
         break;
       case 1:
-        Navigator.pushNamed(context, '/history');
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/profil');
+        Navigator.pushNamed(context, '/profileAdmin');
         break;
       default:
         break;
@@ -219,10 +216,6 @@ class _ProfileScreenState extends State<ProfilePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

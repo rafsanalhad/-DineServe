@@ -19,6 +19,8 @@ import 'controller/AuthController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 import 'views/Payment.dart';
 import 'views/TentangKami.dart';
+import 'views/AdminPage.dart';
+import 'views/ProfileAdmin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +51,8 @@ void main() async {
         GetPage(name: '/payment', page: () => Payment()),
         GetPage(name: '/cameraEmotion', page: () => TakePictureScreenEmotion()),
         GetPage(name: '/tentangKami', page: () => TentangKami()),
+        GetPage(name: '/admin', page: () => AdminPage()),
+        GetPage(name: '/profileAdmin', page: () => ProfileAdmin()),
       ],
     ),
   );

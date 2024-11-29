@@ -126,40 +126,44 @@ class TakePictureScreenEmotionState extends State<TakePictureScreenEmotion> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final height = constraints.maxHeight;
-          final width = constraints.maxWidth;
-          final camHeight = width * 4 / 3; // Standard 4:3 aspect ratio
+    backgroundColor: Colors.black,
+    body: LayoutBuilder(
+      builder: (context, constraints) {
+        final height = constraints.maxHeight;
+        final width = constraints.maxWidth;
+        final camHeight = width * 4 / 3; // Standard 4:3 aspect ratio
 
-          return Stack(
-            fit: StackFit.expand,
-            children: [
-              Positioned(
-                top: (height - camHeight) / 2,
-                child: SizedBox(
-                  width: width,
-                  height: camHeight,
-                  child: CameraPreview(_controller!),
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned(
+              top: (height - camHeight) / 2,
+              child: SizedBox(
+                width: width,
+                height: camHeight,
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(0),  // Menghilangkan efek mirror
+                  child: CameraPreview(_controller!), // Preview kamera tanpa mirror
                 ),
               ),
-              Positioned(
-                bottom: 20,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.white.withOpacity(0.5),
-                    onPressed: _takePicture,
-                    child: const Icon(Icons.camera_alt, color: Colors.white),
-                  ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: FloatingActionButton(
+                  backgroundColor: Colors.white.withOpacity(0.5),
+                  onPressed: _takePicture,
+                  child: const Icon(Icons.camera_alt, color: Colors.white),
                 ),
               ),
-            ],
-          );
-        },
-      ),
-    );
+            ),
+          ],
+        );
+      },
+    ),
+  );
   }
 }
