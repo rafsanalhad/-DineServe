@@ -42,10 +42,8 @@ class _ReservationPageState extends State<ReservationPage> {
         final List<dynamic> data = json.decode(response.body)['tables'];
         setState(() {
           tables = data
-              .map((table) => {
-                    'id': table['id'],
-                    'table_number': table['table_number']
-                  })
+              .map((table) =>
+                  {'id': table['id'], 'table_number': table['table_number']})
               .toList();
 
           // Optionally set a default table selection
@@ -100,7 +98,7 @@ class _ReservationPageState extends State<ReservationPage> {
     _submitReservation(result);
   }
 
-  // Menambahkan validasi dan data reservasi
+// Menambahkan validasi dan data reservasi
   void _submitReservation(result) async {
     if (_nameController.text.isEmpty ||
         _phoneController.text.isEmpty ||
@@ -122,6 +120,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
     final id = DateTime.now().millisecondsSinceEpoch;
 
+    // Membuat Map untuk data reservasi
     final Map<String, dynamic> reservationData = {
       'id': id,
       'user_id': _authController.id.value,
@@ -135,15 +134,6 @@ class _ReservationPageState extends State<ReservationPage> {
       'transaction_id': transaction_id,
     };
 
-    final Map<String, dynamic> transactionData = {
-      'transaction_id': transaction_id,
-      'transaction_status': 'settlement',
-      'reservation_id': id,
-      'payment_type': paymentType,
-      'order_id': orderId,
-      'status': 'sukses'
-    };
-
     final response = await http.post(
       Uri.parse(baseUrl + '/reservations'),
       headers: {'Content-Type': 'application/json'},
@@ -151,16 +141,93 @@ class _ReservationPageState extends State<ReservationPage> {
     );
 
     if (response.statusCode == 201) {
+      // Menyelesaikan pembayaran setelah reservasi berhasil
+      final Map<String, dynamic> transactionData = {
+        'transaction_id': transaction_id,
+        'transaction_status': 'settlement',
+        'reservation_id': id,
+        'payment_type': paymentType,
+        'order_id': orderId,
+        'status': 'sukses',
+      };
+
       final response2 = await http.post(
         Uri.parse(baseUrl + '/payment/finish'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(transactionData),
       );
-      _showToast('Reservation submitted successfully!', false);
+      _showConfirmationDialog();
     } else {
-      _showToast('Failed to submit reservation: ${response.body}', true);
+      _showToast('Maaf anda belum bayar', true);
     }
   }
+
+ void _showConfirmationDialog() {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Tidak bisa menutup dialog dengan klik di luar dialog
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20), // Membuat sudut lebih bulat
+        ),
+        elevation: 10, // Memberikan efek shadow pada dialog
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.green,
+                size: 80.0,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Reservation Submitted',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Your reservation has been successfully submitted.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/history');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                ),
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
 
   // Menampilkan Toast
   void _showToast(String msg, bool isError) {
@@ -257,15 +324,12 @@ class _ReservationPageState extends State<ReservationPage> {
               ),
 
               SizedBox(height: 16),
-
-              // Pemilihan Meja
               DropdownButton<String>(
                 hint: Text('Select Table'),
                 value: _tablePreference,
                 items: tables.map((table) {
                   return DropdownMenuItem<String>(
-                    value: table['id']
-                        .toString(),
+                    value: table['id'].toString(),
                     child: Text(table['table_number']),
                   );
                 }).toList(),
@@ -311,8 +375,28 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  // Fungsi untuk memulai pembayaran
   void _initiatePayment() async {
+    // Mengecek apakah reservasi sudah ada di waktu dan meja yang sama
+    final formattedDate =
+        '${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}';
+    final checkResponse = await http.post(
+      Uri.parse(baseUrl + '/check_reservation'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'date': formattedDate,
+        'time': _selectedTime,
+        'table_id': _tablePreference,
+      }),
+    );
+
+    if (checkResponse.statusCode != 200) {
+      // Jika ada konflik reservasi
+      final responseJson = jsonDecode(checkResponse.body);
+      _showToast(responseJson['message'], true);
+      return;
+    }
+
+    // Jika tidak ada konflik, lanjutkan dengan reservasi
     try {
       final tokenResult = await TokenService().getToken();
 
