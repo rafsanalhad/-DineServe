@@ -162,77 +162,86 @@ class _ReservationPageState extends State<ReservationPage> {
     }
   }
 
-bool _isDialogShown = false;
+bool _isDialogShowing = false;
 
 void _showConfirmationDialog() {
-  if (!_isDialogShown) {
-    _isDialogShown = true;
+  if (!_isDialogShowing) {
+    _isDialogShowing = true;
     showDialog(
       context: context,
       barrierDismissible: false, // Tidak bisa menutup dialog dengan klik di luar dialog
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20), // Membuat sudut lebih bulat
-          ),
-          elevation: 10, // Memberikan efek shadow pada dialog
-          backgroundColor: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.green,
-                  size: 80.0,
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Reservation Submitted',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+        return WillPopScope(
+          onWillPop: () async {
+            _isDialogShowing = false;
+            return true;
+          },
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20), // Membuat sudut lebih bulat
+            ),
+            elevation: 10, // Memberikan efek shadow pada dialog
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    Icons.check_circle_outline,
                     color: Colors.green,
+                    size: 80.0,
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Your reservation has been successfully submitted.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/history');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  SizedBox(height: 20),
+                  Text(
+                    'Reservation Submitted',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   ),
-                  child: Text(
-                    'OK',
+                  SizedBox(height: 10),
+                  Text(
+                    'Your reservation has been successfully submitted.',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: Colors.grey[600],
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      _isDialogShowing = false;
+                      Navigator.of(context).pop(); // Tutup dialog
+                      Navigator.pushReplacementNamed(context, '/history');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    ),
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
       },
     ).then((_) {
-      // Setelah dialog ditutup, set flag untuk menunjukkan dialog telah selesai
-      _isDialogShown = false;
+      _isDialogShowing = false;
+    }).catchError((_) {
+      _isDialogShowing = false;
     });
   }
 }
