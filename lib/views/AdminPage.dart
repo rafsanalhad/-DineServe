@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../controller/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -26,8 +27,14 @@ class _AdminPageState extends State<AdminPage> {
   @override
   void initState() {
     super.initState();
+    checkAdmin();
     _getProfile();
     _getAllReservations();
+  }
+  void checkAdmin(){
+    if(_authController.role.value != 'admin'){
+      Navigator.pushNamed(context, '/login');
+    }
   }
 
   Future<void> _getProfile() async {
@@ -72,8 +79,23 @@ class _AdminPageState extends State<AdminPage> {
         reservations.removeWhere((reservation) => reservation['id'] == reservationId);
       });
       print("Reservation cancelled successfully.");
+      SuccessAlertBox(
+      context: context,
+      title: "Success",
+      messageText: "Reservation cancelled successfully.",
+      buttonColor: Colors.green,
+      buttonText: "OK",
+    );
     } else {
       print("Failed to cancel reservation: ${response.body}");
+      DangerAlertBox(
+      context: context,
+      title: "Error",
+      messageText: "Failed to cancel reservation: ${response.body}",
+      buttonColor: Colors.green,
+      buttonText: "OK",
+    );
+  
     }
   }
 

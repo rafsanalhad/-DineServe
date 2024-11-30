@@ -23,7 +23,13 @@ class _ProfileScreenState extends State<ProfileAdmin> {
   @override
   void initState() {
     super.initState();
+    checkAdmin();
     _getProfile();
+  }
+  void checkAdmin(){
+    if(_authController.role.value != 'admin'){
+      Navigator.pushNamed(context, '/login');
+    }
   }
 
   Future<void> _getProfile() async {
