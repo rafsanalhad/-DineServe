@@ -13,7 +13,7 @@ class ProfileAdmin extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileAdmin> {
   bool pushNotifications = true;
   bool notifications = true;
-  int _selectedIndex = 1; 
+  int _selectedIndex = 2; 
   final AuthController _authController = Get.find();
   late String username = '';
   late String email = '';
@@ -91,6 +91,8 @@ class _ProfileScreenState extends State<ProfileAdmin> {
         Navigator.pushNamed(context, '/admin');
         break;
       case 1:
+        Navigator.pushNamed(context, '/refund');
+      case 2:
         Navigator.pushNamed(context, '/profileAdmin');
         break;
       default:
@@ -222,6 +224,10 @@ class _ProfileScreenState extends State<ProfileAdmin> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Refund',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

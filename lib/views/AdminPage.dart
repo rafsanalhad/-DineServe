@@ -108,6 +108,9 @@ class _AdminPageState extends State<AdminPage> {
         Navigator.pushNamed(context, '/admin');
         break;
       case 1:
+        Navigator.pushNamed(context, '/refund');
+        break;
+      case 2:
         Navigator.pushNamed(context, '/profileAdmin');
         break;
       default:
@@ -220,6 +223,10 @@ class _AdminPageState extends State<AdminPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Refund',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
