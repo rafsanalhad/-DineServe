@@ -203,6 +203,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                   leading: Icon(Icons.logout, color: Colors.red),
                   title: Text('Logout', style: TextStyle(color: Colors.red)),
                   onTap: () {
+                    _authController.logout();
                     Navigator.pushNamed(context, '/login');
                   },
                 ),

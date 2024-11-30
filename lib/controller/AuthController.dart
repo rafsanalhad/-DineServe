@@ -49,9 +49,9 @@ class AuthController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('role', value);
       role.value = value;
-      print('Set username: $role'); // Debug print
+      print('Set role: $role'); // Debug print
     } catch (e) {
-      print('Error setting username: $e');
+      print('Error setting role: $e');
     }
   }
 
@@ -61,8 +61,10 @@ class AuthController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('user_id');
       await prefs.remove('username');
+      await prefs.remove('role');
       id.value = 0;
       username.value = '';
+      role.value = '';
     } catch (e) {
       print('Error during logout: $e');
     }

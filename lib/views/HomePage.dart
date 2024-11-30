@@ -142,8 +142,11 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                           ),
-                          const Icon(Icons.notifications_active_outlined,
+                          InkWell(
+                            onTap:() => Navigator.pushNamed(context, '/notification'),
+                            child: const Icon(Icons.notifications_active_outlined,
                               color: Colors.white),
+                          ) 
                         ],
                       ),
                       Row(

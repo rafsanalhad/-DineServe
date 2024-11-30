@@ -22,6 +22,7 @@ import 'views/TentangKami.dart';
 import 'views/AdminPage.dart';
 import 'views/ProfileAdmin.dart';
 import 'views/RefundPage.dart';
+import 'views/NotificationScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +56,7 @@ void main() async {
         GetPage(name: '/admin', page: () => AdminPage()),
         GetPage(name: '/profileAdmin', page: () => ProfileAdmin()),
         GetPage(name: '/refund', page: () => RefundPage()),
+        GetPage(name: '/notification', page: () => NotificationScreen()),
       ],
     ),
   );
