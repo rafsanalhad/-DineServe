@@ -31,25 +31,19 @@ class _DisplayPictureScreenEmotionState
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   String getStarRating(String emotion) {
     switch (emotion.toLowerCase()) {
-      case 'senang':
+      case 'Suprise':
         starInt = 5;
         return '★★★★★';
-      case 'terkejut':
+      case 'Happy':
         starInt = 4;
         return '★★★★☆';
-      case 'netral':
+      case 'Neutral':
         starInt = 3;
         return '★★★☆☆';
-      case 'takut':
+      case 'Sad':
         starInt = 2;
         return '★★☆☆☆';
-      case 'jijik':
-        starInt = 1;
-        return '★☆☆☆☆';
-      case 'sedih':
-        starInt = 1;
-        return '★☆☆☆☆';
-      case 'marah':
+      case 'Angry':
         starInt = 1;
         return '★☆☆☆☆';
       default:
@@ -60,8 +54,7 @@ class _DisplayPictureScreenEmotionState
 
   Future<void> sendReview(int starInt, String review) async {
     try {
-      final url = Uri.parse(
-          baseUrl + '/review');
+      final url = Uri.parse(baseUrl + '/review');
       final requestBody = jsonEncode({
         'user_id': _authController.id.value,
         'rating': starInt,
@@ -93,8 +86,7 @@ class _DisplayPictureScreenEmotionState
     });
 
     try {
-      final url = Uri.parse(
-          baseUrl + '/predict');
+      final url = Uri.parse(baseUrl + '/predict');
       print('Sending request to: $url');
 
       final request = http.MultipartRequest('POST', url);
@@ -264,19 +256,15 @@ class _DisplayPictureScreenEmotionState
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context),
+                                    onPressed: () => Navigator.pop(context),
                                     child: Text("Batal"),
                                   ),
                                   ElevatedButton(
                                     onPressed: () async {
                                       if (userReview.isNotEmpty) {
-                                        await sendReview(starInt,
-                                            userReview); 
-                                        Navigator.pop(
-                                            context);
-                                        setState(() {
-                                        });
+                                        await sendReview(starInt, userReview);
+                                        Navigator.pop(context);
+                                        setState(() {});
                                       } else {
                                         setState(() {
                                           ScaffoldMessenger.of(context)

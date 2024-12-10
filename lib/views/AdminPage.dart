@@ -31,8 +31,9 @@ class _AdminPageState extends State<AdminPage> {
     _getProfile();
     _getAllReservations();
   }
-  void checkAdmin(){
-    if(_authController.role.value != 'admin'){
+
+  void checkAdmin() {
+    if (_authController.role.value != 'admin') {
       Navigator.pushNamed(context, '/login');
     }
   }
@@ -60,7 +61,9 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   Future<void> _getAllReservations() async {
-    final response = await http.get(Uri.parse('$baseUrl/reservations?user_id=${_authController.id.value}'),);
+    final response = await http.get(
+      Uri.parse('$baseUrl/reservations?user_id=${_authController.id.value}'),
+    );
 
     if (response.statusCode == 200) {
       setState(() {
@@ -72,30 +75,31 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   Future<void> _cancelReservation(String reservationId) async {
-    final response = await http.delete(Uri.parse(baseUrl + '/reservations/$reservationId'));
+    final response =
+        await http.delete(Uri.parse(baseUrl + '/reservations/$reservationId'));
 
     if (response.statusCode == 200) {
       setState(() {
-        reservations.removeWhere((reservation) => reservation['id'] == reservationId);
+        reservations
+            .removeWhere((reservation) => reservation['id'] == reservationId);
       });
       print("Reservation cancelled successfully.");
       SuccessAlertBox(
-      context: context,
-      title: "Success",
-      messageText: "Reservation cancelled successfully.",
-      buttonColor: Colors.green,
-      buttonText: "OK",
-    );
+        context: context,
+        title: "Success",
+        messageText: "Reservation cancelled successfully.",
+        buttonColor: Colors.green,
+        buttonText: "OK",
+      );
     } else {
       print("Failed to cancel reservation: ${response.body}");
       DangerAlertBox(
-      context: context,
-      title: "Error",
-      messageText: "Failed to cancel reservation: ${response.body}",
-      buttonColor: Colors.green,
-      buttonText: "OK",
-    );
-  
+        context: context,
+        title: "Error",
+        messageText: "Failed to cancel reservation: ${response.body}",
+        buttonColor: Colors.green,
+        buttonText: "OK",
+      );
     }
   }
 
@@ -144,7 +148,8 @@ class _AdminPageState extends State<AdminPage> {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: NetworkImage(baseUrl + '/uploads/$profilePicture'),
+                      backgroundImage:
+                          NetworkImage(baseUrl + '/uploads/$profilePicture'),
                     ),
                     const SizedBox(width: 15),
                     Column(
@@ -152,11 +157,17 @@ class _AdminPageState extends State<AdminPage> {
                       children: [
                         Text(
                           'Hello, Admin',
-                          style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(color: Colors.black),
                         ),
                         Text(
                           'Manage your platform here',
-                          style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.grey),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -165,7 +176,9 @@ class _AdminPageState extends State<AdminPage> {
                 const SizedBox(height: 20),
 
                 // Reservation Section
-                const Text('Reservations', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text('Reservations',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
@@ -200,7 +213,8 @@ class _AdminPageState extends State<AdminPage> {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.cancel),
-                            onPressed: () => _cancelReservation(reservation['id']),
+                            onPressed: () =>
+                                _cancelReservation(reservation['id']),
                           ),
                         ),
                       );
@@ -208,9 +222,6 @@ class _AdminPageState extends State<AdminPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                
-            
               ],
             ),
           ),
