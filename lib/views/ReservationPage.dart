@@ -266,131 +266,185 @@ void _showConfirmationDialog() {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reservation and Payment'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Full Name'),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Reservation and Payment'),
+      elevation: 0,
+      backgroundColor: Colors.white,
+      iconTheme: IconThemeData(color: Colors.black),
+    ),
+    body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Full Name
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Full Name',
+                labelStyle: TextStyle(color: Colors.black87),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
               ),
-              TextField(
-                controller: _phoneController,
-                decoration: const InputDecoration(labelText: 'Phone Number'),
-                keyboardType: TextInputType.phone,
-              ),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email Address'),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 16),
+            ),
+            SizedBox(height: 16),
 
-              // Pemilihan Tanggal
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: _selectedDate ?? DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2101),
-                      );
-                      if (picked != null && picked != _selectedDate) {
-                        setState(() {
-                          _selectedDate = picked;
-                        });
-                      }
-                    },
-                    child: const Text('Select Date'),
-                  ),
-                  SizedBox(width: 8),
-                  Text(_selectedDate == null
-                      ? 'No date selected'
-                      : '${_selectedDate!.toLocal()}'.split(' ')[0]),
-                ],
+            // Phone Number
+            TextField(
+              controller: _phoneController,
+              decoration: InputDecoration(
+                labelText: 'Phone Number',
+                labelStyle: TextStyle(color: Colors.black87),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
               ),
+              keyboardType: TextInputType.phone,
+            ),
+            SizedBox(height: 16),
 
-              Row(
-                children: [
-                  const Text('Select Time: '),
-                  DropdownButton<String>(
-                    value: _selectedTime,
-                    hint: const Text('Choose Time Slot'),
-                    items: availableTimes.map((String time) {
-                      return DropdownMenuItem<String>(
-                        value: time,
-                        child: Text(time),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
+            // Email Address
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email Address',
+                labelStyle: TextStyle(color: Colors.black87),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+              ),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            SizedBox(height: 16),
+
+            // Date Selection
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    final DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: _selectedDate ?? DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2101),
+                    );
+                    if (picked != null && picked != _selectedDate) {
                       setState(() {
-                        _selectedTime = newValue;
+                        _selectedDate = picked;
                       });
-                    },
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 16),
-              DropdownButton<String>(
-                hint: Text('Select Table'),
-                value: _tablePreference,
-                items: tables.map((table) {
-                  return DropdownMenuItem<String>(
-                    value: table['id'].toString(),
-                    child: Text(table['table_number']),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    _tablePreference = newValue;
-                  });
-                },
-              ),
-
-              SizedBox(height: 16),
-
-              // Jumlah Tamu
-              Row(
-                children: [
-                  const Text('Guest Count: '),
-                  DropdownButton<int>(
-                    value: _guestCount,
-                    items: List.generate(
-                      10,
-                      (index) => DropdownMenuItem(
-                        value: index + 1,
-                        child: Text('${index + 1} guests'),
-                      ),
+                    }
+                  },
+                  child: const Text('Select Date'),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    backgroundColor: Color(0xFF18654A),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        _guestCount = value!;
-                      });
-                    },
                   ),
-                ],
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
+                ),
+                SizedBox(width: 8),
+                Text(_selectedDate == null
+                    ? 'No date selected'
+                    : '${_selectedDate!.toLocal()}'.split(' ')[0]),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            // Time Selection
+            Row(
+              children: [
+                const Text('Select Time: '),
+                DropdownButton<String>(
+                  value: _selectedTime,
+                  hint: const Text('Choose Time Slot'),
+                  items: availableTimes.map((String time) {
+                    return DropdownMenuItem<String>(
+                      value: time,
+                      child: Text(time),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedTime = newValue;
+                    });
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            // Table Preference
+            DropdownButton<String>(
+              hint: Text('Select Table'),
+              value: _tablePreference,
+              items: tables.map((table) {
+                return DropdownMenuItem<String>(
+                  value: table['id'].toString(),
+                  child: Text(table['table_number']),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _tablePreference = newValue;
+                });
+              },
+            ),
+            SizedBox(height: 16),
+
+            // Guest Count
+            Row(
+              children: [
+                const Text('Guest Count: '),
+                DropdownButton<int>(
+                  value: _guestCount,
+                  items: List.generate(
+                    10,
+                        (index) => DropdownMenuItem(
+                      value: index + 1,
+                      child: Text('${index + 1} guests'),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _guestCount = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 32),
+
+            // Submit Button
+            Center(
+              child: ElevatedButton(
                 onPressed: _initiatePayment,
                 child: const Text('Proceed to Payment'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                  backgroundColor: Color(0xFF18654A),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   void _initiatePayment() async {
     // Mengecek apakah reservasi sudah ada di waktu dan meja yang sama
