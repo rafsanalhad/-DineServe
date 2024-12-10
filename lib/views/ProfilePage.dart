@@ -48,33 +48,6 @@ class _ProfileScreenState extends State<ProfilePage> {
     }
   }
 
-  Future<void> _updateProfile() async {
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(baseUrl + '/profil/update'),
-    );
-
-    request.fields['user_id'] = _authController.username.value;
-    request.fields['username'] = username; 
-    request.fields['email'] = email; 
-    request.fields['password'] = ''; 
-
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      print("Profile updated successfully!");
-      Navigator.pushNamed(context, '/profile');
-      await _getProfile();
-      Get.snackbar(
-        'Success',
-        'Profile updated successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    } else {
-      print("Failed to update profile: ${response.statusCode}");
-    }
-  }
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -88,7 +61,7 @@ class _ProfileScreenState extends State<ProfilePage> {
         Navigator.pushNamed(context, '/history');
         break;
       case 2:
-        Navigator.pushNamed(context, '/profil');
+        Navigator.pushNamed(context, '/profile');
         break;
       default:
         break;

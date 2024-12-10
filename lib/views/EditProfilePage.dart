@@ -140,7 +140,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Profile updated successfully")));
         _authController.setUsername(usernameController.text);
-      Navigator.pushNamed(context, '/profile');
     } else {
       print("Failed to update profile: ${response}");
       ScaffoldMessenger.of(context)
@@ -234,9 +233,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/profile');
                         },
-                        child: Text("Cancel"),
+                        child: Text("Kembali"),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
