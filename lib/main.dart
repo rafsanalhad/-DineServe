@@ -23,6 +23,8 @@ import 'views/AdminPage.dart';
 import 'views/ProfileAdmin.dart';
 import 'views/RefundPage.dart';
 import 'views/NotificationScreen.dart';
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +44,7 @@ void main() async {
       getPages: [
         GetPage(name: '/', page: () => const StartScreen()),
         GetPage(name: '/home', page: () => const HomePage()),
-        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/login', page: () => const LoginScreen()),
         GetPage(name: '/signup', page: () => const SignUpPage()),
         GetPage(name: '/reservation', page: () => ReservationPage()),
         GetPage(name: '/loading', page: () => const CardLoadingApp()),
