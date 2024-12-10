@@ -13,7 +13,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfileScreenState extends State<ProfilePage> {
   bool pushNotifications = true;
   bool notifications = true;
-  int _selectedIndex = 2; 
+  int _selectedIndex = 2;
   final AuthController _authController = Get.find();
   late String username = '';
   late String email = '';
@@ -71,117 +71,224 @@ class _ProfileScreenState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Menambahkan backgroundColor di Scaffold untuk seluruh tampilan
+      backgroundColor: Color(0xFFFAFAFA),
+      appBar: AppBar(
+        backgroundColor: Color(0xFFFAFAFA),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
+        child: Padding(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CircleAvatar(
+                      radius: 55,
+                      backgroundImage:
+                          NetworkImage(baseUrl + '/uploads/$profilePicture'),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "@$username",
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      email,
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+              Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(36),
+                  ),
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage: NetworkImage(
-                            baseUrl + '/uploads/$profilePicture'),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        username,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        email,
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/editProfile');
-                        },
-                        child: Text('Edit profile'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green, // primary green
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                      ListTile(
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFE0FBE2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.store,
+                            color: Colors.green,
+                            size: 24,
                           ),
                         ),
+                        title: const Text('History'),
+                         trailing: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.chevron_right,
+                            color: Color(0xFFB8B8B8),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/history');
+                        },
+                      ),
+                      ListTile(
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFE0FBE2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.headset_mic,
+                            color: Colors.green,
+                            size: 24,
+                          ),
+                        ),
+                        title: const Text('Kontak Support'),
+                         trailing: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.chevron_right,
+                            color: Color(0xFFB8B8B8),
+                          ),
+                        ),
+                        onTap: () {
+                          // Action untuk Kontak Support
+                        },
+                      ),
+                      ListTile(
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFE0FBE2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.info,
+                            color: Colors.green,
+                            size: 24,
+                          ),
+                        ),
+                        title: const Text('Tentang Kami'),
+                         trailing: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.chevron_right,
+                            color: Color(0xFFB8B8B8),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/tentangKami');
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ListTile(
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFE0FBE2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.green,
+                            size: 24,
+                          ),
+                        ),
+                        title: const Text('Edit Profile'),
+                         trailing: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.chevron_right,
+                            color: Color(0xFFB8B8B8),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/editProfile');
+                        },
+                      ),
+                      ListTile(
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFE0FBE2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons
+                                .logout,
+                            color: Colors.green,
+                            size: 24,
+                          ),
+                        ),
+                        title: const Text('Logout'),
+                        trailing: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.chevron_right,
+                            color: Color(0xFFB8B8B8),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/logout');
+                        },
                       ),
                     ],
-                  ),
-                ),
-                SizedBox(height: 24),
-                Text(
-                  'Inventories',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                ListTile(
-                  leading: Icon(Icons.store),
-                  title: Text('My Reservation'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.green,
-                        radius: 12,
-                        child: Text('2',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 12)),
-                      ),
-                      Icon(Icons.chevron_right),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/history');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.support_agent),
-                  title: Text('Support'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                  },
-                ),
-                SizedBox(height: 24),
-                Text(
-                  'Preferences',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                ListTile(
-                  title: Text('Tentang Kami'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    // Add your action here
-                  },
-                ),
-                SwitchListTile(
-                  title: Text('Notification'),
-                  value: notifications,
-                  onChanged: (bool value) {
-                    setState(() {
-                      notifications = value;
-                    });
-                  },
-                ),
-                ListTile(
-                  title: Text('Reset Password'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                  },
-                ),
-                SizedBox(height: 16),
-                ListTile(
-                  leading: Icon(Icons.logout, color: Colors.red),
-                  title: Text('Logout', style: TextStyle(color: Colors.red)),
-                  onTap: () {
-                    _authController.logout();
-                    Navigator.pushNamed(context, '/login');
-                  },
-                ),
-              ],
-            ),
+                  )),
+            ],
           ),
         ),
       ),
@@ -203,7 +310,7 @@ class _ProfileScreenState extends State<ProfilePage> {
             label: 'Profil',
           ),
         ],
-        selectedItemColor: const Color(0xFF18654A), // your primary green color
+        selectedItemColor: const Color(0xFF18654A), // primary green
         unselectedItemColor: const Color(0xFF18654A),
         onTap: _onItemTapped,
       ),
