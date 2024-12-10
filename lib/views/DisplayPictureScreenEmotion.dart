@@ -30,7 +30,7 @@ class _DisplayPictureScreenEmotionState
   int starInt = 0;
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   String getStarRating(String emotion) {
-    switch (emotion.toLowerCase()) {
+    switch (emotion) {
       case 'Suprise':
         starInt = 5;
         return '★★★★★';
@@ -129,6 +129,7 @@ class _DisplayPictureScreenEmotionState
           emotionResult = data['max_emotion'] ?? "Unknown";
           confidence = "${data['max_percentage'] ?? 0}%";
           starRating = getStarRating(emotionResult);
+          print('emotion: $emotionResult');
         });
       } else {
         setState(() {
