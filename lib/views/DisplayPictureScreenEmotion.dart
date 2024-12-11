@@ -52,33 +52,6 @@ class _DisplayPictureScreenEmotionState
     }
   }
 
-  Future<void> sendReview(int starInt, String review) async {
-    try {
-      final url = Uri.parse(baseUrl + '/review');
-      final requestBody = jsonEncode({
-        'user_id': _authController.id.value,
-        'rating': starInt,
-        'comment': review,
-      });
-      print('Sending request body: $requestBody');
-
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: requestBody,
-      );
-
-      if (response.statusCode == 200) {
-        print("Review submitted successfully");
-      } else {
-        print("Failed to submit review: ${response.statusCode}");
-        print("Response body: ${response.body}");
-      }
-    } catch (e) {
-      print("Error submitting review: $e");
-    }
-  }
-
   Future<void> predictEmotion() async {
     setState(() {
       emotionResult = "Loading...";
@@ -157,147 +130,262 @@ class _DisplayPictureScreenEmotionState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Tombol back
+          },
+        ),
+        backgroundColor:
+            Colors.transparent, // Membuat background app bar transparan
+        elevation: 0, // Menghilangkan shadow
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: kIsWeb
-                  ? Image.network(widget.imagePath)
-                  : Image.file(
-                      File(widget.imagePath),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      fit: BoxFit.cover,
-                    ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Emotion Detection Result',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 16),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xFF18654A)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(height: 8),
-                                Text(
-                                  starRating,
-                                  style: TextStyle(
-                                    color: Colors.amber,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  emotionResult,
-                                  style: TextStyle(color: Color(0xFF18654A)),
-                                ),
-                              ],
-                            ),
-                          ]),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              String userReview = "";
-
-                              return AlertDialog(
-                                title: Text("Tulis Ulasan"),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextField(
-                                      maxLines: 5,
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            "Tulis ulasan Anda di sini...",
-                                        border: OutlineInputBorder(),
-                                      ),
-                                      onChanged: (value) {
-                                        userReview = value;
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text("Batal"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      if (userReview.isNotEmpty) {
-                                        await sendReview(starInt, userReview);
-                                        Navigator.pop(context);
-                                        setState(() {});
-                                      } else {
-                                        setState(() {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                                content: Text(
-                                                    "Please enter a review")),
-                                          );
-                                        });
-                                      }
-                                    },
-                                    child: Text("Submit"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF18654A),
-                          foregroundColor: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Gambar Face Recognition (diperbesar dan bulat)
+              Center(
+                child: ClipOval(
+                  child: kIsWeb
+                      ? Image.network(
+                          widget.imagePath,
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.file(
+                          File(widget.imagePath),
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
                         ),
-                        child: const Text('Tulis Ulasan'),
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
-          ],
+
+              const SizedBox(height: 30),
+
+              // Face Recognition Text
+              const Text(
+                'Deteksi Emosi',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+
+              Text(
+                emotionResult,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF18654A),
+                ),
+              ),
+              Text(
+                starRating,
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              // Instruction Text
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  "Hasil ini adalah prediksi emosi dari gambar yang diunggah. Silakan berikan ulasan Anda untuk membantu kami meningkatkan layanan kami.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 40),
+
+              // Tombol Get Started dengan lebar penuh
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: SizedBox(
+                  width: double.infinity, // Mengatur lebar tombol menjadi penuh
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return CommentBottomSheet(starInt: starInt);
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF18654A), // Warna tombol
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      'Berikan Ulasan',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class CommentBottomSheet extends StatefulWidget {
+  final int starInt; // Menerima rating dari konstruktor
+
+  CommentBottomSheet(
+      {required this.starInt}); // Konstruktor dengan nilai starInt
+
+  @override
+  _CommentBottomSheetState createState() => _CommentBottomSheetState();
+}
+
+class _CommentBottomSheetState extends State<CommentBottomSheet> {
+  final TextEditingController _controller = TextEditingController();
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
+  final AuthController _authController = Get.find();
+
+  Future<void> sendReview(int starInt, String review) async {
+    try {
+      final url = Uri.parse(baseUrl + '/review');
+      final requestBody = jsonEncode({
+        'user_id': _authController.id.value,
+        'rating': starInt,
+        'comment': review,
+      });
+      print('Sending request body: $requestBody');
+
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: requestBody,
+      );
+
+      if (response.statusCode == 201) {
+        print("Review submitted successfully");
+        // Menampilkan modal sukses yang trendy
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Ulasan berhasil dikirim"),
+            backgroundColor: Color(0xFF18654A),
+          ),
+        );
+      } else {
+        print("Failed to submit review: ${response.statusCode}");
+        print("Response body: ${response.body}");
+      }
+    } catch (e) {
+      print("Error submitting review: $e");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.6,
+      minChildSize: 0.4,
+      maxChildSize: 0.9,
+      builder: (BuildContext context, ScrollController scrollController) {
+        return SingleChildScrollView(
+          controller: scrollController,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Berikan Ulasan',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: "Tulis komentar Anda...",
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                    ),
+                    maxLines: 5,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Komentar Anda sangat membantu kami untuk meningkatkan layanan.",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      String userReview = _controller.text.trim();
+                      if (userReview.isNotEmpty) {
+                        await sendReview(widget.starInt, userReview);
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Harap isi ulasan")),
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF18654A),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      'Kirim Ulasan',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

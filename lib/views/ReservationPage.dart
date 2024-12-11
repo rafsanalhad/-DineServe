@@ -162,89 +162,92 @@ class _ReservationPageState extends State<ReservationPage> {
     }
   }
 
-bool _isDialogShowing = false;
+  bool _isDialogShowing = false;
 
-void _showConfirmationDialog() {
-  if (!_isDialogShowing) {
-    _isDialogShowing = true;
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Tidak bisa menutup dialog dengan klik di luar dialog
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async {
-            _isDialogShowing = false;
-            return true;
-          },
-          child: Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20), // Membuat sudut lebih bulat
-            ),
-            elevation: 10, // Memberikan efek shadow pada dialog
-            backgroundColor: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(
-                    Icons.check_circle_outline,
-                    color: Colors.green,
-                    size: 80.0,
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Reservation Submitted',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+  void _showConfirmationDialog() {
+    if (!_isDialogShowing) {
+      _isDialogShowing = true;
+      showDialog(
+        context: context,
+        barrierDismissible:
+            false, // Tidak bisa menutup dialog dengan klik di luar dialog
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async {
+              _isDialogShowing = false;
+              return true;
+            },
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(20), // Membuat sudut lebih bulat
+              ),
+              elevation: 10, // Memberikan efek shadow pada dialog
+              backgroundColor: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(
+                      Icons.check_circle_outline,
                       color: Colors.green,
+                      size: 80.0,
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Your reservation has been successfully submitted.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      _isDialogShowing = false;
-                      Navigator.of(context).pop(); // Tutup dialog
-                      Navigator.pushReplacementNamed(context, '/history');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    SizedBox(height: 20),
+                    Text(
+                      'Reservation Submitted',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                     ),
-                    child: Text(
-                      'OK',
+                    SizedBox(height: 10),
+                    Text(
+                      'Your reservation has been successfully submitted.',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white,
+                        color: Colors.grey[600],
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        _isDialogShowing = false;
+                        Navigator.of(context).pop(); // Tutup dialog
+                        Navigator.pushReplacementNamed(context, '/history');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      ),
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ).then((_) {
-      _isDialogShowing = false;
-    }).catchError((_) {
-      _isDialogShowing = false;
-    });
+          );
+        },
+      ).then((_) {
+        _isDialogShowing = false;
+      }).catchError((_) {
+        _isDialogShowing = false;
+      });
+    }
   }
-}
 
   // Menampilkan Toast
   void _showToast(String msg, bool isError) {
@@ -266,84 +269,208 @@ void _showConfirmationDialog() {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Reservation and Payment'),
-      elevation: 0,
-      backgroundColor: Colors.white,
-      iconTheme: IconThemeData(color: Colors.black),
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Full Name
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Full Name',
-                labelStyle: TextStyle(color: Colors.black87),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reservasi dan Pembayaran'),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Full Name
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Atas Nama',
+                  labelStyle: TextStyle(color: Colors.black87),
+                  filled: true, // Mengaktifkan background
+                  fillColor: Colors.grey[200], // Warna background
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                  // Menghilangkan border
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Mengatur border radius
+                    borderSide: BorderSide.none, // Menghilangkan border
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Mengatur border radius
+                    borderSide:
+                        BorderSide.none, // Menghilangkan border saat fokus
+                  ),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
               ),
-            ),
-            SizedBox(height: 16),
+              SizedBox(height: 16),
 
-            // Phone Number
-            TextField(
-              controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                labelStyle: TextStyle(color: Colors.black87),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+// Phone Number
+              TextField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  labelText: 'No Telp',
+                  labelStyle: TextStyle(color: Colors.black87),
+                  filled: true, // Mengaktifkan background
+                  fillColor: Colors.grey[200], // Warna background
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                  // Menghilangkan border
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Mengatur border radius
+                    borderSide: BorderSide.none, // Menghilangkan border
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Mengatur border radius
+                    borderSide:
+                        BorderSide.none, // Menghilangkan border saat fokus
+                  ),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                keyboardType: TextInputType.phone,
               ),
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(height: 16),
+              SizedBox(height: 16),
 
-            // Email Address
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email Address',
-                labelStyle: TextStyle(color: Colors.black87),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+// Email Address
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.black87),
+                  filled: true, // Mengaktifkan background
+                  fillColor: Colors.grey[200], // Warna background
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                  // Menghilangkan border
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Mengatur border radius
+                    borderSide: BorderSide.none, // Menghilangkan border
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Mengatur border radius
+                    borderSide:
+                        BorderSide.none, // Menghilangkan border saat fokus
+                  ),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                keyboardType: TextInputType.emailAddress,
               ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 16),
 
-            // Date Selection
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    final DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: _selectedDate ?? DateTime.now(),
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime(2101),
-                    );
-                    if (picked != null && picked != _selectedDate) {
+              SizedBox(height: 16),
+
+              // Date Selection
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      final DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: _selectedDate ?? DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2101),
+                      );
+                      if (picked != null && picked != _selectedDate) {
+                        setState(() {
+                          _selectedDate = picked;
+                        });
+                      }
+                    },
+                    child: const Text('Pilih Tanggal'),
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      backgroundColor: Color(0xFF18654A),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(_selectedDate == null
+                      ? 'Tanggal belum dipilih'
+                      : '${_selectedDate!.toLocal()}'.split(' ')[0]),
+                ],
+              ),
+              SizedBox(height: 16),
+
+              // Time Selection
+              Row(
+                children: [
+                  const Text('Pilih Jam: '),
+                  DropdownButton<String>(
+                    value: _selectedTime,
+                    hint: const Text('Pilih Slot Waktu'),
+                    items: availableTimes.map((String time) {
+                      return DropdownMenuItem<String>(
+                        value: time,
+                        child: Text(time),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
                       setState(() {
-                        _selectedDate = picked;
+                        _selectedTime = newValue;
                       });
-                    }
-                  },
-                  child: const Text('Select Date'),
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+
+              const Text('Pilih Meja: '),
+              DropdownButton<String>(
+                hint: Text('Pilih Meja'),
+                value: _tablePreference,
+                items: tables.map((table) {
+                  return DropdownMenuItem<String>(
+                    value: table['id'].toString(),
+                    child: Text(table['table_number']),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    _tablePreference = newValue;
+                  });
+                },
+              ),
+              SizedBox(height: 16),
+
+              // Guest Count
+              Row(
+                children: [
+                  const Text('Jumlah Orang: '),
+                  DropdownButton<int>(
+                    value: _guestCount,
+                    items: List.generate(
+                      10,
+                      (index) => DropdownMenuItem(
+                        value: index + 1,
+                        child: Text('${index + 1} guests'),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _guestCount = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 32),
+
+              // Submit Button
+              Center(
+                child: ElevatedButton(
+                  onPressed: _initiatePayment,
+                  child: const Text('Lakukan Pembayaran'),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                     backgroundColor: Color(0xFF18654A),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -351,100 +478,13 @@ Widget build(BuildContext context) {
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
-                Text(_selectedDate == null
-                    ? 'No date selected'
-                    : '${_selectedDate!.toLocal()}'.split(' ')[0]),
-              ],
-            ),
-            SizedBox(height: 16),
-
-            // Time Selection
-            Row(
-              children: [
-                const Text('Select Time: '),
-                DropdownButton<String>(
-                  value: _selectedTime,
-                  hint: const Text('Choose Time Slot'),
-                  items: availableTimes.map((String time) {
-                    return DropdownMenuItem<String>(
-                      value: time,
-                      child: Text(time),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedTime = newValue;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-
-            // Table Preference
-            DropdownButton<String>(
-              hint: Text('Select Table'),
-              value: _tablePreference,
-              items: tables.map((table) {
-                return DropdownMenuItem<String>(
-                  value: table['id'].toString(),
-                  child: Text(table['table_number']),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  _tablePreference = newValue;
-                });
-              },
-            ),
-            SizedBox(height: 16),
-
-            // Guest Count
-            Row(
-              children: [
-                const Text('Guest Count: '),
-                DropdownButton<int>(
-                  value: _guestCount,
-                  items: List.generate(
-                    10,
-                        (index) => DropdownMenuItem(
-                      value: index + 1,
-                      child: Text('${index + 1} guests'),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _guestCount = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 32),
-
-            // Submit Button
-            Center(
-              child: ElevatedButton(
-                onPressed: _initiatePayment,
-                child: const Text('Proceed to Payment'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                  backgroundColor: Color(0xFF18654A),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   void _initiatePayment() async {
     // Mengecek apakah reservasi sudah ada di waktu dan meja yang sama

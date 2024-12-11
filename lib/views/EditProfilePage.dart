@@ -140,6 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Profile updated successfully")));
         _authController.setUsername(usernameController.text);
+        _authController.setEmail(emailController.text);
     } else {
       print("Failed to update profile: ${response}");
       ScaffoldMessenger.of(context)
@@ -152,47 +153,53 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Profile"),
-        backgroundColor: Color(0xFF18654A),
-      ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: GestureDetector(
-                          onTap: _pickImage,
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundImage: kIsWeb
-                                ? (_imageBytes != null
-                                    ? Image.memory(_imageBytes!).image
-                                    : NetworkImage(
-                                            baseUrl + '/uploads/$profilePicture')
-                                        as ImageProvider)
-                                : (_selectedImage != null
-                                    ? FileImage(_selectedImage!)
-                                    : NetworkImage(
-                                            baseUrl + '/uploads/$profilePicture')
-                                        as ImageProvider),
-                          ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text("Edit Profile"),
+    ),
+    body: isLoading
+        ? Center(child: CircularProgressIndicator())
+        : Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: GestureDetector(
+                        onTap: _pickImage,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: kIsWeb
+                              ? (_imageBytes != null
+                                  ? Image.memory(_imageBytes!).image
+                                  : NetworkImage(
+                                          baseUrl + '/uploads/$profilePicture')
+                                      as ImageProvider)
+                              : (_selectedImage != null
+                                  ? FileImage(_selectedImage!)
+                                  : NetworkImage(
+                                          baseUrl + '/uploads/$profilePicture')
+                                      as ImageProvider),
                         ),
                       ),
-                      SizedBox(height: 20),
-                      TextFormField(
+                    ),
+                    SizedBox(height: 20),
+                    // Username field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextFormField(
                         controller: usernameController,
                         decoration: InputDecoration(
-                          labelText: "Username",
-                          border: OutlineInputBorder(),
+                          hintText: "Username",
+                          border: InputBorder.none,
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -201,12 +208,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
-                      TextFormField(
+                    ),
+                    SizedBox(height: 16),
+                    // Email field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          labelText: "Email",
-                          border: OutlineInputBorder(),
+                          hintText: "Email",
+                          border: InputBorder.none,
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -218,36 +233,55 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           return null;
                         },
                       ),
-                     
-                      SizedBox(height: 20),
-                      ElevatedButton(
+                    ),
+                    SizedBox(height: 20),
+                    // Save Changes Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
                         onPressed: _updateProfile,
-                        child: Text("Save Changes"),
+                        child: Text(
+                          "Save Changes",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: Color(0xFF18654A),
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
+                    ),
+                    SizedBox(height: 16),
+                    // Kembali Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/profile');
+                          Navigator.pop(context);
                         },
-                        child: Text("Kembali"),
+                        child: Text(
+                          "Kembali",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: Colors.grey[400],
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-    );
-  }
+          ),
+  );
+}
+
 }

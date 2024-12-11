@@ -38,8 +38,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
-        backgroundColor: Colors.green,
+        title: Text('Notifikasi'),
       ),
       body: FutureBuilder<List<Notification>>(
         future: _notifications,
@@ -96,7 +95,7 @@ class NotificationCard extends StatelessWidget {
             ),
             SizedBox(height: 8.0),
             Text(
-              'Status: ${notification.status}',
+              'Tipe: Reservasi',
               style: TextStyle(
                 fontSize: 14.0,
                 fontStyle: FontStyle.italic,

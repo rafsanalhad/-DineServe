@@ -41,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         final dataUser = jsonDecode(response.body);
         _authController.setId(dataUser['id']);
         _authController.setUsername(dataUser['user']);
+        _authController.setEmail(dataUser['email']);
         _authController.setRole(dataUser['role']);
         if(dataUser['role'] == 'admin'){
           Navigator.pushNamed(context, '/admin');

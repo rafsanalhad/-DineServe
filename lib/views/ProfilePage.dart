@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                           ),
                         ),
                         title: const Text('History'),
-                         trailing: Container(
+                        trailing: Container(
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
@@ -173,7 +173,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                           ),
                         ),
                         title: const Text('Kontak Support'),
-                         trailing: Container(
+                        trailing: Container(
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
@@ -204,7 +204,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                           ),
                         ),
                         title: const Text('Tentang Kami'),
-                         trailing: Container(
+                        trailing: Container(
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
@@ -238,7 +238,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                           ),
                         ),
                         title: const Text('Edit Profile'),
-                         trailing: Container(
+                        trailing: Container(
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
@@ -263,8 +263,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
-                            Icons
-                                .logout,
+                            Icons.logout,
                             color: Colors.green,
                             size: 24,
                           ),
@@ -283,7 +282,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.pushNamed(context, '/logout');
+                          Navigator.pushNamed(context, '/login');
                         },
                       ),
                     ],
