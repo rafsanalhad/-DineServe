@@ -15,7 +15,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   Future<void> signUp() async {
     String username = _usernameController.text;
@@ -23,19 +24,24 @@ class _SignUpPageState extends State<SignUpPage> {
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
+    if (username.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Please fill all fields")));
       return;
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Passwords do not match")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Passwords do not match")));
       return;
     }
 
     try {
       var response = await http.post(
-        Uri.parse(baseUrl + '/signup'), 
+        Uri.parse(baseUrl + '/signup'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -48,29 +54,31 @@ class _SignUpPageState extends State<SignUpPage> {
 
       if (response.statusCode == 200) {
         showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Sign Up Successful"),
-            content: Text("Your account has been created successfully!"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pushReplacementNamed(context, '/login');
-                },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Sign Up Successful"),
+              content: Text("Your account has been created successfully!"),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
       } else {
         var responseData = json.decode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(responseData['message'] ?? 'Error occurred')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(responseData['message'] ?? 'Error occurred')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error connecting to the server")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error connecting to the server")));
     }
   }
 
@@ -142,7 +150,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           offset: const Offset(0, 2),
                         ),
                       ]),
-
                   child: Column(
                     children: [
                       Row(

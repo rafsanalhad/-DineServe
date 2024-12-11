@@ -5,7 +5,7 @@ class TentangKami extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00BF69),
+        backgroundColor: const Color(0xFF459171),
         title: const Text(
           'Tentang Kami',
           style: TextStyle(color: Colors.white),
@@ -21,7 +21,7 @@ class TentangKami extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               decoration: const BoxDecoration(
-                color: Color(0xFF00BF69),
+                color: Color(0xFF459171),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -117,12 +117,12 @@ class TentangKami extends StatelessWidget {
                       ),
                       _teamMember(
                         imagePath: 'assets/images/profil.png',
-                        name: 'King Armand',
+                        name: 'Maulana Armand',
                         role: 'CTO',
                       ),
                       _teamMember(
                         imagePath: 'assets/images/profil.png',
-                        name: 'Arno Kewer',
+                        name: 'Arno Coding',
                         role: 'Designer',
                       ),
                     ],

@@ -143,10 +143,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           InkWell(
-                            onTap:() => Navigator.pushNamed(context, '/notification'),
-                            child: const Icon(Icons.notifications_active_outlined,
-                              color: Colors.white),
-                          ) 
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/notification'),
+                            child: const Icon(
+                                Icons.notifications_active_outlined,
+                                color: Colors.white),
+                          )
                         ],
                       ),
                       Row(
@@ -187,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                                             vertical: 10, horizontal: 20),
                                         margin: const EdgeInsets.only(top: 15),
                                         decoration: BoxDecoration(
-                                          color: Color(0xFF00BF69),
+                                          color: Color(0xFF459171),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           border: Border.all(
@@ -479,7 +481,7 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Profil',
+              label: 'Profile',
             ),
           ],
           selectedItemColor: const Color(0xFF18654A),

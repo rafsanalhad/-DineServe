@@ -71,7 +71,6 @@ class _ProfileScreenState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Menambahkan backgroundColor di Scaffold untuk seluruh tampilan
       backgroundColor: Color(0xFFFAFAFA),
       appBar: AppBar(
         backgroundColor: Color(0xFFFAFAFA),
@@ -88,37 +87,39 @@ class _ProfileScreenState extends State<ProfilePage> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CircleAvatar(
-                      radius: 55,
-                      backgroundImage:
-                          NetworkImage(baseUrl + '/uploads/$profilePicture'),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "@$username",
-                      style: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      email,
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                    const SizedBox(height: 30),
-                  ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CircleAvatar(
+                        radius: 55,
+                        backgroundImage:
+                            NetworkImage(baseUrl + '/uploads/$profilePicture'),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        "@$username",
+                        style: const TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        email,
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
+                Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(36),
@@ -286,8 +287,10 @@ class _ProfileScreenState extends State<ProfilePage> {
                         },
                       ),
                     ],
-                  )),
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -306,7 +309,7 @@ class _ProfileScreenState extends State<ProfilePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profil',
+            label: 'Profile',
           ),
         ],
         selectedItemColor: const Color(0xFF18654A), // primary green
