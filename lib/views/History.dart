@@ -148,7 +148,7 @@ class _HistoryState extends State<History> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            "Guests: ${(reservasi['guest_count'] ?? 0).toString()}",
+                            "Jumlah Orang: ${(reservasi['guest_count'] ?? 0).toString()}",
                             style: TextStyle(
                               color: Colors.green.shade700,
                               fontSize: 12,
@@ -188,7 +188,7 @@ class _HistoryState extends State<History> {
           ),
         ],
         selectedItemColor: const Color(0xFF18654A),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: const Color(0xFF18654A),
         onTap: _onItemTapped,
       ),
     );

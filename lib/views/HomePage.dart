@@ -279,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          'Reservasi sekarang dengan Face Recognition',
+                                          'Reservasi sekarang dengan menggunakan payment gateway',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 10,

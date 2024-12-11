@@ -20,7 +20,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 import 'views/Payment.dart';
 import 'views/TentangKami.dart';
 import 'views/AdminPage.dart';
-import 'views/ProfileAdmin.dart';
 import 'views/RefundPage.dart';
 import 'views/NotificationScreen.dart';
 import 'screens/login_screen.dart';
@@ -56,7 +55,6 @@ void main() async {
         GetPage(name: '/cameraEmotion', page: () => TakePictureScreenEmotion()),
         GetPage(name: '/tentangKami', page: () => TentangKami()),
         GetPage(name: '/admin', page: () => AdminPage()),
-        GetPage(name: '/profileAdmin', page: () => ProfileAdmin()),
         GetPage(name: '/refund', page: () => RefundPage()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
       ],

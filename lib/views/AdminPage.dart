@@ -114,9 +114,6 @@ class _AdminPageState extends State<AdminPage> {
       case 1:
         Navigator.pushNamed(context, '/refund');
         break;
-      case 2:
-        Navigator.pushNamed(context, '/profileAdmin');
-        break;
       default:
         break;
     }
@@ -126,13 +123,12 @@ class _AdminPageState extends State<AdminPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF18654A),
           title: const Text('Admin Dashboard'),
           actions: [
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(Icons.logout),
               onPressed: () {
-                // Handle notifications
+                Navigator.pushNamed(context, '/login');
               },
             ),
           ],
@@ -236,12 +232,8 @@ class _AdminPageState extends State<AdminPage> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.payment),
               label: 'Refund',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
             ),
           ],
           selectedItemColor: const Color(0xFF18654A),

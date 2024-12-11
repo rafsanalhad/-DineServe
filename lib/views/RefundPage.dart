@@ -30,9 +30,6 @@ class _RefundPageState extends State<RefundPage> {
         break;
       case 1:
         Navigator.pushNamed(context, '/refund');
-      case 2:
-        Navigator.pushNamed(context, '/profileAdmin');
-        break;
       default:
         break;
     }
@@ -103,7 +100,6 @@ class _RefundPageState extends State<RefundPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Refund Management"),
-        backgroundColor: const Color(0xFF18654A),
       ),
       body: refunds.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -154,12 +150,8 @@ class _RefundPageState extends State<RefundPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.payment),
             label: 'Refund',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
           ),
         ],
         selectedItemColor: const Color(0xFF18654A), // your primary green color
