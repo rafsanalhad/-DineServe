@@ -24,6 +24,7 @@ import 'views/RefundPage.dart';
 import 'views/NotificationScreen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
+import 'views/forgotPassword.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +58,7 @@ void main() async {
         GetPage(name: '/admin', page: () => AdminPage()),
         GetPage(name: '/refund', page: () => RefundPage()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
+        GetPage(name: '/forgotPassword', page: () => ForgotPasswordScreen()),
       ],
     ),
   );

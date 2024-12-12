@@ -30,7 +30,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (username.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please fill all fields")),
       );
@@ -55,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -74,8 +77,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       } else {
         var responseData = json.decode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'] ?? 'Error occurred')),
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text(
+                "Sign Up Failed"), // Ini masih boleh menggunakan `const`
+            content: Text(responseData['error']), // Tidak perlu const
+          ),
         );
       }
     } catch (e) {
