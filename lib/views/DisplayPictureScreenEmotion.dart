@@ -107,7 +107,7 @@ class _DisplayPictureScreenEmotionState
       } else {
         setState(() {
           emotionResult =
-              "Failed to get prediction (Status: ${streamedResponse.statusCode})";
+              "Gagal Mendeteksi Wajah, Silahkan Coba Lagi";
           confidence = "";
           starRating = "☆☆☆☆☆";
         });

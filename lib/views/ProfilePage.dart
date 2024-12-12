@@ -282,8 +282,45 @@ class _ProfileScreenState extends State<ProfilePage> {
                             color: Color(0xFFB8B8B8),
                           ),
                         ),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/login');
+                        onTap: () async {
+                          // Menampilkan modal konfirmasi logout
+                          bool? confirmed = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Konfirmasi Logout"),
+                                content:
+                                    Text("Apakah Anda yakin ingin logout?"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text("Batal"),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(false); // Tidak logout
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text("Logout"),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(true); // Ya, logout
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          // Jika user mengonfirmasi logout, jalankan proses logout
+                          if (confirmed == true) {
+                            try {
+                              await _authController.logout();
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/login', (route) => false);
+                            } catch (e) {
+                              print("Error during logout: $e");
+                            }
+                          }
                         },
                       ),
                     ],
@@ -314,6 +351,8 @@ class _ProfileScreenState extends State<ProfilePage> {
         ],
         selectedItemColor: const Color(0xFF18654A), // primary green
         unselectedItemColor: const Color(0xFF18654A),
+        selectedFontSize: 0.0,
+        unselectedFontSize: 0.0,
         onTap: _onItemTapped,
       ),
     );

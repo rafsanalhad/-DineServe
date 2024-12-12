@@ -80,7 +80,6 @@ class _ReviewsPageState extends State<ReviewsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Reviews'),
-        backgroundColor: const Color(0xFF18654A),
         centerTitle: true,
         elevation: 2,
       ),
@@ -162,8 +161,11 @@ class _ReviewsPageState extends State<ReviewsPage> {
                       final review = _reviews[index];
                       final rating = (review['rating'] ?? 0).toInt();
                       final rawDate = review['date'];
+                      final profilePicture = review['image'];
                       final parsedDate = DateTime.tryParse(rawDate ?? '') ?? DateTime.now();
                       final timeAgo = timeago.format(parsedDate, locale: 'en');
+
+                      print("Review: $review");
 
                       return Card(
                         margin: const EdgeInsets.only(bottom: 16),
@@ -179,12 +181,10 @@ class _ReviewsPageState extends State<ReviewsPage> {
                               Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundColor: const Color(0xFF18654A),
-                                    child: Text(
-                                      (review['username']?[0] ?? '-').toUpperCase(),
-                                      style: const TextStyle(color: Colors.white),
-                                    ),
-                                  ),
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                      baseUrl + '/uploads/$profilePicture'),
+                                ),
                                   const SizedBox(width: 12),
                                   Expanded(
                                     child: Column(

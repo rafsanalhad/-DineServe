@@ -10,7 +10,7 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadAuthData(); // Load data saat controller diinisialisasi
+    loadAuthData();
   }
 
   Future<void> loadAuthData() async {
@@ -18,6 +18,8 @@ class AuthController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       id.value = prefs.getInt('user_id') ?? 0;
       username.value = prefs.getString('username') ?? '';
+      role.value = prefs.getString('role') ?? '';
+      email.value = prefs.getString('email') ?? '';
       print('Loaded username: ${username.value}'); // Debug print
     } catch (e) {
       print('Error loading auth data: $e');
@@ -45,6 +47,7 @@ class AuthController extends GetxController {
       print('Error setting username: $e');
     }
   }
+
   Future<void> setRole(String value) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -55,6 +58,7 @@ class AuthController extends GetxController {
       print('Error setting role: $e');
     }
   }
+
   Future<void> setEmail(String value) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -66,21 +70,27 @@ class AuthController extends GetxController {
     }
   }
 
-  // Method untuk logout
   Future<void> logout() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+
       await prefs.remove('user_id');
       await prefs.remove('username');
       await prefs.remove('role');
+      await prefs.remove('email');
       id.value = 0;
       username.value = '';
       role.value = '';
+      email.value = ''; 
+
+
+      loadAuthData();
+
+      print('Logged out successfully');
     } catch (e) {
       print('Error during logout: $e');
     }
   }
 
-  // Getter untuk mengecek status login
   bool get isLoggedIn => id.value != 0 && username.value.isNotEmpty;
 }

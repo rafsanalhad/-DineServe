@@ -4,6 +4,7 @@ import '../controller/AuthController.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/scheduler.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,8 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
-  final AuthController _authController =
-      Get.find();
+  final AuthController _authController = Get.find();
 
   Future<void> _login() async {
     String email = _emailController.text.trim();
@@ -28,8 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    final url =
-        Uri.parse(baseUrl + '/login');
+    final url = Uri.parse(baseUrl + '/login');
     try {
       final response = await http.post(
         url,
@@ -43,10 +42,14 @@ class _LoginPageState extends State<LoginPage> {
         _authController.setUsername(dataUser['user']);
         _authController.setEmail(dataUser['email']);
         _authController.setRole(dataUser['role']);
-        if(dataUser['role'] == 'admin'){
-          Navigator.pushNamed(context, '/admin');
-        }else{
-          Navigator.pushNamed(context, '/home');
+        if (dataUser['role'] == 'admin') {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/admin');
+          });
+        } else {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/home');
+          });
         }
         print('Saved username: ${_authController.username.value}');
       } else {
@@ -74,6 +77,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    print("authController: ${_authController.username.value}");
+    print("authController: ${_authController.email.value}");
+    print("authController: ${_authController.role.value}");
+    print("authController: ${_authController.id.value}");
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
