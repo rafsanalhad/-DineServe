@@ -28,9 +28,9 @@ class _ReservationPageState extends State<ReservationPage> {
   final AuthController _authController = Get.find();
   List<Map<String, dynamic>> tables = [];
   List<String> availableTimes = [
-    '07:00 - 08:00',
-    '08:00 - 09:00',
-    '09:00 - 10:00'
+    '07:00 - 10:00',
+    '12:00 - 15:00',
+    '19:00 - 22:00'
   ]; // Opsi waktu
 
   Future<void> fetchTables() async {
@@ -216,7 +216,7 @@ class _ReservationPageState extends State<ReservationPage> {
                     ElevatedButton(
                       onPressed: () {
                         _isDialogShowing = false;
-                        Navigator.of(context).pop(); // Tutup dialog
+                        Navigator.pop(context);
                         Navigator.pushReplacementNamed(context, '/history');
                       },
                       style: ElevatedButton.styleFrom(

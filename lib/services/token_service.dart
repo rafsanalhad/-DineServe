@@ -13,7 +13,7 @@ class TokenService {
     var payload = {
       "id": DateTime.now().millisecondsSinceEpoch, // Unique Id
       "productName": "Mentos Marbels",
-      "price": 2500,
+      "price": 30000,
       "quantity": 2
     };
 

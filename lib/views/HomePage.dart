@@ -484,6 +484,8 @@ class _HomePageState extends State<HomePage> {
           ],
           selectedItemColor: const Color(0xFF18654A),
           unselectedItemColor: const Color(0xFF18654A),
+          selectedFontSize: 0.0,
+          unselectedFontSize: 0.0,
           onTap: _onItemTapped,
         ),
       ),

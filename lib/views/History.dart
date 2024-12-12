@@ -15,7 +15,7 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   late Future<List<dynamic>> _reservations;
   final AuthController _authController = Get.find();
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
 
   @override
@@ -114,7 +114,8 @@ class _HistoryState extends State<History> {
             } else {
               final reservations = snapshot.data!;
               return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 itemCount: reservations.length,
                 itemBuilder: (context, index) {
                   final reservasi = reservations[index];
@@ -127,7 +128,8 @@ class _HistoryState extends State<History> {
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.green.shade100,
-                        child: const Icon(Icons.restaurant_menu, color: Colors.green),
+                        child: const Icon(Icons.restaurant_menu,
+                            color: Colors.green),
                       ),
                       title: Text(
                         reservasi['name'] ?? 'No name available',
@@ -189,6 +191,8 @@ class _HistoryState extends State<History> {
         ],
         selectedItemColor: const Color(0xFF18654A),
         unselectedItemColor: const Color(0xFF18654A),
+        selectedFontSize: 0.0,
+        unselectedFontSize: 0.0,
         onTap: _onItemTapped,
       ),
     );
