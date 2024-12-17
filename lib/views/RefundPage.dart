@@ -17,7 +17,7 @@ class _RefundPageState extends State<RefundPage> {
   final AuthController _authController = Get.find();
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   List<dynamic> refunds = [];
-  int _selectedIndex = 1; 
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -79,7 +79,7 @@ class _RefundPageState extends State<RefundPage> {
       SuccessAlertBox(
         context: context,
         title: "Success",
-        messageText: "Refund status updated to $status.",
+        messageText: "Refund berhasil $status.",
         buttonColor: Colors.green,
         buttonText: "OK",
       );
@@ -124,14 +124,91 @@ class _RefundPageState extends State<RefundPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.check, color: Colors.green),
-                                onPressed: () =>
-                                    _updateRefundStatus(refund['id'], 'Diterima'),
+                                icon: const Icon(Icons.check,
+                                    color: Colors.green),
+                                onPressed: () async {
+                                  // Menampilkan modal konfirmasi reservasi
+                                  bool? confirmed = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Konfirmasi"),
+                                        content: Text(
+                                            "Apakah Anda yakin ingin menghapus reservasi ini?"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("Tidak"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(
+                                                  false); // Tidak hapus reservasi
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text("Ya"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(
+                                                  true); // Ya, hapus reservasi
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  // Jika user mengonfirmasi reservasi, jalankan proses reservasi
+                                  if (confirmed == true) {
+                                    try {
+                                      _updateRefundStatus(
+                                          refund['id'], 'Diterima');
+                                    } catch (e) {
+                                      print("Error cancel reservation: $e");
+                                    }
+                                  }
+                                },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.close, color: Colors.red),
-                                onPressed: () =>
-                                    _updateRefundStatus(refund['id'], 'Ditolak'),
+                                icon:
+                                    const Icon(Icons.close, color: Colors.red),
+                                onPressed: () async {
+                                  // Menampilkan modal konfirmasi reservasi
+                                  bool? confirmed = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title:
+                                            Text("Konfirmasi Hapus Reservasi"),
+                                        content: Text(
+                                            "Apakah Anda yakin ingin menghapus reservasi ini?"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("Tidak"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(
+                                                  false); // Tidak hapus reservasi
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text("Ya"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(
+                                                  true); // Ya, hapus reservasi
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  // Jika user mengonfirmasi reservasi, jalankan proses reservasi
+                                  if (confirmed == true) {
+                                    try {
+                                      _updateRefundStatus(
+                                          refund['id'], 'Ditolak');
+                                    } catch (e) {
+                                      print("Error cancel reservation: $e");
+                                    }
+                                  }
+                                },
                               ),
                             ],
                           )
@@ -140,7 +217,7 @@ class _RefundPageState extends State<RefundPage> {
                 );
               },
             ),
-            bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         showSelectedLabels: true,
         showUnselectedLabels: true,

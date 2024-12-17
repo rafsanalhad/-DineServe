@@ -120,8 +120,42 @@ class _AdminPageState extends State<AdminPage> {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
+              onPressed: () async {
+                // Menampilkan modal konfirmasi logout
+                bool? confirmed = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Konfirmasi Logout"),
+                      content: Text("Apakah Anda yakin ingin logout?"),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text("Batal"),
+                          onPressed: () {
+                            Navigator.of(context).pop(false); // Tidak logout
+                          },
+                        ),
+                        TextButton(
+                          child: Text("Logout"),
+                          onPressed: () {
+                            Navigator.of(context).pop(true); // Ya, logout
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+                // Jika user mengonfirmasi logout, jalankan proses logout
+                if (confirmed == true) {
+                  try {
+                    await _authController.logout();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/login', (route) => false);
+                  } catch (e) {
+                    print("Error during logout: $e");
+                  }
+                }
               },
             ),
           ],
@@ -202,8 +236,44 @@ class _AdminPageState extends State<AdminPage> {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.cancel),
-                            onPressed: () =>
-                                _cancelReservation(reservation['id']),
+                            onPressed: () async {
+                              // Menampilkan modal konfirmasi reservasi
+                              bool? confirmed = await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Konfirmasi Hapus Reservasi"),
+                                    content: Text(
+                                        "Apakah Anda yakin ingin menghapus reservasi ini?"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text("Tidak"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop(
+                                              false); // Tidak hapus reservasi
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("Ya"),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(true); // Ya, hapus reservasi
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                              // Jika user mengonfirmasi reservasi, jalankan proses reservasi
+                              if (confirmed == true) {
+                                try {
+                                  _cancelReservation(reservation['id']);
+                                } catch (e) {
+                                  print("Error cancel reservation: $e");
+                                }
+                              }
+                            },
                           ),
                         ),
                       );
