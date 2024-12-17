@@ -31,7 +31,7 @@ class _DisplayPictureScreenEmotionState
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   String getStarRating(String emotion) {
     switch (emotion) {
-      case 'Suprise':
+      case 'Surprise':
         starInt = 5;
         return '★★★★★';
       case 'Happy':
@@ -106,8 +106,7 @@ class _DisplayPictureScreenEmotionState
         });
       } else {
         setState(() {
-          emotionResult =
-              "Gagal Mendeteksi Wajah, Silahkan Coba Lagi";
+          emotionResult = "Gagal Mendeteksi Wajah";
           confidence = "";
           starRating = "☆☆☆☆☆";
         });
