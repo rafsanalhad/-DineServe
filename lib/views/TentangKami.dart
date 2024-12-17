@@ -7,7 +7,7 @@ class TentangKami extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF459171),
         title: const Text(
-          'Tentang Kami',
+          'About Us',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -45,7 +45,7 @@ class TentangKami extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Solusi reservasi restoran modern yang menggabungkan teknologi terkini untuk memberikan pengalaman terbaik.',
+                    'A modern restaurant reservation solution that combines the latest technology to provide the best experience.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -63,7 +63,7 @@ class TentangKami extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Visi Kami',
+                    'Our Vision',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -72,12 +72,12 @@ class TentangKami extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Menjadi platform reservasi restoran nomor satu yang dipercaya oleh jutaan pengguna di seluruh dunia.',
+                    'To become the number one restaurant reservation platform trusted by millions of users worldwide.',
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Misi Kami',
+                    'Our Mission',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -86,15 +86,15 @@ class TentangKami extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    '- Mempermudah pengguna dalam melakukan reservasi restoran.\n'
-                    '- Menggunakan teknologi canggih untuk meningkatkan efisiensi layanan.\n'
-                    '- Memberikan pengalaman terbaik bagi pelanggan dan mitra restoran.',
+                    '- Make it easier for users to make restaurant reservations.\n'
+                    '- Use advanced technology to enhance service efficiency.\n'
+                    '- Provide the best experience for customers and restaurant partners.',
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   const SizedBox(height: 30),
                   // Our Team Section
                   const Text(
-                    'Tim Kami',
+                    'Our Team',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class TentangKami extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Dibalik DineServe adalah tim profesional yang berdedikasi untuk menciptakan pengalaman reservasi yang luar biasa.',
+                    'Behind DineServe is a team of professionals dedicated to creating an exceptional reservation experience.',
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   const SizedBox(height: 20),
@@ -112,18 +112,23 @@ class TentangKami extends StatelessWidget {
                     children: [
                       _teamMember(
                         imagePath: 'assets/images/profil.png',
-                        name: 'Rafsan Alhad',
+                        name: 'Rafsan',
                         role: 'CEO',
                       ),
                       _teamMember(
                         imagePath: 'assets/images/profil.png',
-                        name: 'Maulana Armand',
+                        name: 'Armand',
                         role: 'CTO',
                       ),
                       _teamMember(
                         imagePath: 'assets/images/profil.png',
-                        name: 'Arno Coding',
-                        role: 'Designer',
+                        name: 'Arno',
+                        role: 'COO',
+                      ),
+                      _teamMember(
+                        imagePath: 'assets/images/profil.png',
+                        name: 'Natan',
+                        role: 'CMO',
                       ),
                     ],
                   ),

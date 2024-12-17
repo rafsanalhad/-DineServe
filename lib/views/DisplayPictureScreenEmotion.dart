@@ -106,7 +106,7 @@ class _DisplayPictureScreenEmotionState
         });
       } else {
         setState(() {
-          emotionResult = "Gagal Mendeteksi Wajah";
+          emotionResult = "No Face Detected";
           confidence = "";
           starRating = "☆☆☆☆☆";
         });
@@ -168,7 +168,7 @@ class _DisplayPictureScreenEmotionState
 
               // Face Recognition Text
               const Text(
-                'Deteksi Emosi',
+                'Emotion Detected',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -199,7 +199,7 @@ class _DisplayPictureScreenEmotionState
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Text(
-                  "Hasil ini adalah prediksi emosi dari gambar yang diunggah. Silakan berikan ulasan Anda untuk membantu kami meningkatkan layanan kami.",
+                  "This result is the predicted emotion from the uploaded image. Please provide your feedback to help us improve our service.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -233,7 +233,7 @@ class _DisplayPictureScreenEmotionState
                       ),
                     ),
                     child: const Text(
-                      'Berikan Ulasan',
+                      'Leave a Comment',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
@@ -283,7 +283,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
         // Menampilkan modal sukses yang trendy
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Ulasan berhasil dikirim"),
+            content: Text("Review submitted successfully."),
             backgroundColor: Color(0xFF18654A),
           ),
         );
@@ -314,7 +314,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Berikan Ulasan',
+                      'Leave a Comment',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -335,7 +335,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   child: TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      hintText: "Tulis komentar Anda...",
+                      hintText: "Write your comment...",
                       border: InputBorder.none,
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 12),
@@ -345,7 +345,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "Komentar Anda sangat membantu kami untuk meningkatkan layanan.",
+                  "Your comments are very helpful in improving our service.",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black54,
@@ -363,7 +363,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                         Navigator.pop(context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Harap isi ulasan")),
+                          SnackBar(content: Text("Please leave a review")),
                         );
                       }
                     },
@@ -375,7 +375,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                       ),
                     ),
                     child: const Text(
-                      'Kirim Ulasan',
+                      'Send Review',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),

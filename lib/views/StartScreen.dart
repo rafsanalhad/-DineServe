@@ -23,7 +23,8 @@ class StartScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
-                  'Mulai Reservasi Sekarang Dengan Mudah',
+                  // 'Mulai Reservasi Sekarang Dengan Mudah'
+                  'Start Your Reservation Easily Now!',
                   textAlign: TextAlign.center, 
                   style: TextStyle(
                     fontSize: 24,
@@ -33,7 +34,8 @@ class StartScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10), 
                 const Text(
-                  'Lakukan Reservasi Dengan Pengenalan Wajah dengan cepat dan mudah',
+                  // 'Lakukan Reservasi Dengan Pengenalan Wajah dengan cepat dan mudah'
+                  'Elevating Your Dining Experience with Emotion-Based Reviews',
                   textAlign: TextAlign.center, 
                   style: TextStyle(
                     fontSize: 14,
@@ -66,7 +68,7 @@ class StartScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     },
-                    child: const Text('Mulai Sekarang', style: TextStyle(color: Color(0xFF18654A))),
+                    child: const Text('Get Started', style: TextStyle(color: Color(0xFF18654A))),
                   ),
                 ),
               ],
