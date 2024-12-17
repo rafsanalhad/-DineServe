@@ -287,7 +287,7 @@ class _ReservationPageState extends State<ReservationPage> {
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'Atas Nama',
+                  labelText: 'Name',
                   labelStyle: TextStyle(color: Colors.black87),
                   filled: true, // Mengaktifkan background
                   fillColor: Colors.grey[200], // Warna background
@@ -313,7 +313,7 @@ class _ReservationPageState extends State<ReservationPage> {
               TextField(
                 controller: _phoneController,
                 decoration: InputDecoration(
-                  labelText: 'No Telp',
+                  labelText: 'Phone Number',
                   labelStyle: TextStyle(color: Colors.black87),
                   filled: true, // Mengaktifkan background
                   fillColor: Colors.grey[200], // Warna background
@@ -381,7 +381,7 @@ class _ReservationPageState extends State<ReservationPage> {
                         });
                       }
                     },
-                    child: const Text('Pilih Tanggal'),
+                    child: const Text('Pick a Date'),
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -394,7 +394,7 @@ class _ReservationPageState extends State<ReservationPage> {
                   ),
                   SizedBox(width: 8),
                   Text(_selectedDate == null
-                      ? 'Tanggal belum dipilih'
+                      ? 'Date not selected'
                       : '${_selectedDate!.toLocal()}'.split(' ')[0]),
                 ],
               ),
@@ -403,10 +403,10 @@ class _ReservationPageState extends State<ReservationPage> {
               // Time Selection
               Row(
                 children: [
-                  const Text('Pilih Jam: '),
+                  const Text('Pick a Time: '),
                   DropdownButton<String>(
                     value: _selectedTime,
-                    hint: const Text('Pilih Slot Waktu'),
+                    hint: const Text('Pick a Time Slot'),
                     items: availableTimes.map((String time) {
                       return DropdownMenuItem<String>(
                         value: time,
@@ -423,9 +423,9 @@ class _ReservationPageState extends State<ReservationPage> {
               ),
               SizedBox(height: 16),
 
-              const Text('Pilih Meja: '),
+              const Text('Pick a Table: '),
               DropdownButton<String>(
-                hint: Text('Pilih Meja'),
+                hint: Text('Pick a Table'),
                 value: _tablePreference,
                 items: tables.map((table) {
                   return DropdownMenuItem<String>(
@@ -444,7 +444,7 @@ class _ReservationPageState extends State<ReservationPage> {
               // Guest Count
               Row(
                 children: [
-                  const Text('Jumlah Orang: '),
+                  const Text('Number of People: '),
                   DropdownButton<int>(
                     value: _guestCount,
                     items: List.generate(
@@ -468,7 +468,7 @@ class _ReservationPageState extends State<ReservationPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: _initiatePayment,
-                  child: const Text('Lakukan Pembayaran'),
+                  child: const Text('Make a Payment'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                     backgroundColor: Color(0xFF18654A),

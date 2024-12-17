@@ -30,7 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       final List<dynamic> data = json.decode(response.body)['notif'];
       return data.map((item) => Notification.fromJson(item)).toList();
     } else {
-      throw Exception('Tidak ada notifikasi yang tersedia');
+      throw Exception('No notifications available');
     }
   }
 
@@ -38,7 +38,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifikasi'),
+        title: Text('Notifications'),
       ),
       body: FutureBuilder<List<Notification>>(
         future: _notifications,
@@ -95,7 +95,7 @@ class NotificationCard extends StatelessWidget {
             ),
             SizedBox(height: 8.0),
             Text(
-              'Tipe: Reservasi',
+              'Type: Reservation',
               style: TextStyle(
                 fontSize: 14.0,
                 fontStyle: FontStyle.italic,

@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                             size: 24,
                           ),
                         ),
-                        title: const Text('History'),
+                        title: const Text('Reservation History'),
                         trailing: Container(
                           width: 40,
                           height: 40,
@@ -173,7 +173,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                             size: 24,
                           ),
                         ),
-                        title: const Text('Kontak Support'),
+                        title: const Text('Contact Support'),
                         trailing: Container(
                           width: 40,
                           height: 40,
@@ -204,7 +204,7 @@ class _ProfileScreenState extends State<ProfilePage> {
                             size: 24,
                           ),
                         ),
-                        title: const Text('Tentang Kami'),
+                        title: const Text('About Us'),
                         trailing: Container(
                           width: 40,
                           height: 40,
@@ -288,12 +288,12 @@ class _ProfileScreenState extends State<ProfilePage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Konfirmasi Logout"),
+                                title: Text("Logout Confirmation"),
                                 content:
-                                    Text("Apakah Anda yakin ingin logout?"),
+                                    Text("Are you sure you want to logout?"),
                                 actions: <Widget>[
                                   TextButton(
-                                    child: Text("Batal"),
+                                    child: Text("Cancel"),
                                     onPressed: () {
                                       Navigator.of(context)
                                           .pop(false); // Tidak logout

@@ -126,11 +126,11 @@ class _AdminPageState extends State<AdminPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Konfirmasi Logout"),
-                      content: Text("Apakah Anda yakin ingin logout?"),
+                      title: Text("Logout Confirmation"),
+                      content: Text("Are you sure you want to logout?"),
                       actions: <Widget>[
                         TextButton(
-                          child: Text("Batal"),
+                          child: Text("Cancel"),
                           onPressed: () {
                             Navigator.of(context).pop(false); // Tidak logout
                           },
@@ -186,7 +186,7 @@ class _AdminPageState extends State<AdminPage> {
                               ?.copyWith(color: Colors.black),
                         ),
                         Text(
-                          'Manage your platform here',
+                          'Manage the reservations and refunds here',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -231,7 +231,7 @@ class _AdminPageState extends State<AdminPage> {
                               Text('Date: ${reservation['date']}'),
                               Text('Time: ${reservation['time']}'),
                               Text('Guests: ${reservation['guest_count']}'),
-                              Text('Meja: ${reservation['table_number']}'),
+                              Text('Table: ${reservation['table_number']}'),
                             ],
                           ),
                           trailing: IconButton(
@@ -242,19 +242,19 @@ class _AdminPageState extends State<AdminPage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("Konfirmasi Hapus Reservasi"),
+                                    title: Text("Confirm Removal of Customer Reservation"),
                                     content: Text(
-                                        "Apakah Anda yakin ingin menghapus reservasi ini?"),
+                                        "Are you sure you want to remove this reservation for this customer?"),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text("Tidak"),
+                                        child: Text("Cancel"),
                                         onPressed: () {
                                           Navigator.of(context).pop(
                                               false); // Tidak hapus reservasi
                                         },
                                       ),
                                       TextButton(
-                                        child: Text("Ya"),
+                                        child: Text("Remove"),
                                         onPressed: () {
                                           Navigator.of(context)
                                               .pop(true); // Ya, hapus reservasi

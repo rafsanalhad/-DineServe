@@ -61,7 +61,7 @@ class _HistoryState extends State<History> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF7F7F7),
         title: const Text(
-          'History',
+          'Reservation History',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,

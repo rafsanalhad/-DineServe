@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Halo Food Hunter',
+                                  'Hello, Food Hunter',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 22,
@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 const Text(
-                                  'Mau Melakukan Apa Hari Ini?',
+                                  'Ready to do reservation?',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 11,
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                         child: Row(
                                           children: [
                                             Text(
-                                              'Tentang Kami',
+                                              'About Us',
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w400,
@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: const EdgeInsets.only(top: 15, left: 20, bottom: 10),
                   child: const Text(
-                    'Layanan Kami',
+                    'Our Services',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Lakukan Reservasi',
+                                          'Reservation',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -281,7 +281,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          'Reservasi sekarang dengan menggunakan payment gateway',
+                                          'Do a reservation now with payment gateway!',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 10,
@@ -329,7 +329,7 @@ class _HomePageState extends State<HomePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'History Reservasi',
+                                          'Reservation History',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -337,7 +337,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         Text(
-                                          'Lihat history reservasi Anda',
+                                          'Your reservation history',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 10,
@@ -388,7 +388,7 @@ class _HomePageState extends State<HomePage> {
                                   Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: const Text(
-                                      'Lakukan Ulasan\nDengan Emotion Detection',
+                                      'Review with Emotion Detection',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -435,7 +435,7 @@ class _HomePageState extends State<HomePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Lihat Rating',
+                                          'Reviews',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -444,7 +444,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          'Cek rating dari pengguna lainnya',
+                                          'See reviews from others',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 10,
