@@ -18,7 +18,6 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -108,12 +107,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Column(
                             children: [
                               RoundedInputField(
-                              hintText: "Email",
+                                hintText: "Email",
                                 icon: Icons.email,
                                 controller: _emailController,
                               ),
-                              RoundedPasswordField(controller: _passwordController, hintText: "Password"),
-                              switchListTile(),
+                              RoundedPasswordField(
+                                  controller: _passwordController,
+                                  hintText: "Password"),
+                              // switchListTile(),
                               RoundedButton(
                                 text: 'LOGIN',
                                 press: _login,
@@ -126,7 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const SignUpScreen(),
+                                      builder: (context) =>
+                                          const SignUpScreen(),
                                     ),
                                   );
                                 },
@@ -134,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 20),
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, '/forgotPassword');
+                                  Navigator.pushNamed(
+                                      context, '/forgotPassword');
                                 },
                                 child: const Text(
                                   'Forgot password?',
@@ -164,19 +167,19 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 
-switchListTile() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 50, right: 40),
-    child: SwitchListTile(
-      dense: true,
-      title: const Text(
-        'Remember Me',
-        style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
-      ),
-      value: true,
-      activeColor: kPrimaryColor,
-      onChanged: (val) {},
-    ),
-  );
-}
+// switchListTile() {
+//   return Padding(
+//     padding: const EdgeInsets.only(left: 50, right: 40),
+//     child: SwitchListTile(
+//       dense: true,
+//       title: const Text(
+//         'Remember Me',
+//         style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
+//       ),
+//       value: true,
+//       activeColor: kPrimaryColor,
+//       onChanged: (val) {},
+//     ),
+//   );
+// }
 
