@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                                   'Hello, Food Hunter',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 22,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
