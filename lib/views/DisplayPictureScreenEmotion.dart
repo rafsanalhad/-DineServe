@@ -217,11 +217,10 @@ class _DisplayPictureScreenEmotionState
                   width: double.infinity, // Mengatur lebar tombol menjadi penuh
                   child: ElevatedButton(
                     onPressed: () {
-                      showModalBottomSheet(
+                      showDialog(
                         context: context,
-                        isScrollControlled: true,
-                        builder: (BuildContext context) {
-                          return CommentBottomSheet(starInt: starInt);
+                        builder: (context) {
+                          return CommentDialog(starInt: starInt);
                         },
                       );
                     },
@@ -247,20 +246,83 @@ class _DisplayPictureScreenEmotionState
   }
 }
 
-class CommentBottomSheet extends StatefulWidget {
+class CommentDialog extends StatefulWidget {
   final int starInt; // Menerima rating dari konstruktor
 
-  CommentBottomSheet(
-      {required this.starInt}); // Konstruktor dengan nilai starInt
+  const CommentDialog({Key? key, required this.starInt}) : super(key: key);
 
   @override
-  _CommentBottomSheetState createState() => _CommentBottomSheetState();
+  _CommentDialogState createState() => _CommentDialogState();
 }
 
-class _CommentBottomSheetState extends State<CommentBottomSheet> {
+class _CommentDialogState extends State<CommentDialog> {
   final TextEditingController _controller = TextEditingController();
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   final AuthController _authController = Get.find();
+
+    void _showSuccessModal() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.check_circle_outline,
+                  size: 60,
+                  color: Color(0xFF18654A),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  "Success!",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF18654A),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  "Review submitted successfully.",
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close modal
+                      Navigator.pushReplacementNamed(context, '/reviews'); // Redirect
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF18654A),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      "Go to Reviews",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> sendReview(int starInt, String review) async {
     try {
@@ -270,6 +332,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
         'rating': starInt,
         'comment': review,
       });
+
       print('Sending request body: $requestBody');
 
       final response = await http.post(
@@ -279,112 +342,91 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
       );
 
       if (response.statusCode == 201) {
-        print("Review submitted successfully");
-        // Menampilkan modal sukses yang trendy
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Review submitted successfully."),
-            backgroundColor: Color(0xFF18654A),
-          ),
-        );
+        print("Reviews submitted successfully");
+        _showSuccessModal();
       } else {
-        print("Failed to submit review: ${response.statusCode}");
-        print("Response body: ${response.body}");
+        print("Failed to submit review: \${response.statusCode}");
+        print("Response body: \${response.body}");
       }
     } catch (e) {
-      print("Error submitting review: $e");
+      print("Error submitting review: \$e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.6,
-      minChildSize: 0.4,
-      maxChildSize: 0.9,
-      builder: (BuildContext context, ScrollController scrollController) {
-        return SingleChildScrollView(
-          controller: scrollController,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Leave a Comment',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: "Write your comment...",
-                      border: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                    ),
-                    maxLines: 5,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Your comments are very helpful in improving our service.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      String userReview = _controller.text.trim();
-                      if (userReview.isNotEmpty) {
-                        await sendReview(widget.starInt, userReview);
-                        Navigator.pop(context);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Please leave a review")),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF18654A),
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Send Review',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      contentPadding: const EdgeInsets.all(16),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Leave a Comment',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                hintText: "Write your comment...",
+                border: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+              ),
+              maxLines: 5,
             ),
           ),
-        );
-      },
+          const SizedBox(height: 10),
+          const Text(
+            "Your comments are very helpful in improving our service.",
+            style: TextStyle(fontSize: 14, color: Colors.black54),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () async {
+                String userReview = _controller.text.trim();
+                if (userReview.isNotEmpty) {
+                  await sendReview(widget.starInt, userReview);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please leave a review"),
+                    ),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF18654A),
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: const Text(
+                'Send Review',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
